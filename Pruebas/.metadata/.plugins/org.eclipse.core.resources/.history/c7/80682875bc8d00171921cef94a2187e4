@@ -1,0 +1,27 @@
+package co.edu.poli.Edge;
+
+import co.edu.poli.Node.Node;
+
+public interface Edge {
+
+	public abstract Node getNodeA();
+
+	public abstract Node getNodeB();
+
+	public abstract long getWeight();
+
+	public abstract String getLabel();
+
+	public abstract long getId();
+	
+	public abstract Node setNodeA(Node nodeA);
+
+	public abstract Node setNodeB(Node nodeB);
+
+	public abstract long setWeight(long weigth);
+
+	public abstract String setLabel(String label);
+
+	public abstract long setId(long id);
+		
+}

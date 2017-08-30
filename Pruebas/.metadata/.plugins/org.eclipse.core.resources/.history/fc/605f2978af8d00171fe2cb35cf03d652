@@ -1,0 +1,10 @@
+package co.edu.poli.Node;
+
+import java.util.HashMap;
+
+public abstract class Node {
+	private int idNode;
+	private HashMap<String, String> properties;
+	private String label;
+	
+}

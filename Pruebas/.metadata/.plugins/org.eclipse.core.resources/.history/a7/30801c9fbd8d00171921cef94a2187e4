@@ -1,0 +1,14 @@
+package co.edu.poli.Graph;
+
+import java.util.ArrayList;
+
+import co.edu.poli.Edge.Edge;
+import co.edu.poli.Edge.EdgeDirect;
+
+public class main {
+	public static void main(String[] args) {
+		EdgeDirect s = new EdgeDirect();
+		ArrayList<Edge> al = new ArrayList<>();
+		al.add(new EdgeDirect());
+	}
+}

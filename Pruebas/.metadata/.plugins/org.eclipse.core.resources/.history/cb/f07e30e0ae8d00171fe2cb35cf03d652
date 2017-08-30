@@ -1,0 +1,5 @@
+package co.edu.poli.Node;
+
+public interface Node implements In{
+	
+}

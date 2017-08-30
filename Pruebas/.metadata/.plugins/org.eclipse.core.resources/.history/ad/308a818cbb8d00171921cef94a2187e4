@@ -1,0 +1,10 @@
+package co.edu.poli.Edge;
+
+import co.edu.poli.Node.Node;
+
+public interface Edge {
+	
+	public abstract Node
+	getNodeA();
+	public abstract 
+}

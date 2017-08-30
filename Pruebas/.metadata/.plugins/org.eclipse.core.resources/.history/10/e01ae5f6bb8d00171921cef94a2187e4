@@ -1,0 +1,9 @@
+package co.edu.poli.Edge;
+
+import co.edu.poli.Node.Node;
+
+public class EdgeDirect implements Edge{
+	private Node nodeA;
+	
+
+}

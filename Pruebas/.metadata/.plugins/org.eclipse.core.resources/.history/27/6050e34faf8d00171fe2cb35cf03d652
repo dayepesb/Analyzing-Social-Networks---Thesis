@@ -1,0 +1,6 @@
+package co.edu.poli.Node;
+
+public abstract class Node {
+	private int idNode;
+	private 
+}

@@ -1,0 +1,65 @@
+package co.edu.poli.Edge;
+
+import co.edu.poli.Node.Node;
+
+public class EdgeDirect implements Edge {
+	private long id;
+	private Node nodeA;
+	private Node nodeB;
+	private long weight;
+	private String label;
+
+	// geters
+	@Override
+	public long getId() {
+		return this.id;
+	}
+
+	@Override
+	public Node getNodeA() {
+		return this.nodeA;
+	}
+
+	@Override
+	public Node getNodeB() {
+		return this.nodeB;
+	}
+
+	@Override
+	public long getWeight() {
+		return this.weight;
+	}
+
+	@Override
+	public String getLabel() {
+		return this.getLabel();
+	}
+
+	// setters
+	@Override
+	public void setId(long id) {
+		this.id = id;
+		;
+	}
+
+	@Override
+	public void setNodeA(Node nodeA) {
+		this.nodeA = nodeA;
+	}
+
+	@Override
+	public void setNodeB(Node nodeB) {
+		this.nodeB = nodeB;
+	}
+
+	@Override
+	public void setWeight(long weight) {
+		this.weight = weight;
+	}
+
+	@Override
+	public String setLabel() {
+		return null;
+	}
+
+}

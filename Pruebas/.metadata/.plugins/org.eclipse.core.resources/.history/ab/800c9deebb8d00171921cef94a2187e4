@@ -1,0 +1,6 @@
+package co.edu.poli.Edge;
+
+public class EdgeDirect implements Edge{
+	private 
+
+}

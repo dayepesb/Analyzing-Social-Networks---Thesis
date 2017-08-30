@@ -1,0 +1,24 @@
+package co.edu.poli.Node;
+
+import java.util.HashMap;
+
+public class NodeUniq extends Node{
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public int getIdNode() {
+		return super.getIdNode();
+	}
+	@Override
+	public HashMap<String, String> getProperties() {
+		return super.getProperties();
+	}
+	get
+}

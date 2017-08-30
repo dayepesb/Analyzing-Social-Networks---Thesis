@@ -1,0 +1,17 @@
+package co.edu.poli.Node;
+
+import java.awt.Color;
+import java.util.HashMap;
+
+public abstract class Node {
+	private int idNode;
+	private HashMap<String, String> properties;
+	private String label;
+	private Color color;
+	
+	//getters
+	public int getIdNode(){
+		return idNode;
+	}
+	
+}

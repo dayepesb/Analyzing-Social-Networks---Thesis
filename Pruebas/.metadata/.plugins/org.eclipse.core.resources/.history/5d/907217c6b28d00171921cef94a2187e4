@@ -1,0 +1,67 @@
+package co.edu.poli.Node;
+
+import java.awt.Color;
+import java.util.HashMap;
+
+public class NodeUniq implements Node{
+
+	int idNode;
+	HashMap<String, String> properties;
+	String label;
+	Color color;
+
+	@Override
+	public int getIdNode() {
+		return this.idNode;
+	}
+
+	@Override
+	public HashMap<String, String> getProperties() {
+		return this.properties;
+	}
+
+	@Override
+	public String getLabel() {
+		return null;
+	}
+
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setIdNode(int idNode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setProperties(HashMap<String, String> properties) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setLabel(String label) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setColor(Color color) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+

@@ -1,0 +1,16 @@
+package co.edu.poli.Edge;
+
+import co.edu.poli.Node.Node;
+
+public interface Edge {
+
+	public abstract Node getNodeA();
+
+	public abstract Node hetNodeB();
+
+	public abstract long getWeight();
+
+	public abstract String getLabel();
+
+	public abstract long getId();
+}

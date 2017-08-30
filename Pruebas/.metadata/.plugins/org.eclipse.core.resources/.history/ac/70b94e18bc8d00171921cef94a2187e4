@@ -1,0 +1,13 @@
+package co.edu.poli.Edge;
+
+import co.edu.poli.Node.Node;
+
+public class EdgeDirect implements Edge{
+	private long id;
+	private Node nodeA;
+	private Node nodeB;
+	private long weight;
+	private String label;
+	
+
+}
