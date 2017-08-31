@@ -1,9 +1,0 @@
-package co.edu.poli.Graph;
-
-import java.util.ArrayList;
-
-public class GraphDirect {
-
-	ArrayList<Integer> s = new ArrayList<>();
-	
-}

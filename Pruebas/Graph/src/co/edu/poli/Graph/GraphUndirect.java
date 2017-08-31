@@ -32,6 +32,22 @@ public class GraphUndirect implements Graph {
 		graph = new HashMap<>();
 	}
 
+	public GraphUndirect(String label) {
+		this.idGraph = 1;
+		this.label = label;
+		this.listNodes = new ArrayList<>();
+		this.listEdges = new ArrayList<>();
+		graph = new HashMap<>();
+	}
+
+	public GraphUndirect(long idGraph, String label) {
+		this.idGraph = idGraph;
+		this.label = label;
+		this.listNodes = new ArrayList<>();
+		this.listEdges = new ArrayList<>();
+		graph = new HashMap<>();
+	}
+
 	@Override
 	public long getIdGraph() {
 		return idGraph;
@@ -101,21 +117,21 @@ public class GraphUndirect implements Graph {
 	}
 
 	@Override
-	public void addEdge(long idEdge, Node nodeA, Node nodeB,boolean isDirect) {
+	public void addEdge(long idEdge, Node nodeA, Node nodeB, boolean isDirect) {
 		EdgeDirect ed = new EdgeDirect(idEdge, nodeA, nodeB);
 		listEdges.add(ed);
 		graph.get(ed.getNodeA().getIdNode()).add(ed);
 	}
 
 	@Override
-	public void addEdge(long idEdge, Node nodeA, Node nodeB, double weight,boolean isDirect) {
+	public void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, boolean isDirect) {
 		EdgeDirect ed = new EdgeDirect(idEdge, nodeA, nodeB, weight);
 		listEdges.add(ed);
 		graph.get(ed.getNodeA().getIdNode()).add(ed);
 	}
 
 	@Override
-	public void addEdge(long idEdge, Node nodeA, Node nodeB, String label,boolean isDirect) {
+	public void addEdge(long idEdge, Node nodeA, Node nodeB, String label, boolean isDirect) {
 		EdgeDirect ed = new EdgeDirect(idEdge, nodeA, nodeB, label);
 		listEdges.add(ed);
 		graph.get(ed.getNodeA().getIdNode()).add(ed);
@@ -123,7 +139,7 @@ public class GraphUndirect implements Graph {
 	}
 
 	@Override
-	public void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, String label,boolean isDirect) {
+	public void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, String label, boolean isDirect) {
 		EdgeDirect ed = new EdgeDirect(idEdge, nodeA, nodeB, weight, label);
 		listEdges.add(ed);
 		graph.get(ed.getNodeA().getIdNode()).add(ed);
