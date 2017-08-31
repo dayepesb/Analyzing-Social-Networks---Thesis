@@ -9,7 +9,13 @@ import co.edu.poli.Node.Node;
 
 public interface Graph {
 
-	public int cardinalityNodes();
+	public abstract long getIdGraph();
+
+	public abstract String getLabel();
+
+	public abstract void setLabel(String label);
+
+	public abstract int cardinalityNodes();
 
 	public abstract int cardinalityEdges();
 
@@ -27,11 +33,11 @@ public interface Graph {
 
 	public abstract void addNode(long idNode, String label, Color color);
 
-	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB);
+	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB,boolean isDirect);
 
-	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, double weight);
+	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, double weight,boolean isDirect);
 
-	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, String label);
+	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, String label,boolean isDirect);
 
-	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, String label);
+	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, String label,boolean isDirect);
 }

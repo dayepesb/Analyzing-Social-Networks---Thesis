@@ -1,0 +1,89 @@
+package co.edu.poli.Graph;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import co.edu.poli.Edge.Edge;
+import co.edu.poli.Edge.EdgeDirect;
+import co.edu.poli.Node.Node;
+import co.edu.poli.Node.NodeUniq;
+
+public class GraphDirect implements Graph {
+
+	private long idGraph
+	private ArrayList<Node> listNodes;
+	private ArrayList<Edge> listEdges;
+	private HashMap<Long, ArrayList<Edge>> graph;
+
+	public GraphDirect() {
+		
+	}
+
+	@Override
+	public int cardinalityNodes() {
+		return listNodes.size();
+	}
+
+	@Override
+	public int cardinalityEdges() {
+		return listEdges.size();
+	}
+
+	@Override
+	public ArrayList<Node> getListNodes() {
+		return listNodes;
+	}
+
+	@Override
+	public ArrayList<Edge> getListEdges() {
+		return listEdges;
+	}
+
+	@Override
+	public HashMap<Long, ArrayList<Edge>> getGraph() {
+		return graph;
+	}
+
+	@Override
+	public void addNode(long idNode) {
+		listNodes.add(new NodeUniq(idNode));
+	}
+
+	@Override
+	public void addNode(long idNode, Color color) {
+		listNodes.add(new NodeUniq(idNode, color));
+	}
+
+	@Override
+	public void addNode(long idNode, String label) {
+		listNodes.add(new NodeUniq(idNode, label));
+	}
+
+	@Override
+	public void addNode(long idNode, String label, Color color) {
+		listNodes.add(new NodeUniq(idNode, label, color));
+	}
+
+	@Override
+	public void addEdge(long idEdge, Node nodeA, Node nodeB) {
+		listEdges.add(new EdgeDirect(idEdge, nodeA, nodeB));
+	}
+
+	@Override
+	public void addEdge(long idEdge, Node nodeA, Node nodeB, double weight) {
+		listEdges.add(new EdgeDirect(idEdge, nodeA, nodeB, weight));
+	}
+
+	@Override
+	public void addEdge(long idEdge, Node nodeA, Node nodeB, String label) {
+		listEdges.add(new EdgeDirect(idEdge, nodeA, nodeB, label));
+
+	}
+
+	@Override
+	public void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, String label) {
+		listEdges.add(new EdgeDirect(idEdge, nodeA, nodeB, weight, label));
+	}
+
+}
