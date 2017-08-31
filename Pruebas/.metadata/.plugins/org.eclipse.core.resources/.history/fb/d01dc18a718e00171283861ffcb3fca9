@@ -1,0 +1,14 @@
+package co.edu.poli.Graph;
+
+import java.awt.Color;
+
+public interface Graph {
+
+	public abstract void addNode(long idNode);
+
+	public abstract void addEdge(long idNode, Color color);
+
+	public abstract void addEdge(long idNode, String label);
+
+	public abstract void addEdge(long idNode, String label, Color color);
+}

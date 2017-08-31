@@ -1,0 +1,33 @@
+package co.edu.poli.Graph;
+
+import java.awt.Color;
+import java.util.ArrayList;
+
+import co.edu.poli.Node.Node;
+
+public interface Graph {
+
+	public abstract int cardinalityNodes();
+
+	public abstract int cardinalityEdges();
+
+	public abstract ArrayList<Node> getListNodes();
+
+	
+
+	public abstract void addNode(long idNode);
+
+	public abstract void addNode(long idNode, Color color);
+
+	public abstract void addNode(long idNode, String label);
+
+	public abstract void addNode(long idNode, String label, Color color);
+
+	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB);
+
+	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, double weight);
+
+	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, String label);
+
+	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, String label);
+}

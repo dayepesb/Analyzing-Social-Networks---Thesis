@@ -1,0 +1,16 @@
+package co.edu.poli.Graph;
+
+import java.awt.Color;
+
+public interface Graph {
+
+	public abstract int cardinality();
+
+	public abstract void addNode(long idNode);
+
+	public abstract void addNode(long idNode, Color color);
+
+	public abstract void addNode(long idNode, String label);
+
+	public abstract void addNode(long idNode, String label, Color color);
+}

@@ -6,7 +6,7 @@ import co.edu.poli.Node.Node;
 import co.edu.poli.Node.NodeUniq;
 
 public class EdgeDirect implements Edge {
-	private long id;
+	private long idEdge;
 	// From NodeA to NodeB
 	private Node nodeA;
 	private Node nodeB;
@@ -15,47 +15,47 @@ public class EdgeDirect implements Edge {
 
 	public EdgeDirect() {
 		Random r = new Random();
-		this.id = r.nextLong();
+		this.idEdge = r.nextLong();
 		nodeA = new NodeUniq();
 		nodeB = new NodeUniq();
 		weight = 0.;
 		label = "Empty";
 	}
 
-	public EdgeDirect(long id) {
-		this.id = id;
+	public EdgeDirect(long idEdge) {
+		this.idEdge = idEdge;
 		nodeA = new NodeUniq();
 		nodeB = new NodeUniq();
 		weight = 0.;
 		label = "Empty";
 	}
 
-	public EdgeDirect(long id, Node nodeA, Node nodeB) {
-		this.id = id;
+	public EdgeDirect(long idEdge, Node nodeA, Node nodeB) {
+		this.idEdge = idEdge;
 		this.nodeA = nodeA;
 		this.nodeB = nodeB;
 		weight = 1.;
 		label = "Empty";
 	}
 
-	public EdgeDirect(long id, Node nodeA, Node nodeB, double weight) {
-		this.id = id;
+	public EdgeDirect(long idEdge, Node nodeA, Node nodeB, double weight) {
+		this.idEdge = idEdge;
 		this.nodeA = nodeA;
 		this.nodeB = nodeB;
 		this.weight = weight;
 		label = "Empty";
 	}
 
-	public EdgeDirect(long id, Node nodeA, Node nodeB, String label) {
-		this.id = id;
+	public EdgeDirect(long idEdge, Node nodeA, Node nodeB, String label) {
+		this.idEdge = idEdge;
 		this.nodeA = nodeA;
 		this.nodeB = nodeB;
 		this.weight = 1.;
 		this.label = label;
 	}
 
-	public EdgeDirect(long id, Node nodeA, Node nodeB, double weight, String label) {
-		this.id = id;
+	public EdgeDirect(long idEdge, Node nodeA, Node nodeB, double weight, String label) {
+		this.idEdge = idEdge;
 		this.nodeA = nodeA;
 		this.nodeB = nodeB;
 		this.weight = weight;
@@ -65,7 +65,7 @@ public class EdgeDirect implements Edge {
 	// geters
 	@Override
 	public long getId() {
-		return this.id;
+		return this.idEdge;
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class EdgeDirect implements Edge {
 	// setters
 	@Override
 	public void setId(long id) {
-		this.id = id;
+		this.idEdge = id;
 	}
 
 	@Override
@@ -121,8 +121,8 @@ public class EdgeDirect implements Edge {
 
 	@Override
 	public String toString() {
-		return String.format("ID : %d%nLabel : %s%nNode A :%n%s%nNode B :%n%s%nWeight : %.5f%n", this.id, this.label,
-				this.nodeA.toString(), this.nodeB.toString(), this.weight);
+		return String.format("ID : %d%nLabel : %s%nNode A :%n%s%nNode B :%n%s%nWeight : %.5f%n", this.idEdge,
+				this.label, this.nodeA.toString(), this.nodeB.toString(), this.weight);
 	}
 
 }
