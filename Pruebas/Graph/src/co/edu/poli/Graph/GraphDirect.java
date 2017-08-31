@@ -17,7 +17,7 @@ public class GraphDirect implements Graph {
 	private ArrayList<Node> listNodes;
 	private ArrayList<Edge> listEdges;
 	private HashMap<Long, ArrayList<Edge>> graph;
-	private long nextId;
+	private long nextIdNode, nextIdEdge;
 
 	public GraphDirect() {
 		this.idGraph = 1;
@@ -25,7 +25,8 @@ public class GraphDirect implements Graph {
 		this.listNodes = new ArrayList<>();
 		this.listEdges = new ArrayList<>();
 		graph = new HashMap<>();
-		this.nextId=0;
+		this.nextIdNode = 0;
+		this.nextIdEdge = 0;
 	}
 
 	public GraphDirect(long idGraph) {
@@ -34,7 +35,8 @@ public class GraphDirect implements Graph {
 		this.listNodes = new ArrayList<>();
 		this.listEdges = new ArrayList<>();
 		graph = new HashMap<>();
-		this.nextId=0;
+		this.nextIdNode = 0;
+		this.nextIdEdge = 0;
 	}
 
 	public GraphDirect(String label) {
@@ -43,7 +45,8 @@ public class GraphDirect implements Graph {
 		this.listNodes = new ArrayList<>();
 		this.listEdges = new ArrayList<>();
 		graph = new HashMap<>();
-		this.nextId=0;
+		this.nextIdNode = 0;
+		this.nextIdEdge = 0;
 	}
 
 	public GraphDirect(long idGraph, String label) {
@@ -52,7 +55,8 @@ public class GraphDirect implements Graph {
 		this.listNodes = new ArrayList<>();
 		this.listEdges = new ArrayList<>();
 		graph = new HashMap<>();
-		this.nextId=0;
+		this.nextIdNode = 0;
+		this.nextIdEdge = 0;
 	}
 
 	@Override
@@ -71,9 +75,15 @@ public class GraphDirect implements Graph {
 	}
 
 	@Override
-	public long getNextId() {
-		nextId += 1;
-		return (nextId - 1);
+	public long getNextIdNode() {
+		nextIdNode += 1;
+		return (nextIdNode - 1);
+	}
+
+	@Override
+	public long getNextIdEdge() {
+		nextIdEdge += 1;
+		return (nextIdEdge - 1);
 	}
 
 	@Override
@@ -102,60 +112,100 @@ public class GraphDirect implements Graph {
 	}
 
 	@Override
-	public void addNode(long idNode) {
-		Node n1 = new NodeUniq(idNode);
-		listNodes.add(n1);
-		graph.put(idNode, new ArrayList<>());
+	public boolean addNode() {
+		try {
+			Node n1 = new NodeUniq(this.getNextIdNode());
+			listNodes.add(n1);
+			graph.put(n1.getIdNode(), new ArrayList<>());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
-	public void addNode(long idNode, Color color) {
-		Node n1 = new NodeUniq(idNode, color);
-		listNodes.add(n1);
-		graph.put(idNode, new ArrayList<>());
+	public boolean addNode(Color color) {
+		try {
+			Node n1 = new NodeUniq(this.getNextIdNode(), color);
+			listNodes.add(n1);
+			graph.put(n1.getIdNode(), new ArrayList<>());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
-	public void addNode(long idNode, String label) {
-		Node n1 = new NodeUniq(idNode, label);
-		listNodes.add(n1);
-		graph.put(idNode, new ArrayList<>());
+	public boolean addNode(String label) {
+		try {
+			Node n1 = new NodeUniq(this.getNextIdNode(), label);
+			listNodes.add(n1);
+			graph.put(n1.getIdNode(), new ArrayList<>());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
-	public void addNode(long idNode, String label, Color color) {
-		Node n1 = new NodeUniq(idNode, label, color);
-		listNodes.add(n1);
-		graph.put(idNode, new ArrayList<>());
+	public boolean addNode(String label, Color color) {
+		try {
+			Node n1 = new NodeUniq(this.getNextIdNode(), label, color);
+			listNodes.add(n1);
+			graph.put(n1.getIdNode(), new ArrayList<>());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
-	public void addEdge(long idEdge, Node nodeA, Node nodeB, boolean isDirect) {
-		EdgeDirect ed = new EdgeDirect(idEdge, nodeA, nodeB);
-		listEdges.add(ed);
-		graph.get(ed.getNodeA().getIdNode()).add(ed);
+	public boolean addEdge(Node nodeA, Node nodeB, boolean isDirect) {
+		try {
+			EdgeDirect ed = new EdgeDirect(this.getNextIdEdge(), nodeA, nodeB);
+			listEdges.add(ed);
+			graph.get(ed.getNodeA().getIdNode()).add(ed);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
-	public void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, boolean isDirect) {
-		EdgeDirect ed = new EdgeDirect(idEdge, nodeA, nodeB, weight);
-		listEdges.add(ed);
-		graph.get(ed.getNodeA().getIdNode()).add(ed);
+	public boolean addEdge(Node nodeA, Node nodeB, double weight, boolean isDirect) {
+		try {
+			EdgeDirect ed = new EdgeDirect(this.getNextIdEdge(), nodeA, nodeB, weight);
+			listEdges.add(ed);
+			graph.get(ed.getNodeA().getIdNode()).add(ed);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
-	public void addEdge(long idEdge, Node nodeA, Node nodeB, String label, boolean isDirect) {
-		EdgeDirect ed = new EdgeDirect(idEdge, nodeA, nodeB, label);
-		listEdges.add(ed);
-		graph.get(ed.getNodeA().getIdNode()).add(ed);
+	public boolean addEdge(Node nodeA, Node nodeB, String label, boolean isDirect) {
+		try {
+			EdgeDirect ed = new EdgeDirect(this.getNextIdEdge(), nodeA, nodeB, label);
+			listEdges.add(ed);
+			graph.get(ed.getNodeA().getIdNode()).add(ed);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 
 	}
 
 	@Override
-	public void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, String label, boolean isDirect) {
-		EdgeDirect ed = new EdgeDirect(idEdge, nodeA, nodeB, weight, label);
-		listEdges.add(ed);
-		graph.get(ed.getNodeA().getIdNode()).add(ed);
+	public boolean addEdge(Node nodeA, Node nodeB, double weight, String label, boolean isDirect) {
+		try {
+			EdgeDirect ed = new EdgeDirect(this.getNextIdEdge(), nodeA, nodeB, weight, label);
+			listEdges.add(ed);
+			graph.get(ed.getNodeA().getIdNode()).add(ed);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
