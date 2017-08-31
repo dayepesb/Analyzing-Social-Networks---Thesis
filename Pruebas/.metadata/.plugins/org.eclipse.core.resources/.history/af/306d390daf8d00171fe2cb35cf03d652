@@ -1,5 +1,0 @@
-package co.edu.poli.Node;
-
-public abstract class Node {
-
-}

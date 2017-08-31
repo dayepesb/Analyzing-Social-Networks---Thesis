@@ -1,5 +1,0 @@
-package co.edu.poli.Node;
-
-public class NodeDirected extends Node{
-	
-}
