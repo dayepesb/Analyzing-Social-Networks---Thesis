@@ -1,4 +1,4 @@
-package co.poli.edu.MatrixAdj;
+package co.edu.poli.MatrixAdj;
 
 import co.edu.poli.Graph.GraphDirect;
 

@@ -1,4 +1,4 @@
-package co.poli.edu.MatrixAdj;
+package co.edu.poli.MatrixAdj;
 
 public interface Matrix {
 	
