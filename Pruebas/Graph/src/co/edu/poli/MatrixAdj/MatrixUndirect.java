@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import co.edu.poli.Edge.Edge;
 import co.edu.poli.Graph.GraphDirect;
 
-public class MatrixDirected implements Matrix {
+public class MatrixUndirect implements Matrix {
 	ArrayList<ArrayList<Double>> matAdj;
 	GraphDirect graph;
 
-	public MatrixDirected(GraphDirect graph) {
-
+	public MatrixUndirect() {
 		matAdj = new ArrayList<ArrayList<Double>>();
 		for (int i = 0; i < graph.cardinalityNodes(); i++) {
 			ArrayList<Double> t = new ArrayList<Double>();
@@ -23,6 +22,7 @@ public class MatrixDirected implements Matrix {
 			int idNodeB = (int) e.getNodeB().getIdNode();
 			double weight = e.getWeight();
 			matAdj.get(idNodeA).add(idNodeB, weight);
+			matAdj.get(idNodeB).add(idNodeA, weight);
 		}
 	}
 
@@ -33,12 +33,13 @@ public class MatrixDirected implements Matrix {
 
 	@Override
 	public int whoIs() {
-		return 1;
+		return -1;
 	}
 
 	@Override
 	public void setWidht(int idA, int idB, double newValue) {
 		matAdj.get(idA).set(idB, newValue);
+		matAdj.get(idB).set(idA, newValue);
 	}
 
 	@Override
@@ -52,4 +53,5 @@ public class MatrixDirected implements Matrix {
 		// TODO Auto-generated method stub
 		
 	}
+
 }
