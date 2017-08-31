@@ -1,5 +1,5 @@
 package co.edu.poli.Graph;
 
-public class GraphMixed {
+public class GraphMixed implements Graph{
 
 }

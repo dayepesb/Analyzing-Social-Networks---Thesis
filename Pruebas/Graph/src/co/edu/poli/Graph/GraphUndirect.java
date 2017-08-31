@@ -1,5 +1,5 @@
 package co.edu.poli.Graph;
 
-public class GraphUndirect {
+public class GraphUndirect implements Graph{
 
 }

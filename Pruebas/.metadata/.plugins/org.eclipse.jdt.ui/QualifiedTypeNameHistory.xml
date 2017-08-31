@@ -4,10 +4,10 @@
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="co.edu.poli.Edge.Edge"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="co.edu.poli.Node.Node"/>
 <fullyQualifiedTypeName name="co.edu.poli.Node.NodeUniq"/>
 <fullyQualifiedTypeName name="co.edu.poli.Graph.main"/>
-<fullyQualifiedTypeName name="co.edu.poli.Edge.EdgeDirect"/>
 <fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="co.edu.poli.Edge.EdgeDirect"/>
 </qualifiedTypeNameHistroy>

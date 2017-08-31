@@ -1,0 +1,8 @@
+package co.edu.poli.Graph;
+
+public class GraphDirect {
+
+	public static void main(String[] args) {
+
+	}
+}

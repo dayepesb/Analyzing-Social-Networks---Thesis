@@ -1,0 +1,12 @@
+package co.edu.poli.Graph;
+
+import java.util.ArrayList;
+
+public interface Graph {
+	
+	
+	
+	
+	
+	public abstract void addNode(long idNode);
+}
