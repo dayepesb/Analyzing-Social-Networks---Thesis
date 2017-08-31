@@ -1,0 +1,12 @@
+package co.edu.poli.Exceptions;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class NotFoundException {
+	public static void main(String[] args) {
+		HashMap<Integer, ArrayList<Integer>> hm = new HashMap<>();
+		hm.put(64455, new ArrayList<>());
+		hm.get(64455).add(51654)
+	}
+}

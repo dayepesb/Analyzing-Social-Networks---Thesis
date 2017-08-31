@@ -15,6 +15,8 @@ public interface Graph {
 
 	public abstract void setLabel(String label);
 
+	public abstract long getNextId(); 
+
 	public abstract int cardinalityNodes();
 
 	public abstract int cardinalityEdges();
@@ -33,11 +35,16 @@ public interface Graph {
 
 	public abstract void addNode(long idNode, String label, Color color);
 
-	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB,boolean isDirect);
+	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, boolean isDirect);
 
-	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, double weight,boolean isDirect);
+	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, boolean isDirect);
 
-	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, String label,boolean isDirect);
+	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, String label, boolean isDirect);
 
-	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, String label,boolean isDirect);
+	public abstract void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, String label, boolean isDirect);
+
+	public abstract boolean removeNode(long idNode);
+
+	public abstract boolean removeEdge(long idEdge);
+
 }

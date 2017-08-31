@@ -3,6 +3,7 @@ package co.edu.poli.Graph;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import co.edu.poli.Edge.Edge;
 import co.edu.poli.Edge.EdgeDirect;
@@ -16,6 +17,7 @@ public class GraphDirect implements Graph {
 	private ArrayList<Node> listNodes;
 	private ArrayList<Edge> listEdges;
 	private HashMap<Long, ArrayList<Edge>> graph;
+	private long nextId;
 
 	public GraphDirect() {
 		this.idGraph = 1;
@@ -23,6 +25,7 @@ public class GraphDirect implements Graph {
 		this.listNodes = new ArrayList<>();
 		this.listEdges = new ArrayList<>();
 		graph = new HashMap<>();
+		this.nextId=0;
 	}
 
 	public GraphDirect(long idGraph) {
@@ -31,6 +34,25 @@ public class GraphDirect implements Graph {
 		this.listNodes = new ArrayList<>();
 		this.listEdges = new ArrayList<>();
 		graph = new HashMap<>();
+		this.nextId=0;
+	}
+
+	public GraphDirect(String label) {
+		this.idGraph = 1;
+		this.label = label;
+		this.listNodes = new ArrayList<>();
+		this.listEdges = new ArrayList<>();
+		graph = new HashMap<>();
+		this.nextId=0;
+	}
+
+	public GraphDirect(long idGraph, String label) {
+		this.idGraph = idGraph;
+		this.label = label;
+		this.listNodes = new ArrayList<>();
+		this.listEdges = new ArrayList<>();
+		graph = new HashMap<>();
+		this.nextId=0;
 	}
 
 	@Override
@@ -46,6 +68,12 @@ public class GraphDirect implements Graph {
 	@Override
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	@Override
+	public long getNextId() {
+		nextId += 1;
+		return (nextId - 1);
 	}
 
 	@Override
@@ -102,21 +130,21 @@ public class GraphDirect implements Graph {
 	}
 
 	@Override
-	public void addEdge(long idEdge, Node nodeA, Node nodeB,boolean isDirect) {
+	public void addEdge(long idEdge, Node nodeA, Node nodeB, boolean isDirect) {
 		EdgeDirect ed = new EdgeDirect(idEdge, nodeA, nodeB);
 		listEdges.add(ed);
 		graph.get(ed.getNodeA().getIdNode()).add(ed);
 	}
 
 	@Override
-	public void addEdge(long idEdge, Node nodeA, Node nodeB, double weight,boolean isDirect) {
+	public void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, boolean isDirect) {
 		EdgeDirect ed = new EdgeDirect(idEdge, nodeA, nodeB, weight);
 		listEdges.add(ed);
 		graph.get(ed.getNodeA().getIdNode()).add(ed);
 	}
 
 	@Override
-	public void addEdge(long idEdge, Node nodeA, Node nodeB, String label,boolean isDirect) {
+	public void addEdge(long idEdge, Node nodeA, Node nodeB, String label, boolean isDirect) {
 		EdgeDirect ed = new EdgeDirect(idEdge, nodeA, nodeB, label);
 		listEdges.add(ed);
 		graph.get(ed.getNodeA().getIdNode()).add(ed);
@@ -124,10 +152,61 @@ public class GraphDirect implements Graph {
 	}
 
 	@Override
-	public void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, String label,boolean isDirect) {
+	public void addEdge(long idEdge, Node nodeA, Node nodeB, double weight, String label, boolean isDirect) {
 		EdgeDirect ed = new EdgeDirect(idEdge, nodeA, nodeB, weight, label);
 		listEdges.add(ed);
 		graph.get(ed.getNodeA().getIdNode()).add(ed);
+	}
+
+	@Override
+	public boolean removeNode(long idNode) {
+		boolean b = false;
+		Node nu = null;
+		for (int i = 0; i < listNodes.size(); i++) {
+			if (listEdges.get(i).getId() == idNode) {
+				nu = listNodes.remove(i);
+				graph.remove(i);
+				b = true;
+				break;
+			}
+		}
+		if (!b)
+			return false;
+
+		for (Entry<Long, ArrayList<Edge>> entry : graph.entrySet()) {
+			for (int i = 0; i < entry.getValue().size(); i++) {
+				if (entry.getValue().get(i).getNodeB().getIdNode() == nu.getIdNode()) {
+					graph.get(entry.getKey()).remove(i);
+					break;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean removeEdge(long idEdge) {
+		boolean b = false;
+		Edge ed = null;
+		for (int i = 0; i < listEdges.size(); i++) {
+			if (listEdges.get(i).getId() == idEdge) {
+				b = true;
+				ed = listEdges.remove(i);
+				break;
+			}
+		}
+		if (!b)
+			return false;
+
+		for (int i = 0; i < graph.get(ed.getNodeA().getIdNode()).size(); i++) {
+			if (graph.get(ed.getNodeA().getIdNode()).get(i).getNodeB().getIdNode() == idEdge) {
+				graph.get(ed.getNodeA().getIdNode()).remove(i);
+				break;
+			}
+		}
+
+		return true;
 	}
 
 }
