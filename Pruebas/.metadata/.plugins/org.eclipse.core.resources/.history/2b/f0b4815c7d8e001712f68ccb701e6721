@@ -1,0 +1,10 @@
+package co.edu.poli.Exceptions;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class NotFoundException {
+	public static void main(String[] args) {
+		System.out.println(Integer.max(a, b));
+	}
+}
