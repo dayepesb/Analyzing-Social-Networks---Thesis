@@ -165,6 +165,9 @@ public class GraphUndirect implements Graph {
 			EdgeDirect ed = new EdgeDirect(this.getNextIdEdge(), nodeA, nodeB);
 			listEdges.add(ed);
 			graph.get(ed.getNodeA().getIdNode()).add(ed);
+			ed = new EdgeDirect(this.getNextIdEdge(), nodeB, nodeA);
+			listEdges.add(ed);
+			graph.get(ed.getNodeB().getIdNode()).add(ed);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -177,6 +180,10 @@ public class GraphUndirect implements Graph {
 			EdgeDirect ed = new EdgeDirect(this.getNextIdEdge(), nodeA, nodeB, weight);
 			listEdges.add(ed);
 			graph.get(ed.getNodeA().getIdNode()).add(ed);
+			ed = new EdgeDirect(this.getNextIdEdge(), nodeB, nodeA, weight);
+			listEdges.add(ed);
+			graph.get(ed.getNodeB().getIdNode()).add(ed);
+
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -189,6 +196,10 @@ public class GraphUndirect implements Graph {
 			EdgeDirect ed = new EdgeDirect(this.getNextIdEdge(), nodeA, nodeB, label);
 			listEdges.add(ed);
 			graph.get(ed.getNodeA().getIdNode()).add(ed);
+			ed = new EdgeDirect(this.getNextIdEdge(), nodeB, nodeA,label);
+			listEdges.add(ed);
+			graph.get(ed.getNodeB().getIdNode()).add(ed);
+			
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -202,6 +213,10 @@ public class GraphUndirect implements Graph {
 			EdgeDirect ed = new EdgeDirect(this.getNextIdEdge(), nodeA, nodeB, weight, label);
 			listEdges.add(ed);
 			graph.get(ed.getNodeA().getIdNode()).add(ed);
+			ed = new EdgeDirect(this.getNextIdEdge(), nodeB, nodeA,weight,label);
+			listEdges.add(ed);
+			graph.get(ed.getNodeB().getIdNode()).add(ed);
+			
 			return true;
 		} catch (Exception e) {
 			return false;

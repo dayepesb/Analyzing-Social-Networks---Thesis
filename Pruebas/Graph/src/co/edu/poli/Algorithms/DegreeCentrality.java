@@ -6,11 +6,36 @@ import java.util.Map.Entry;
 
 import co.edu.poli.Edge.Edge;
 import co.edu.poli.Graph.Graph;
+import co.edu.poli.Graph.GraphDirect;
+import co.edu.poli.Graph.GraphMixed;
+import co.edu.poli.Graph.GraphUndirect;
 import co.edu.poli.Node.Node;
 
 public class DegreeCentrality {
 
-	public static HashMap<Long, Integer> InputDegree(Graph graph) {
+	private Graph graph;
+	private boolean mixted,direct;
+
+	public DegreeCentrality(GraphDirect graph) {
+		this.graph = graph;
+		direct = true;
+		mixted = false;
+	}
+
+	public DegreeCentrality(GraphUndirect graph) {
+		this.graph = graph;
+		direct = false;
+		mixted = false;
+	}
+
+	public DegreeCentrality(GraphMixed graph) {
+		this.graph = graph;
+		direct = false;
+		mixted = true;
+	}
+
+
+	public HashMap<Long, Integer> InputDegree() {
 		// Rate of popularity of all nodes in a Graph
 		HashMap<Long, Integer> inputDegree = new HashMap<Long, Integer>();
 		for (Edge e : graph.getListEdges()) {
@@ -24,7 +49,7 @@ public class DegreeCentrality {
 		return inputDegree;
 	}
 
-	public static HashMap<Long, Integer> OutputDegree(Graph graph) {
+	public HashMap<Long, Integer> OutputDegree() {
 		// Rate of sociality of all nodes in a Graph
 		HashMap<Long, Integer> outputDegree = new HashMap<Long, Integer>();
 		for (Entry<Long, ArrayList<Edge>> edges : graph.getGraph().entrySet()) {
@@ -33,7 +58,7 @@ public class DegreeCentrality {
 		return outputDegree;
 	}
 
-	public static int OutputDegree(Graph graph, Node node) {
+	public int OutputDegree(Node node) {
 		// Rate of sociality of one node in a Graph
 		return graph.getGraph().get(node.getIdNode()).size();
 	}
