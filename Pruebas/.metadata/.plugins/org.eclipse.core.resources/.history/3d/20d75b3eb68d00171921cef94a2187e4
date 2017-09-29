@@ -1,5 +1,0 @@
-package co.edu.poli.Edge;
-
-public interface Edge {
-
-}

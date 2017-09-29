@@ -1,7 +1,0 @@
-package co.edu.poli.Exceptions;
-
-public class NotFoundException {
-	public static void main(String[] args) {
-		int mAdy [][] = new int[2500][2500];
-	}
-}
