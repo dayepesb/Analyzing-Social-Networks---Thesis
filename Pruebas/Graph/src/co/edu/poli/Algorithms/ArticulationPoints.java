@@ -15,7 +15,6 @@ public class ArticulationPoints {
 	private HashMap<Long, Long> ord, low;
 	private Graph graph;
 	private HashMap<Long, ArrayList<Edge>> map;
-	private final long INF = Long.MAX_VALUE / 3;
 
 	public ArticulationPoints(GraphDirect graph) {
 		this.graph = graph;
@@ -31,7 +30,6 @@ public class ArticulationPoints {
 
 	public ArrayList<Long> articulationPoints() {
 		map = graph.getGraph();
-		int n = map.size();
 		ord = new HashMap<>();
 		low = new HashMap<>();
 		for (Entry<Long, ArrayList<Edge>> m : map.entrySet()) {
@@ -42,20 +40,20 @@ public class ArticulationPoints {
 		for (Entry<Long, ArrayList<Edge>> m : map.entrySet()) {
 			if (ord.get(m.getKey()) == 0) {
 				cnt = 1;
-
+				searchArticulationPoints(m.getKey(), m.getKey(), res);
 			}
 		}
 		return res;
 	}
 
-	private void articulationPoints(long v, long w, ArrayList<Long> res) {
+	private void searchArticulationPoints(long v, long w, ArrayList<Long> res) {
 		low.put(w, cnt);
 		ord.put(w, cnt);
 		cnt++;
 		for (Edge e : map.get(w)) {
 			long t = e.getNodeB().getIdNode();
 			if (ord.get(t) == 0) {
-				articulationPoints(w, t, res);
+				searchArticulationPoints(w, t, res);
 				low.put(w, Math.min(low.get(w), low.get(t)));
 				if ((ord.get(w) == 1 && ord.get(t) != 2) || (ord.get(w) != 1 && low.get(t) >= ord.get(w))) {
 					res.add(w);

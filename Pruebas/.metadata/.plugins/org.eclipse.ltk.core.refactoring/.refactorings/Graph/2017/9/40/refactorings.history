@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;co.edu.poli.Algorithms.ArticulationPoints.articulationPoints(...)&apos; to &apos;searchArticulationPoints&apos;&#x0D;&#x0A;- Original project: &apos;Graph&apos;&#x0D;&#x0A;- Original element: &apos;co.edu.poli.Algorithms.ArticulationPoints.articulationPoints(...)&apos;&#x0D;&#x0A;- Renamed element: &apos;co.edu.poli.Algorithms.ArticulationPoints.searchArticulationPoints(...)&apos;&#x0D;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;articulationPoints&apos;" flags="589826" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;co.edu.poli.Algorithms{ArticulationPoints.java[ArticulationPoints~articulationPoints~J~J~QArrayList\&lt;QLong;&gt;;" name="searchArticulationPoints" references="true" stamp="1506667124354" version="1.0"/>
+</session>
