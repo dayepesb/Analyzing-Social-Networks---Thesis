@@ -4,40 +4,40 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import co.edu.poli.Edge.Edge;
-import co.edu.poli.Graph.Graph;
-import co.edu.poli.Graph.GraphDirect;
-import co.edu.poli.Graph.GraphMixed;
-import co.edu.poli.Graph.GraphUndirect;
+import co.edu.poli.GraphPoli.GraphPoli;
+import co.edu.poli.GraphPoli.GraphPoliDirect;
+import co.edu.poli.GraphPoli.GraphPoliMixed;
+import co.edu.poli.GraphPoli.GraphPoliUndirect;
+import co.edu.poli.Link.Link;
 
 public class ArticulationPoints {
 	private long cnt;
 	private HashMap<Long, Long> ord, low;
-	private Graph graph;
-	private HashMap<Long, ArrayList<Edge>> map;
+	private GraphPoli graph;
+	private HashMap<Long, ArrayList<Link>> map;
 
-	public ArticulationPoints(GraphDirect graph) {
+	public ArticulationPoints(GraphPoliDirect graph) {
 		this.graph = graph;
 	}
 
-	public ArticulationPoints(GraphUndirect graph) {
+	public ArticulationPoints(GraphPoliUndirect graph) {
 		this.graph = graph;
 	}
 
-	public ArticulationPoints(GraphMixed graph) {
+	public ArticulationPoints(GraphPoliMixed graph) {
 		this.graph = graph;
 	}
 
 	public ArrayList<Long> articulationPoints() {
-		map = graph.getGraph();
+		map = graph.getGraphPoli();
 		ord = new HashMap<>();
 		low = new HashMap<>();
-		for (Entry<Long, ArrayList<Edge>> m : map.entrySet()) {
+		for (Entry<Long, ArrayList<Link>> m : map.entrySet()) {
 			ord.put(m.getKey(), 0L);
 			low.put(m.getKey(), 0L);
 		}
 		ArrayList<Long> res = new ArrayList<>();
-		for (Entry<Long, ArrayList<Edge>> m : map.entrySet()) {
+		for (Entry<Long, ArrayList<Link>> m : map.entrySet()) {
 			if (ord.get(m.getKey()) == 0) {
 				cnt = 1;
 				searchArticulationPoints(m.getKey(), m.getKey(), res);
@@ -50,7 +50,7 @@ public class ArticulationPoints {
 		low.put(w, cnt);
 		ord.put(w, cnt);
 		cnt++;
-		for (Edge e : map.get(w)) {
+		for (Link e : map.get(w)) {
 			long t = e.getNodeB().getIdNode();
 			if (ord.get(t) == 0) {
 				searchArticulationPoints(w, t, res);

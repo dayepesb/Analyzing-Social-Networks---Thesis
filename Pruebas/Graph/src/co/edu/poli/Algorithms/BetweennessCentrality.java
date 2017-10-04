@@ -5,32 +5,32 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
-import co.edu.poli.Graph.Graph;
-import co.edu.poli.Graph.GraphDirect;
-import co.edu.poli.Graph.GraphMixed;
-import co.edu.poli.Graph.GraphUndirect;
-import co.edu.poli.Node.Node;
+import co.edu.poli.GraphPoli.GraphPoli;
+import co.edu.poli.GraphPoli.GraphPoliDirect;
+import co.edu.poli.GraphPoli.GraphPoliMixed;
+import co.edu.poli.GraphPoli.GraphPoliUndirect;
+import co.edu.poli.Node.Vertex;
 
 public class BetweennessCentrality {
-	private Graph graph;
+	private GraphPoli graph;
 	private HashMap<Long, Long> centrality;
 	private final long INF = Long.MAX_VALUE / 3;
-	private ArrayList<Node> listNodes;
+	private ArrayList<Vertex> listNodes;
 	private boolean mixted,direct;
 
-	public BetweennessCentrality(GraphDirect graph) {
+	public BetweennessCentrality(GraphPoliDirect graph) {
 		this.graph = graph;
 		direct = true;
 		mixted = false;
 	}
 
-	public BetweennessCentrality(GraphUndirect graph) {
+	public BetweennessCentrality(GraphPoliUndirect graph) {
 		this.graph = graph;
 		direct = false;
 		mixted = false;
 	}
 
-	public BetweennessCentrality(GraphMixed graph) {
+	public BetweennessCentrality(GraphPoliMixed graph) {
 		this.graph = graph;
 		direct = false;
 		mixted = true;
@@ -38,21 +38,21 @@ public class BetweennessCentrality {
 
 	public HashMap<Long, Long> centralityNodes() {
 		centrality = new HashMap<>();
-		listNodes = graph.getListNodes();
+		listNodes = graph.getListVertex();
 
-		for (Node n : listNodes) {
+		for (Vertex n : listNodes) {
 			centrality.put(n.getIdNode(), 0L);
 		}
 
 		Dijkstra dijkstra ;
 		if(mixted) {
-			dijkstra = new Dijkstra((GraphMixed)graph);
+			dijkstra = new Dijkstra((GraphPoliMixed)graph);
 		}else if(direct) {
-			dijkstra = new Dijkstra((GraphDirect)graph);
+			dijkstra = new Dijkstra((GraphPoliDirect)graph);
 		}else {
-			dijkstra  = new Dijkstra((GraphUndirect)graph);
+			dijkstra  = new Dijkstra((GraphPoliUndirect)graph);
 		}
-		for (Node n : listNodes) {
+		for (Vertex n : listNodes) {
 			HashMap<Long, String> path = dijkstra.pathDijkstra(n.getIdNode());
 			getCentrality(path);
 		}

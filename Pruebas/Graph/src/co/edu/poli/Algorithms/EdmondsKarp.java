@@ -4,41 +4,41 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import co.edu.poli.Edge.Edge;
-import co.edu.poli.Edge.EdgeDirect;
-import co.edu.poli.Graph.Graph;
-import co.edu.poli.Graph.GraphDirect;
-import co.edu.poli.Graph.GraphMixed;
-import co.edu.poli.Graph.GraphUndirect;
-import co.edu.poli.Node.Node;
+import co.edu.poli.GraphPoli.GraphPoli;
+import co.edu.poli.GraphPoli.GraphPoliDirect;
+import co.edu.poli.GraphPoli.GraphPoliMixed;
+import co.edu.poli.GraphPoli.GraphPoliUndirect;
+import co.edu.poli.Link.Link;
+import co.edu.poli.Link.LinkDirect;
+import co.edu.poli.Node.Vertex;
 
 public class EdmondsKarp {
 	double flow;
-	Graph graph;
+	GraphPoli graph;
 	HashMap<Long, Long>pi;
 	
-	public EdmondsKarp(GraphDirect graph) {
+	public EdmondsKarp(GraphPoliDirect graph) {
 		this.graph=graph;
 	}
 	
-	public EdmondsKarp(GraphUndirect graph) {
+	public EdmondsKarp(GraphPoliUndirect graph) {
 		this.graph=graph;
 	}
 	
-	public EdmondsKarp(GraphMixed graph) {
+	public EdmondsKarp(GraphPoliMixed graph) {
 		this.graph=graph;
 	}
 	
 	double flow(long s,long t){
 		double flow=0;
-		HashMap<Long, ArrayList<Edge>>residual=graph.getGraph();
+		HashMap<Long, ArrayList<Link>>residual=graph.getGraphPoli();
 		pi=new HashMap<>();
 		while(bfs(s, t)){
 			double minFlow=Double.MAX_VALUE;
 			for(long v=t;v!=s;v=pi.get(v)){
 				long u=pi.get(v);
 				double weight=0;
-				for(Edge e:residual.get(u)){
+				for(Link e:residual.get(u)){
 					if(e.getNodeB().getIdNode()==v){
 						weight=e.getWeight();
 						break;
@@ -50,13 +50,13 @@ public class EdmondsKarp {
 			for(long v=t;v!=s;v=pi.get(v)){
 				long u=pi.get(v);
 				double weight=0;
-				for(Edge e:residual.get(u)){
+				for(Link e:residual.get(u)){
 					if(e.getNodeB().getIdNode()==v){
 						e.setWeight(e.getWeight()-minFlow);
 					}
 				}
 				boolean found=false;
-				for(Edge e:residual.get(v)){
+				for(Link e:residual.get(v)){
 					if(e.getNodeB().getIdNode()==u){
 						e.setWeight(e.getWeight()+minFlow);
 						found=true;
@@ -64,10 +64,10 @@ public class EdmondsKarp {
 					}
 				}
 				
-				Node uT=null;
-				Node vT=null;
+				Vertex uT=null;
+				Vertex vT=null;
 				int cont=0;
-				for (Node node:graph.getListNodes()) {
+				for (Vertex node:graph.getListVertex()) {
 					if(node.getIdNode()==u){
 						uT=node;
 						cont++;
@@ -80,7 +80,7 @@ public class EdmondsKarp {
 				}
 				
 				if(!found){
-					residual.get(v).add(new EdgeDirect(graph.getNextIdEdge(), vT,uT, minFlow));
+					residual.get(v).add(new LinkDirect(graph.getNextIdLink(), vT,uT, minFlow));
 				}
 				
 				minFlow=Math.min(minFlow, weight);
@@ -99,7 +99,7 @@ public class EdmondsKarp {
 		pi.put(s, -1L);
 		while(!q.isEmpty()){
 			long u=q.poll();
-			for (Edge e:graph.getGraph().get(u)) {
+			for (Link e:graph.getGraphPoli().get(u)) {
 				long v=e.getNodeB().getIdNode();
 				if(!pi.containsKey(v)){
 					q.offer(v);

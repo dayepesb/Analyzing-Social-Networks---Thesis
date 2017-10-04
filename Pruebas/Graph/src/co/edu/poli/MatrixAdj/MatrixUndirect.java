@@ -2,22 +2,22 @@ package co.edu.poli.MatrixAdj;
 
 import java.util.ArrayList;
 
-import co.edu.poli.Edge.Edge;
-import co.edu.poli.Graph.GraphDirect;
+import co.edu.poli.GraphPoli.GraphPoliDirect;
+import co.edu.poli.Link.Link;
 
 public class MatrixUndirect implements Matrix {
 	ArrayList<ArrayList<Double>> matAdj;
-	GraphDirect graph;
+	GraphPoliDirect graph;
 
 	public MatrixUndirect() {
 		matAdj = new ArrayList<ArrayList<Double>>();
-		for (int i = 0; i < graph.cardinalityNodes(); i++) {
+		for (int i = 0; i < graph.cardinalityVertex(); i++) {
 			ArrayList<Double> t = new ArrayList<Double>();
-			for (int j = 0; j < graph.cardinalityNodes(); j++)
+			for (int j = 0; j < graph.cardinalityVertex(); j++)
 				t.add(0.0);
 		}
 
-		for (Edge e : graph.getListEdges()) {
+		for (Link e : graph.getListLinks()) {
 			int idNodeA = (int) e.getNodeA().getIdNode();
 			int idNodeB = (int) e.getNodeB().getIdNode();
 			double weight = e.getWeight();

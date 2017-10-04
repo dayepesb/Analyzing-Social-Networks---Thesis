@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
-import co.edu.poli.Edge.Edge;
-import co.edu.poli.Graph.Graph;
-import co.edu.poli.Graph.GraphDirect;
-import co.edu.poli.Graph.GraphMixed;
-import co.edu.poli.Graph.GraphUndirect;
-import co.edu.poli.Node.Node;
+import co.edu.poli.GraphPoli.GraphPoli;
+import co.edu.poli.GraphPoli.GraphPoliDirect;
+import co.edu.poli.GraphPoli.GraphPoliMixed;
+import co.edu.poli.GraphPoli.GraphPoliUndirect;
+import co.edu.poli.Link.Link;
+import co.edu.poli.Node.Vertex;
 
 public class Tarjan {
-	private Graph graph;
+	private GraphPoli graph;
 	private long vertices;
 	private long preCount;
 	private HashMap<Long, Long> low;
@@ -20,33 +20,33 @@ public class Tarjan {
 	private ArrayList<ArrayList<Long>> sccComponent;
 	private Stack<Long> stack;
 
-	public Tarjan(GraphDirect graph) {
+	public Tarjan(GraphPoliDirect graph) {
 		this.graph = graph;
 	}
 
-	public Tarjan(GraphUndirect graph) {
+	public Tarjan(GraphPoliUndirect graph) {
 		this.graph = graph;
 	}
 
-	public Tarjan(GraphMixed graph) {
+	public Tarjan(GraphPoliMixed graph) {
 		this.graph = graph;
 	}
 
 	public ArrayList<ArrayList<Long>> getSCComponents() {
-		vertices = graph.cardinalityNodes();
+		vertices = graph.cardinalityVertex();
 		low = new HashMap<>();
 		visited = new HashMap<>();
 		stack = new Stack<>();
 		sccComponent = new ArrayList<>();
 		preCount = 0;
 
-		ArrayList<Node> nodes = graph.getListNodes();
-		for (Node n : nodes) {
+		ArrayList<Vertex> nodes = graph.getListVertex();
+		for (Vertex n : nodes) {
 			low.put(n.getIdNode(), 0l);
 			visited.put(n.getIdNode(), false);
 		}
 
-		for (Node n : nodes) {
+		for (Vertex n : nodes) {
 			if (!visited.get(n.getIdNode())) {
 				dfs(n.getIdNode());
 			}
@@ -60,7 +60,7 @@ public class Tarjan {
 		visited.put(v, true);
 		stack.push(v);
 		long min = low.get(v);
-		for (Edge w : graph.getGraph().get(v)) {
+		for (Link w : graph.getGraphPoli().get(v)) {
 			if (!visited.get(w.getNodeB().getIdNode())) {
 				dfs(w.getNodeB().getIdNode());
 			}
