@@ -2,8 +2,8 @@ package co.edu.poli.Link;
 
 import java.util.Random;
 
-import co.edu.poli.Node.Vertex;
-import co.edu.poli.Node.VertexUniq;
+import co.edu.poli.Vertex.Vertex;
+import co.edu.poli.Vertex.VertexUniq;
 
 public class LinkDirect implements Link {
 	private long idLink;
@@ -26,7 +26,7 @@ public class LinkDirect implements Link {
 		this.idLink = idEdge;
 		nodeA = new VertexUniq();
 		nodeB = new VertexUniq();
-		weight = 0.;
+		weight = 1.;
 		label = "Empty";
 	}
 

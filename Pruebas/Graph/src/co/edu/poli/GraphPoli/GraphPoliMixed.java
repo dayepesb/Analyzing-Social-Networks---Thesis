@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 
 import co.edu.poli.Link.Link;
 import co.edu.poli.Link.LinkDirect;
-import co.edu.poli.Node.Vertex;
-import co.edu.poli.Node.VertexUniq;
+import co.edu.poli.Vertex.Vertex;
+import co.edu.poli.Vertex.VertexUniq;
 
 public class GraphPoliMixed implements GraphPoli {
 

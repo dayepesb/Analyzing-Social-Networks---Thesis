@@ -1,6 +1,6 @@
 package co.edu.poli.Link;
 
-import co.edu.poli.Node.Vertex;
+import co.edu.poli.Vertex.Vertex;
 
 public interface Link {
 

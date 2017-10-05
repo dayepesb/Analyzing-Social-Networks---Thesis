@@ -11,7 +11,7 @@ import co.edu.poli.GraphPoli.GraphPoliDirect;
 import co.edu.poli.GraphPoli.GraphPoliMixed;
 import co.edu.poli.GraphPoli.GraphPoliUndirect;
 import co.edu.poli.Link.Link;
-import co.edu.poli.Node.Vertex;
+import co.edu.poli.Vertex.Vertex;
 
 public class Dijkstra {
 

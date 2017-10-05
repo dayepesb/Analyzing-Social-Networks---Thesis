@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import co.edu.poli.Link.Link;
-import co.edu.poli.Node.Vertex;
+import co.edu.poli.Vertex.Vertex;
 
 public interface GraphPoli {
 

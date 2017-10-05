@@ -1,4 +1,4 @@
-package co.edu.poli.Node;
+package co.edu.poli.Vertex;
 
 import java.awt.Color;
 import java.util.HashMap;
