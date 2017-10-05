@@ -1,10 +1,8 @@
 package co.edu.poli.Layots;
 
-import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.KeyEventPostProcessor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,8 +12,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.print.PrinterJob;
+import java.io.File;
 import java.io.IOException;
 
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -23,11 +25,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.SpringLayout.Constraints;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
@@ -46,6 +47,7 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 	private JPanel panel;
 	private JScrollPane barraDesplazamientoAlgorithms, barraDesplazamientoContex;
 	private JTextArea contextGraph;
+	private GraphEditor graphGraphics;
 
 	private int nodes, edges;
 
@@ -57,22 +59,48 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		setSize(dim.width * 7 / 10, dim.height * 8 / 10);
 		setMinimumSize(new Dimension(956, 614));
 		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
-		setLayout(new GridLayout());
+		setLayout(null);
 		this.addComponentListener(this);
 		this.addKeyListener(this);
 
 		// MenuBar
+		graphGraphics = new GraphEditor();
 		mb = new JMenuBar();
 		archive = new JMenu("Archive");
+		mb.add(archive);
+		setJMenuBar(mb);
+		archive.add(new AbstractAction("Make Image") {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				int option = chooser.showSaveDialog(graphGraphics);
+				if (option == JFileChooser.APPROVE_OPTION) {
+					File file = chooser.getSelectedFile();
+					graphGraphics.writeJPEGImage(file);
+				}
+			}
+		});
+
+		archive.add(new AbstractAction("Print") {
+			public void actionPerformed(ActionEvent e) {
+				PrinterJob printJob = PrinterJob.getPrinterJob();
+				printJob.setPrintable(graphGraphics);
+				if (printJob.printDialog()) {
+					try {
+						printJob.print();
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		});
 		close = new JMenuItem("Close");
 		close.addActionListener(this);
 		archive.add(close);
-		mb.add(archive);
-		setJMenuBar(mb);
 
 		// Creación del panel, que contendra JList
 		panel = new JPanel();
 		panel.setLayout(null);
+		panel.setBounds(0, 0, 500, 500);
 		panel.setBorder(border);
 
 		// Se agrega un label para el contexto del grafo
@@ -104,17 +132,32 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		barraDesplazamientoAlgorithms.setBorder(border);
 		panel.add(barraDesplazamientoAlgorithms);
 
+		panel.add(graphGraphics);
+		// graphGraphics.setBounds(0, 0, 500, 500);
 		add(panel);
 		setVisible(true);
 	}
 
 	private void resizedComponents() {
 
-		int widthFrame = (int) dim.getWidth();
-		int heightFrame = (int) dim.getHeight();
+		// Panel
+		int xPnael = 0;
+		int yPanel = 0;
+		int widthPanel = this.getWidth();
+		int heigtPanel = this.getHeight();
+		panel.setBounds(xPnael, yPanel, widthPanel, heigtPanel);
+
+		//Graphics
+		int xGraphics = 0;
+		int yGraphics = 0;
+		int widthGraphics = (int)(panel.getWidth()*0.8);
+		int heigthGraphics = (int)(panel.getHeight()*0.9);
+		graphGraphics.setBounds(xGraphics,yGraphics,widthGraphics,heigthGraphics);
+
+		//Colums
 		int widthColum = (int) (panel.getWidth() * (2) / 10);
 		int longLabels = (int) (panel.getHeight() * 0.7 / 20);
-		int xColum = panel.getWidth() - widthColum;
+		int xColum = widthGraphics;
 
 		// label Contex
 		labelContex.setText("Contex");
@@ -128,7 +171,7 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 				String.format("  Nodes :          %d\n  Edges :          %d\n  Type Graph : %s", nodes, edges, "None"));
 
 		// Scroll Bar Contex
-		int longContex = this.getHeight() / 7;
+		int longContex = panel.getHeight() / 7;
 		int yContex = yLabelContex + longLabels;
 		barraDesplazamientoContex.setBounds(xColum, yContex, widthColum, longContex);
 
@@ -151,6 +194,8 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 	private void updateGraphValues() {
 		// Aca se van a cargar los datos de numero de nodos actuales y numero de
 		// adyacencias actuales
+		nodes = graphGraphics.graph.getVertexCount();
+		edges = graphGraphics.graph.getEdgeCount();
 	}
 
 	@Override
@@ -203,7 +248,7 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 	@Override
 	public void keyPressed(KeyEvent e) {
 		System.out.println("ddd");
-		if(e.isControlDown() && e.getSource().equals(KeyEvent.VK_W)) {
+		if (e.isControlDown() && e.getSource().equals(KeyEvent.VK_W)) {
 			this.dispose();
 		}
 	}

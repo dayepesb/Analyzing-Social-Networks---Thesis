@@ -6,22 +6,22 @@
 			<accessrule kind="accessible" pattern="javafx/**"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/collections-generic-4.01.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/colt-1.2.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/concurrent-1.3.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/j3d-core-1.3.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/jung-3d-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/jung-3d-demos-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/jung-algorithms-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/jung-api-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/jung-graph-impl-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/jung-io-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/jung-jai-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/jung-jai-samples-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/jung-samples-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/jung-visualization-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/stax-api-1.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/vecmath-1.3.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/jars/wstx-asl-3.2.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/collections-generic-4.01.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/colt-1.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/concurrent-1.3.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/j3d-core-1.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/jung-3d-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/jung-3d-demos-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/jung-algorithms-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/jung-api-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/jung-graph-impl-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/jung-io-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/jung-jai-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/jung-jai-samples-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/jung-samples-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/jung-visualization-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/vecmath-1.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Downloads/fd/wstx-asl-3.2.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
