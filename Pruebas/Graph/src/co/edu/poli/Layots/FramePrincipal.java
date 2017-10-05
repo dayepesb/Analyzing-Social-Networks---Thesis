@@ -4,11 +4,14 @@ import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.KeyEventPostProcessor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -21,23 +24,30 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.SpringLayout.Constraints;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import co.edu.poli.Lists.ListProperties;;
 
-public class FramePrincipal extends JFrame implements MouseListener, ActionListener, ComponentListener {
+public class FramePrincipal extends JFrame implements MouseListener, ActionListener, ComponentListener, KeyListener {
 
 	private static final long serialVersionUID = -8099070856715541164L;
 	private final Border border = LineBorder.createGrayLineBorder();
 	private JMenuBar mb;
-	private JMenu file;
+	private JMenu archive;
 	private JMenuItem close;
 	private Dimension dim;
-	private JLabel labelAlgorithms, labelDescriptionGrap;
+	private JLabel labelAlgorithms, labelContex;
 	private JList<String> lista;
 	private JPanel panel;
-	private JScrollPane barraDesplazamiento;
+	private JScrollPane barraDesplazamientoAlgorithms, barraDesplazamientoContex;
+	private JTextArea contextGraph;
+
+	private int nodes, edges;
 
 	public FramePrincipal() throws IOException {
 		// Creación de la ventana
@@ -46,26 +56,42 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(dim.width * 7 / 10, dim.height * 8 / 10);
 		setMinimumSize(new Dimension(956, 614));
-		System.out.println(dim.width * 7 / 10 + " " + dim.height * 8 / 10);
 		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
 		setLayout(new GridLayout());
 		this.addComponentListener(this);
+		this.addKeyListener(this);
 
 		// MenuBar
 		mb = new JMenuBar();
-		file = new JMenu("File");
+		archive = new JMenu("Archive");
 		close = new JMenuItem("Close");
 		close.addActionListener(this);
-		file.add(close);
-		mb.add(file);
+		archive.add(close);
+		mb.add(archive);
 		setJMenuBar(mb);
 
 		// Creación del panel, que contendra JList
 		panel = new JPanel();
 		panel.setLayout(null);
+		panel.setBorder(border);
 
-		// Se agrega una etiqueta de label
-		labelAlgorithms = new JLabel("Algorithms");
+		// Se agrega un label para el contexto del grafo
+		labelContex = new JLabel("Contex", SwingConstants.CENTER);
+		labelContex.setBorder(border);
+		panel.add(labelContex);
+
+		// Se agrega en text Area
+		contextGraph = new JTextArea();
+		contextGraph.setBorder(border);
+		contextGraph.setEditable(false);
+
+		// scrollPaneTextArea
+		barraDesplazamientoContex = new JScrollPane(contextGraph);
+		barraDesplazamientoContex.setBorder(border);
+		panel.add(barraDesplazamientoContex);
+
+		// Se agrega una etiqueta de label de los algoritmos
+		labelAlgorithms = new JLabel("Algorithms", SwingConstants.CENTER);
 		labelAlgorithms.setBorder(border);
 		panel.add(labelAlgorithms);
 
@@ -74,31 +100,57 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		lista.addMouseListener(this);
 
 		// aquí se crea el objeto, es decir la barra de desplazamiento
-		barraDesplazamiento = new JScrollPane(lista);
-		barraDesplazamiento.setBorder(border);
-		panel.add(barraDesplazamiento);
+		barraDesplazamientoAlgorithms = new JScrollPane(lista);
+		barraDesplazamientoAlgorithms.setBorder(border);
+		panel.add(barraDesplazamientoAlgorithms);
 
 		add(panel);
 		setVisible(true);
 	}
 
 	private void resizedComponents() {
+
+		int widthFrame = (int) dim.getWidth();
+		int heightFrame = (int) dim.getHeight();
+		int widthColum = (int) (panel.getWidth() * (2) / 10);
+		int longLabels = (int) (panel.getHeight() * 0.7 / 20);
+		int xColum = panel.getWidth() - widthColum;
+
+		// label Contex
+		labelContex.setText("Contex");
+		labelContex.setFont(new Font("TIMES NEW ROMAN", 0, 15));
+		int yLabelContex = 0;
+		labelContex.setBounds(xColum, yLabelContex, widthColum, longLabels);
+
+		// TextArea
+		updateGraphValues();
+		contextGraph.setText(
+				String.format("  Nodes :          %d\n  Edges :          %d\n  Type Graph : %s", nodes, edges, "None"));
+
+		// Scroll Bar Contex
+		int longContex = this.getHeight() / 7;
+		int yContex = yLabelContex + longLabels;
+		barraDesplazamientoContex.setBounds(xColum, yContex, widthColum, longContex);
+
+		// label Algorithms
 		labelAlgorithms.setText("Algorithms");
 		labelAlgorithms.setFont(new Font("TIMES NEW ROMAN", 0, 15));
-		int anchoLabelAlgorithms = (int) (this.getWidth() * (2) / 10);
-		int largoLabelAlgorithms = (int) (this.getHeight() * 0.7 / 20);
-		int xLabelAlgorithms = 0;
-		int yLabelAlgorithms = 0;
-		labelAlgorithms.setBounds(0, 0, anchoLabelAlgorithms, largoLabelAlgorithms);
+		int yLabelAlgorithms = yContex + longContex;
+		labelAlgorithms.setBounds(xColum, yLabelAlgorithms, widthColum, longLabels);
 
+		// list font
 		lista.setFont(new Font("TIMES NEW ROMAN", 0, 15));
 
-		int anchoList = (int) (this.getWidth() * (2) / 10);
-		int largoList = this.getHeight() * 8 / 30;
-		int xList = 0;
-		int yList = largoLabelAlgorithms;
-		barraDesplazamiento.setBounds(xList, yList, anchoList, largoList);
+		// list
+		int longList = this.getHeight() * 8 / 30;
+		int yList = yLabelAlgorithms + longLabels;
+		barraDesplazamientoAlgorithms.setBounds(xColum, yList, widthColum, longList);
 
+	}
+
+	private void updateGraphValues() {
+		// Aca se van a cargar los datos de numero de nodos actuales y numero de
+		// adyacencias actuales
 	}
 
 	@Override
@@ -147,4 +199,23 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 	@Override
 	public void componentShown(ComponentEvent e) {
 	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		System.out.println("ddd");
+		if(e.isControlDown() && e.getSource().equals(KeyEvent.VK_W)) {
+			this.dispose();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		System.out.println("ddd");
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		System.out.println("ddd");
+	}
+
 }
