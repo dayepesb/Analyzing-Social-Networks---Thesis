@@ -1,19 +1,28 @@
 package co.edu.poli.Layots;
 
-import javax.swing.*;
-
-import co.edu.poli.Lists.ListProperties;
-
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import co.edu.poli.Lists.ListProperties;;
 
 public class FramePrincipal extends JFrame implements MouseListener, ActionListener,ComponentListener {
+	private static final long serialVersionUID = -8099070856715541164L;
 	private JMenuBar mb;
 	private JMenu file;
 	private JMenuItem close;
@@ -52,6 +61,7 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		// creación del objeto lista
 		lista = new ListProperties();
 		lista.addMouseListener(this);
+		
 		// aquí se crea el objeto, es decir la barra de desplazamiento
 		barraDesplazamiento = new JScrollPane(lista);
 		// Agrega la barra de desplazamiento al panel
@@ -69,8 +79,9 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int index = lista.getSelectedIndex();
-		System.out.println(lista.getSelectedValue());
+		if(e.getSource().equals(lista)) {
+			System.out.println(lista.getSelectedValue());
+		}
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
