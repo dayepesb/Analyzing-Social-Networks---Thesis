@@ -1,5 +1,6 @@
 package co.edu.poli.Layots;
 
+import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -26,13 +27,14 @@ import javax.swing.border.LineBorder;
 import co.edu.poli.Lists.ListProperties;;
 
 public class FramePrincipal extends JFrame implements MouseListener, ActionListener, ComponentListener {
+
 	private static final long serialVersionUID = -8099070856715541164L;
 	private final Border border = LineBorder.createGrayLineBorder();
 	private JMenuBar mb;
 	private JMenu file;
 	private JMenuItem close;
 	private Dimension dim;
-	private JLabel labelAlgorithms;
+	private JLabel labelAlgorithms, labelDescriptionGrap;
 	private JList<String> lista;
 	private JPanel panel;
 	private JScrollPane barraDesplazamiento;
@@ -67,15 +69,13 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		labelAlgorithms.setBorder(border);
 		panel.add(labelAlgorithms);
 
-		// creación de los elememtos que componen la lista
 		// creación del objeto lista
 		lista = new ListProperties();
 		lista.addMouseListener(this);
 
-
 		// aquí se crea el objeto, es decir la barra de desplazamiento
 		barraDesplazamiento = new JScrollPane(lista);
-		// Agrega la barra de desplazamiento al panel
+		barraDesplazamiento.setBorder(border);
 		panel.add(barraDesplazamiento);
 
 		add(panel);
@@ -86,17 +86,19 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		labelAlgorithms.setText("Algorithms");
 		labelAlgorithms.setFont(new Font("TIMES NEW ROMAN", 0, 15));
 		int anchoLabelAlgorithms = (int) (this.getWidth() * (2) / 10);
-		int largoLabelAlgorithms = (int) (this.getHeight() *0.7/ 20);
-		int xLabelAlgorithms = this.getWidth() - anchoLabelAlgorithms - 15;
+		int largoLabelAlgorithms = (int) (this.getHeight() * 0.7 / 20);
+		int xLabelAlgorithms = 0;
 		int yLabelAlgorithms = 0;
-		labelAlgorithms.setBounds(xLabelAlgorithms,yLabelAlgorithms,anchoLabelAlgorithms,largoLabelAlgorithms);
+		labelAlgorithms.setBounds(0, 0, anchoLabelAlgorithms, largoLabelAlgorithms);
 
 		lista.setFont(new Font("TIMES NEW ROMAN", 0, 15));
+
 		int anchoList = (int) (this.getWidth() * (2) / 10);
 		int largoList = this.getHeight() * 8 / 30;
-		int xList = this.getWidth() - anchoList - 15;
+		int xList = 0;
 		int yList = largoLabelAlgorithms;
 		barraDesplazamiento.setBounds(xList, yList, anchoList, largoList);
+
 	}
 
 	@Override
