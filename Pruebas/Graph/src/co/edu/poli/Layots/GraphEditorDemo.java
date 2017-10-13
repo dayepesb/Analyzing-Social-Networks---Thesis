@@ -15,6 +15,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.print.Printable;
 import java.awt.print.PrinterJob;
@@ -69,7 +71,7 @@ public class GraphEditorDemo extends JApplet implements Printable {
 	/**
 	 * the graph
 	 */
-	Graph<Number, Number> graph;
+	static Graph<Number, Number> graph;
 
 	AbstractLayout<Number, Number> layout;
 
@@ -271,6 +273,39 @@ public class GraphEditorDemo extends JApplet implements Printable {
 				}
 			}
 		});
+		frame.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println(graph.getVertices());
+				System.out.println(graph.getEdges());
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		JPopupMenu.setDefaultLightWeightPopupEnabled(false);
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(menu);
@@ -279,4 +314,5 @@ public class GraphEditorDemo extends JApplet implements Printable {
 		frame.pack();
 		frame.setVisible(true);
 	}
+
 }

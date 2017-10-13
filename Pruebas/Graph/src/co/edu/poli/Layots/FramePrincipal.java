@@ -2,7 +2,6 @@ package co.edu.poli.Layots;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +24,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -62,9 +60,11 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		setLayout(null);
 		this.addComponentListener(this);
 		this.addKeyListener(this);
+		this.addMouseListener(this);
 
 		// MenuBar
 		graphGraphics = new GraphEditor();
+		graphGraphics.addMouseListener(this);
 		mb = new JMenuBar();
 		archive = new JMenu("Archive");
 		mb.add(archive);
@@ -132,9 +132,10 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		barraDesplazamientoAlgorithms.setBorder(border);
 		panel.add(barraDesplazamientoAlgorithms);
 
+		// graphGraphics.vv.getRenderContext().setVertexFillPaintTransformer(arg0);
+
 		panel.add(graphGraphics);
-		// graphGraphics.setBounds(0, 0, 500, 500);
-		add(panel);
+		getContentPane().add(panel);
 		setVisible(true);
 	}
 
@@ -147,14 +148,14 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		int heigtPanel = this.getHeight();
 		panel.setBounds(xPnael, yPanel, widthPanel, heigtPanel);
 
-		//Graphics
+		// Graphics
 		int xGraphics = 0;
 		int yGraphics = 0;
-		int widthGraphics = (int)(panel.getWidth()*0.8);
-		int heigthGraphics = (int)(panel.getHeight()*0.9);
-		graphGraphics.setBounds(xGraphics,yGraphics,widthGraphics,heigthGraphics);
+		int widthGraphics = (int) (panel.getWidth() * 0.8);
+		int heigthGraphics = (int) (panel.getHeight() * 0.9);
+		graphGraphics.setBounds(xGraphics, yGraphics, widthGraphics, heigthGraphics);
 
-		//Colums
+		// Colums
 		int widthColum = (int) (panel.getWidth() * (2) / 10);
 		int longLabels = (int) (panel.getHeight() * 0.7 / 20);
 		int xColum = widthGraphics;
@@ -166,7 +167,7 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		labelContex.setBounds(xColum, yLabelContex, widthColum, longLabels);
 
 		// TextArea
-		updateGraphValues();
+		// updateGraphValues();
 		contextGraph.setText(
 				String.format("  Nodes :          %d\n  Edges :          %d\n  Type Graph : %s", nodes, edges, "None"));
 
@@ -196,6 +197,10 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		// adyacencias actuales
 		nodes = graphGraphics.graph.getVertexCount();
 		edges = graphGraphics.graph.getEdgeCount();
+		contextGraph.setText(
+				String.format("  Nodes :          %d\n  Edges :          %d\n  Type Graph : %s", nodes, edges, "None"));
+		System.out.println(graphGraphics.graph.toString());
+		System.out.println("----------------------------------------------------------");
 	}
 
 	@Override
@@ -207,6 +212,7 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		updateGraphValues();
 		if (e.getSource().equals(lista)) {
 			System.out.println(lista.getSelectedValue());
 		}
@@ -214,18 +220,22 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
+		updateGraphValues();
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		updateGraphValues();
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		updateGraphValues();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		updateGraphValues();
 	}
 
 	@Override
@@ -247,7 +257,6 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("ddd");
 		if (e.isControlDown() && e.getSource().equals(KeyEvent.VK_W)) {
 			this.dispose();
 		}
@@ -255,12 +264,11 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		System.out.println("ddd");
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		System.out.println("ddd");
 	}
+
 
 }

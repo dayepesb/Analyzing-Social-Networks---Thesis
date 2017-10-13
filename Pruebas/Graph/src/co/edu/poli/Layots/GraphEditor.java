@@ -10,21 +10,14 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.io.File;
 
 import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 
 import org.apache.commons.collections15.Factory;
 
@@ -74,6 +67,16 @@ public class GraphEditor extends JApplet implements Printable {
 				return new LinkDirect(graph.getEdgeCount());
 			}
 		};
+//		Transformer<VertexUniq, Paint> vertexColor = new Transformer<VertexUniq, Paint>() {
+//			@Override
+//			public Paint transform(VertexUniq vu) {
+//				long i = vu.getIdNode();
+//				if(i%2==0)
+//					return Color.GREEN;
+//				return Color.RED;
+//			}
+//		};
+//		vv.getRenderContext().setVertexFillPaintTransformer(vertexColor);
 
 		final EditingModalGraphMouse<VertexUniq, LinkDirect> graphMouse = new EditingModalGraphMouse<VertexUniq, LinkDirect>(
 				vv.getRenderContext(), vertexFactory, edgeFactory);
