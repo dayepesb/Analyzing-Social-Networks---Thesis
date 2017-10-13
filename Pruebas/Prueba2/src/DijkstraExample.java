@@ -34,19 +34,19 @@
 		g.addNode("E").addAttribute("xy", 2, 2);
 		g.addNode("F").addAttribute("xy", 2, 1);
 		g.addNode("G").addAttribute("xy", 0, 1);
-		g.addEdge("AB", "A", "B").addAttribute("length", 14);
-		g.addEdge("AC", "A", "C").addAttribute("length", 9);
-		g.addEdge("AD", "A", "D").addAttribute("length", 7);
-		g.addEdge("BC", "B", "C").addAttribute("length", 2);
-		g.addEdge("CD", "C", "D").addAttribute("length", 10);
-		g.addEdge("BE", "B", "E").addAttribute("length", 9);
-		g.addEdge("CF", "C", "F").addAttribute("length", 11);
-		g.addEdge("DF", "D", "F").addAttribute("length", 15);
-		g.addEdge("EF", "E", "F").addAttribute("length", 6);
+		g.addEdge("AB", "A", "B").addAttribute("length", 14.0);
+		g.addEdge("AC", "A", "C").addAttribute("length", 9.0);
+		g.addEdge("AD", "A", "D").addAttribute("length", 7.0);
+		g.addEdge("BC", "B", "C").addAttribute("length", 2.0);
+		g.addEdge("CD", "C", "D").addAttribute("length", 10.5);
+		g.addEdge("BE", "B", "E").addAttribute("length", 9.0);
+		g.addEdge("CF", "C", "F").addAttribute("length", 11.9999);
+		g.addEdge("DF", "D", "F").addAttribute("length", 15.9);
+		g.addEdge("EF", "E", "F").addAttribute("length", 6.3);
 		for (Node n : g)
 			n.addAttribute("label", n.getId());
 		for (Edge e : g.getEachEdge())
-			e.addAttribute("label", "" + (int) e.getNumber("length"));
+			e.addAttribute("label", "" + (double) e.getNumber("length"));
 		return g;
 	}
 
@@ -74,7 +74,7 @@
 					dijkstra.getPathLength(node));
 
 		// Color in blue all the nodes on the shortest path form A to B
-		for (Node node : dijkstra.getPathNodes(g.getNode("B"))){
+		for (Node node : dijkstra.getPathNodes(g.getNode("C"))){
 			node.addAttribute("ui.style", "fill-color: yellow;");
 			node.addAttribute("ui.style", "size: 20px;");
 		}
@@ -106,7 +106,11 @@
 		dijkstra.init(g);
 		dijkstra.setSource(g.getNode("A"));
 		dijkstra.compute();
+	
+		System.out.println(dijkstra.getTreeLength());
+//		dijkstra.getPath(g.getNode("B")).getPathWeight("B");
 
+		
 		// Print the lengths of the new shortest paths
 		for (Node node : g)
 			System.out.printf("%s->%s:%10.2f%n", dijkstra.getSource(), node,
