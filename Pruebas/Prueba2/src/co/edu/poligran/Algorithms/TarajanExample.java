@@ -22,6 +22,7 @@ public class TarajanExample extends MultiGraph {
 		addEdge("ge", "g", "e", true);
 		addEdge("fg", "f", "g", true);
 
+
 		TarjanStronglyConnectedComponents tscc = new TarjanStronglyConnectedComponents();
 		tscc.init(this);
 		tscc.compute();
