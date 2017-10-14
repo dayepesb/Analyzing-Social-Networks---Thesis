@@ -3,6 +3,7 @@ import org.graphstream.algorithm.BetweennessCentrality;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.algorithm.Toolkit;
 
 public class Betwens {
 	public static void main(String[] args) {
@@ -36,25 +37,28 @@ public class Betwens {
 		//graph.addEdge("EC", "E", "C");
 		//graph.addEdge("BD", "B", "D");
 		graph.addEdge("EF", "E", "F");
-
+		
+	
+		
+		
 		BetweennessCentrality bcb = new BetweennessCentrality();
-		bcb.setWeightAttributeName("weight");
-		bcb.setWeight(A, B, 100);
-		bcb.setWeight(B, E, 1);
-		bcb.setWeight(B, C,100);
-		bcb.setWeight(E, D, 1);
-		bcb.setWeight(C, D, 1);
-		bcb.setWeight(A, E, 1);
-		bcb.setWeight(E, C, 1);
-		bcb.setWeight(B, D, 1);
-		
-		
-		bcb.setWeight(A, B, 1);
-		bcb.setWeight(B, E, 6);
-		bcb.setWeight(B, C, 5);
-		bcb.setWeight(E, D, 2);
-		bcb.setWeight(C, D, 3);
-		bcb.setWeight(A, E, 4);
+//		bcb.setWeightAttributeName("weight");
+//		bcb.setWeight(A, B, 100);
+//		bcb.setWeight(B, E, 1);
+//		bcb.setWeight(B, C,100);
+//		bcb.setWeight(E, D, 1);
+//		bcb.setWeight(C, D, 1);
+//		bcb.setWeight(A, E, 1);
+//		bcb.setWeight(E, C, 1);
+//		bcb.setWeight(B, D, 1);
+//		
+//		
+//		bcb.setWeight(A, B, 1);
+//		bcb.setWeight(B, E, 6);
+//		bcb.setWeight(B, C, 5);
+//		bcb.setWeight(E, D, 2);
+//		bcb.setWeight(C, D, 3);
+//		bcb.setWeight(A, E, 4);
 		
 		bcb.init(graph);
 		bcb.compute();
