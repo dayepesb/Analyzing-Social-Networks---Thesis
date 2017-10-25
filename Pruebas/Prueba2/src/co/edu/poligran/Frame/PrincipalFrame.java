@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.print.PrinterJob;
+import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -29,6 +30,8 @@ import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
 
+import co.edu.poligran.Panels.PanelGraph;
+
 public class PrincipalFrame implements Runnable, ActionListener, ComponentListener {
 	private final Border border = LineBorder.createGrayLineBorder();
 	private JFrame windows;
@@ -36,11 +39,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	private JMenuBar mb;
 	private JMenu archive;
 	private JMenuItem close;
-	private JPanel panelGraph;
-	private ViewPanel view;
-	private Viewer viewer;
-	private JLabel labelContext,labelAlgorithms;
-	private JTextArea contextGraphArea;
+	private PanelGraph panelGraph;
 
 	public static void main(String[] args) {
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -90,8 +89,11 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		gen.end();
 
 		// panel Graph
-		panelGraph = new JPanel();
-		panelGraph.setLayout(null);
+		try {
+			panelGraph = new PanelGraph(graph, windows.getWidth(), windows.getHeight());
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 
 		// create view graph
 		addTabbedPane(graph);
@@ -101,11 +103,6 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	}
 
 	private void addTabbedPane(Graph graph) {
-		// graph
-		createGraph(graph);
-
-		// context algoritms and more colum
-		createColum();
 
 		windows.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -117,38 +114,8 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 
 	}
 
-	private void createColum() {
-		//Label del contex Graph
-		labelContext = new JLabel("Graph Context", SwingConstants.CENTER);
-		labelContext.setBorder(border);
-		panelGraph.add(labelContext);
-		//TextArea del contex Graph
-		contextGraphArea = new JTextArea();
-		contextGraphArea.setBorder(border);
-		contextGraphArea.setEditable(false);
-		panelGraph.add(contextGraphArea);
-		
-	}
-
-	private void createGraph(Graph graph) {
-		viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-		viewer.enableAutoLayout();
-		viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER);
-		view = viewer.addDefaultView(false);
-		view.setBorder(border);
-		panelGraph.add(view);
-	}
-
 	private void resizedConponents() {
-		int width, heigth, widthColum;
-		widthColum = windows.getWidth() - (int) (windows.getWidth() * 0.75) - 21;
-		// graph
-		view.setBounds(0, 0, (int) (windows.getWidth() * 0.75), (int) (windows.getHeight() - 90));
-		// label Contex
-		labelContext.setBounds(view.getWidth(), 0, widthColum, (int) (windows.getHeight() * 0.025));
-		//contex Graph
-		contextGraphArea.setBounds(view.getWidth(),labelContext.getHeight(),widthColum,(int) (windows.getHeight() * 0.3));
-		//
+		panelGraph.rezisedComponents(windows.getWidth(), windows.getHeight());
 	}
 
 	// ActionListener
@@ -156,6 +123,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(close)) {
 			windows.dispose();
+			System.exit(0);
 		}
 	}
 

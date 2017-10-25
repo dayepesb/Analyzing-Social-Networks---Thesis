@@ -1,0 +1,6 @@
+Country
+City
+Sex
+Age
+Blood type
+Number of relationships

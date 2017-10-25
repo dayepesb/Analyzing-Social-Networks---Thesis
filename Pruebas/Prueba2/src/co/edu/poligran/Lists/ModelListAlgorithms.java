@@ -1,4 +1,4 @@
-package co.edu.poli.Lists;
+package co.edu.poligran.Lists;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,7 +12,7 @@ public class ModelListAlgorithms extends DefaultListModel<String> {
 
 	public ModelListAlgorithms() throws IOException {
 //		BufferedReader in = new BufferedReader(new FileReader("../Files/Algorithms.txt"));
-		File archivo = new File ("bin/co/edu/poli/Files/Algorithms.txt");
+		File archivo = new File ("bin/co/edu/poligran/Files/Algorithms.txt");
 		FileReader fr = new FileReader (archivo);
 		BufferedReader in = new BufferedReader(fr);
 		while (true) {
