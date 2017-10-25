@@ -1,6 +1,6 @@
 package co.edu.poli.Layots;
 
-import java.awt.Dimension;
+import java.awt.Dimension; 
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -170,7 +170,7 @@ public class FramePrincipal extends JFrame implements MouseListener, ActionListe
 		// updateGraphValues();
 		contextGraph.setText(
 				String.format("  Nodes :          %d\n  Edges :          %d\n  Type Graph : %s", nodes, edges, "None"));
-
+		contextGraph.setEditable(true);
 		// Scroll Bar Contex
 		int longContex = panel.getHeight() / 7;
 		int yContex = yLabelContex + longLabels;
