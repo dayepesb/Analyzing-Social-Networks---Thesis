@@ -67,7 +67,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 		this.add(jspAlgorithms);
 
 		// Label selectBy
-		labelSelectBy = new JLabel("Selec tBy",JLabel.CENTER);
+		labelSelectBy = new JLabel("Select By",JLabel.CENTER);
 		labelSelectBy.setBorder(border);
 		this.add(labelSelectBy);
 		
@@ -82,9 +82,9 @@ public class PanelGraph extends JPanel implements MouseListener {
 
 	public void rezisedComponents(int width, int height) {
 		int widthColum;
-		widthColum = width - (int) (width * 0.75) - 21;
+		widthColum = 236;
 		// graph
-		view.setBounds(0, 0, (int) (width * 0.75), (int) (height - 90));
+		view.setBounds(0, 0, (int) (width-252), (int) (height - 90));
 		// label Contex
 		labelContext.setBounds(view.getWidth(), 0, widthColum, (int) (height * 0.025));
 		// contex Graph
