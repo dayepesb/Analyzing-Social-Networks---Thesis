@@ -46,7 +46,6 @@ public class ClosenessCentrality {
 		}
 		return remoteness;
 	}
-
 	public double remoteness(int node) {
 		Dijkstra dijkstra = new Dijkstra(Dijkstra.Element.EDGE, "result", "length");
 		dijkstra.init(graph);
@@ -58,5 +57,4 @@ public class ClosenessCentrality {
 		}
 		return distTotal;
 	}
-
 }

@@ -42,6 +42,7 @@ import org.graphstream.graph.implementations.SingleGraph;
 
 import com.sun.prism.paint.Color;
 
+import co.edu.poligran.Panels.PanelEdges;
 import co.edu.poligran.Panels.PanelGraph;
 import co.edu.poligran.Panels.PanelNodes;
 
@@ -55,6 +56,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	private JMenuItem close;
 	private PanelGraph panelGraph;
 	private PanelNodes panelNodes;
+	private PanelEdges panelEdges;
 	private final Image icono = Toolkit.getDefaultToolkit()
 			.getImage("src/co/edu/poligran/Images/LogoPoliGraphApplication.png");
 
@@ -105,7 +107,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 
 		// create graph
 		graph = new SingleGraph("Random");
-		Generator gen = new WattsStrogatzGenerator(10, 2,1);
+		Generator gen = new WattsStrogatzGenerator(10, 2, 1);
 		gen.addSink(graph);
 		gen.begin();
 		for (int i = 0; i < 100; i++) {
@@ -113,8 +115,8 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		}
 		gen.end();
 		for (Node n : graph) {
-			n.addAttribute("-attribute-Age", "13");
-			n.addAttribute("-attribute-Country", "Colombia");
+			n.addAttribute("-attribute-age", "13");
+			n.addAttribute("-attribute-country", "Colombia");
 		}
 
 		// Paint Graph
@@ -129,9 +131,13 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 
 		// Panel nodes
 		try {
-			panelNodes = new PanelNodes(graph, windows.getWidth(), windows.getHeight());
+			panelNodes = new PanelNodes(graph);
 		} catch (IOException e1) {
 			e1.printStackTrace();
+		}
+		try {
+			panelEdges = new PanelEdges(graph);
+		} catch (Exception e) {
 		}
 		try {
 			panelGraph = new PanelGraph(graph, panelNodes);
@@ -153,7 +159,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Graph", panelGraph);
 		tabbedPane.addTab("Nodes", panelNodes);
-		tabbedPane.addTab("Edges", new JPanel());
+		tabbedPane.addTab("Edges", panelEdges);
 		tabbedPane.addTab("Matrix", new JPanel());
 		windows.add(tabbedPane);
 
@@ -162,6 +168,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	private void resizedConponents() {
 		panelGraph.rezisedComponents(windows.getWidth(), windows.getHeight());
 		panelNodes.resizedComponents(windows.getWidth() - 15, windows.getHeight() - 150);
+		panelEdges.resizedComponents(windows.getWidth() - 15, windows.getHeight() - 150);
 	}
 
 	// ActionListener
