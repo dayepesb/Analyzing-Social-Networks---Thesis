@@ -5,11 +5,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
-import java.util.TreeSet;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -34,6 +33,7 @@ import org.graphstream.graph.Node;
 import co.edu.poligran.Lists.ModelListSelectBy;
 
 public class PanelNodes extends JPanel implements MouseListener {
+	private DefaultComboBoxModel<String> defautlComboBoxModel;
 	public int nodes, minWidthColumProperties;
 	public JScrollPane jsp, jspPrperties;
 	public DefaultTableModel dtm;
@@ -42,11 +42,13 @@ public class PanelNodes extends JPanel implements MouseListener {
 	private Graph graph;
 	private final Border border = LineBorder.createGrayLineBorder();
 	private DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-	private JButton addNode, addProperty, removeProperty;
-	private JLabel labelId, labelAddNode, labelLabel, labelProperties;
+	private JButton addNodeButton, addProperty, removeProperty;
+	private JLabel labelId, labelAddNode, labelLabel, labelProperties, labelSelectNode, labelComboBoxSelectNode,
+			labelPropertiesSelect;
 	private TextField textIdNode, textLabel;
 	private JList<String> listProperties;
-	private DefaultListModel<String> DefaultListProperties;
+	private DefaultListModel<String> DefaultListPropertiesAddNode;
+	private JComboBox<String> nodesComboBox;
 
 	public PanelNodes(Graph g, int width, int height) throws IOException {
 		this.graph = g;
@@ -117,9 +119,9 @@ public class PanelNodes extends JPanel implements MouseListener {
 		labelProperties = new JLabel("Properties:", JLabel.CENTER);
 		this.add(labelProperties);
 
-		addNode = new JButton("Add Node");
-		addNode.addMouseListener(this);
-		this.add(addNode);
+		addNodeButton = new JButton("Add Node");
+		addNodeButton.addMouseListener(this);
+		this.add(addNodeButton);
 
 		addProperty = new JButton("+");
 		addProperty.addMouseListener(this);
@@ -128,28 +130,86 @@ public class PanelNodes extends JPanel implements MouseListener {
 		removeProperty.addMouseListener(this);
 		this.add(removeProperty);
 		// list properties
-		DefaultListProperties = new DefaultListModel<>();
-		listProperties = new JList<>(DefaultListProperties);
+		DefaultListPropertiesAddNode = new DefaultListModel<>();
+		listProperties = new JList<>(DefaultListPropertiesAddNode);
 		jspPrperties = new JScrollPane(listProperties);
 		jspPrperties.setBorder(border);
 		this.add(jspPrperties);
 
 		propertiesMap = new HashMap<>();
+
+		labelSelectNode = new JLabel("Select Node", JLabel.CENTER);
+		labelSelectNode.setBorder(border);
+		this.add(labelSelectNode);
+
+		labelComboBoxSelectNode = new JLabel("Label Node :", JLabel.CENTER);
+		this.add(labelComboBoxSelectNode);
+
+		defautlComboBoxModel = new DefaultComboBoxModel<>();
+		nodesComboBox = new JComboBox<>();
+		cargarInfoInComoboBox();
+		nodesComboBox.setBorder(border);
+		this.add(nodesComboBox);
+
+		labelPropertiesSelect = new JLabel("Properties", JLabel.CENTER);
+		this.add(labelPropertiesSelect);
 	}
 
-	private void clearList() {
-		DefaultListProperties = new DefaultListModel<>();
-		listProperties.setModel(DefaultListProperties);
+	public void resizedComponents(int width, int height) {
+		this.setBounds(0, 0, width, height);
+		jsp.setBounds(0, 0, width - 200, height + 57);
+
+		labelAddNode.setBounds(jsp.getWidth(), 1, 200, 20);
+
+		labelId.setBounds(20 + jsp.getWidth(), 10 + labelAddNode.getHeight(), 20, 20);
+		textIdNode.setBounds(labelId.getWidth() + labelId.getX() + 10, 10 + labelAddNode.getHeight(), 130, 18);
+
+		labelLabel.setBounds(jsp.getWidth() + 10, 10 + labelId.getY() + labelId.getHeight(), 40, 20);
+		textLabel.setBounds(labelLabel.getWidth() + labelLabel.getX(), 10 + textIdNode.getHeight() + textIdNode.getY(),
+				130, 18);
+
+		labelProperties.setBounds(jsp.getWidth() + 10, 10 + labelLabel.getY() + labelLabel.getHeight(), 60, 20);
+
+		jspPrperties.setBounds(jsp.getWidth() + 10, labelProperties.getY() + labelProperties.getHeight(), 180, 100);
+
+		addProperty.setBounds(jsp.getWidth() + 10, jspPrperties.getY() + jspPrperties.getHeight() + 10, 35, 20);
+
+		removeProperty.setBounds(addProperty.getX() + addProperty.getWidth() + 5,
+				jspPrperties.getY() + jspPrperties.getHeight() + 10, 35, 20);
+
+		addNodeButton.setBounds(jsp.getWidth() + 90, jspPrperties.getY() + jspPrperties.getHeight() + 10, 100, 20);
+
+		labelSelectNode.setBounds(jsp.getWidth(), addNodeButton.getY() + addNodeButton.getHeight() + 10, 200, 20);
+
+		labelComboBoxSelectNode.setBounds(jsp.getWidth() + 10, labelSelectNode.getY() + labelSelectNode.getHeight() + 5,
+				70, 20);
+		nodesComboBox.setBounds(jsp.getWidth() + 80, labelSelectNode.getY() + labelSelectNode.getHeight() + 5, 100, 20);
+	}
+
+	private void cargarInfoInComoboBox() {
+		String[] nodes = new String[graph.getNodeCount()];
+		int i = 0;
+		for (Node node : graph) {
+			nodes[i++] = node.getIndex() + "";
+		}
+		defautlComboBoxModel = new DefaultComboBoxModel<>(nodes);
+		nodesComboBox.setModel(defautlComboBoxModel);
+	}
+
+	private void clearListAddNode() {
+		DefaultListPropertiesAddNode = new DefaultListModel<>();
+		listProperties.setModel(DefaultListPropertiesAddNode);
 	}
 
 	private void actualizarLista() {
-		clearList();
+		clearListAddNode();
 		for (Entry<String, String> pa : propertiesMap.entrySet()) {
-			DefaultListProperties.addElement(pa.getKey() + " : " + pa.getValue());
+			DefaultListPropertiesAddNode.addElement(pa.getKey() + " : " + pa.getValue());
 		}
+		cargarInfoInComoboBox();
 	}
 
-	private void ProcessNodes() {
+	public void ProcessNodes() {
 		int i = 0;
 		for (Node n : graph.getNodeSet()) {
 			int j = 0;
@@ -171,43 +231,21 @@ public class PanelNodes extends JPanel implements MouseListener {
 		table.getColumnModel().getColumn(4).setPreferredWidth(minWidthColumProperties);
 	}
 
-	public void resizedComponents(int width, int height) {
-		this.setBounds(0, 0, width, height);
-		jsp.setBounds(0, 0, width - 200, height + 57);
-
-		labelAddNode.setBounds(jsp.getWidth(), 1, 200, 20);
-
-		labelId.setBounds(20 + jsp.getWidth(), 10 + labelAddNode.getHeight(), 20, 20);
-		textIdNode.setBounds(labelId.getWidth() + labelId.getX() + 10, 10 + labelAddNode.getHeight(), 130, 18);
-
-		labelLabel.setBounds(jsp.getWidth(), 10 + labelId.getY() + labelId.getHeight(), 40, 20);
-		textLabel.setBounds(labelLabel.getWidth() + labelLabel.getX() + 10,
-				10 + textIdNode.getHeight() + textIdNode.getY(), 130, 18);
-
-		labelProperties.setBounds(jsp.getWidth(), 10 + labelLabel.getY() + labelLabel.getHeight(), 60, 20);
-
-		jspPrperties.setBounds(jsp.getWidth() + 10, labelProperties.getY() + labelProperties.getHeight(), 180, 100);
-
-		addProperty.setBounds(jsp.getWidth() + 10, jspPrperties.getY() + jspPrperties.getHeight() + 10, 35, 20);
-		removeProperty.setBounds(addProperty.getX() + addProperty.getWidth() + 5,
-				jspPrperties.getY() + jspPrperties.getHeight() + 10, 35, 20);
-
-		addNode.setBounds(jsp.getWidth() + 90, jspPrperties.getY() + jspPrperties.getHeight() + 10, 100, 20);
-	}
-
 	private void addNode(String id) {
 		try {
 			graph.addNode(id);
+			graph.getNode(id).setAttribute("ui.style", "fill-color:#fff;");
 			// agregar propiedades
 			for (Entry<String, String> pa : propertiesMap.entrySet()) {
 				graph.getNode(id).addAttribute("-attribute-" + pa.getKey(), pa.getValue());
 			}
 			dtm.addRow(new Object[] { id });
-			DefaultListProperties = new DefaultListModel<>();
-			listProperties.setModel(DefaultListProperties);
+			DefaultListPropertiesAddNode = new DefaultListModel<>();
+			listProperties.setModel(DefaultListPropertiesAddNode);
 			propertiesMap = new HashMap<>();
 			textIdNode.setText("");
 			textLabel.setText("");
+			cargarInfoInComoboBox();
 			ProcessNodes();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "The selected id already exists, please enter a different one.",
@@ -218,7 +256,7 @@ public class PanelNodes extends JPanel implements MouseListener {
 	// Mouse Listener
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getSource().equals(addNode)) {
+		if (e.getSource().equals(addNodeButton)) {
 			addNode(textIdNode.getText());
 		}
 		if (e.getSource().equals(addProperty)) {
@@ -246,13 +284,11 @@ public class PanelNodes extends JPanel implements MouseListener {
 			}
 		}
 		if (e.getSource().equals(removeProperty)) {
-			System.out.println(listProperties.getSelectedIndex());
 			try {
 				int index = listProperties.getSelectedIndex();
 				String remove = listProperties.getSelectedValue();
 				StringTokenizer st = new StringTokenizer(remove);
-				System.out.println(index+" --- "+remove);
-				DefaultListProperties.remove(index);
+				DefaultListPropertiesAddNode.remove(index);
 				propertiesMap.remove(st.nextToken().trim());
 			} catch (Exception ex) {
 			}

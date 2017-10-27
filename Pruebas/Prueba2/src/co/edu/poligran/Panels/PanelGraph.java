@@ -17,6 +17,7 @@ import org.graphstream.graph.Graph;
 import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
 
+import co.edu.poligran.Algorithms.ArticulationPoints;
 import co.edu.poligran.Lists.ListPropertiesAlgorithms;
 import co.edu.poligran.Lists.ListPropertiesSelectBy;
 
@@ -29,10 +30,13 @@ public class PanelGraph extends JPanel implements MouseListener {
 	private JLabel labelContext, labelAlgorithms, labelSelectBy;
 	private JList<String> listAlgorithms,listSelectBy;
 	private JScrollPane jspAlgorithms,jspSelectBy;
+	private Graph graph;
+	private PanelNodes panelNodes;
 
-	public PanelGraph(Graph graph, int width, int height) throws IOException {
+	public PanelGraph(Graph graph,PanelNodes panelNodes) throws IOException {
+		this.panelNodes=panelNodes;
+		this.graph = graph;
 		this.setLayout(null);
-
 		// Grphic Graph
 		viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
 		viewer.enableAutoLayout();
@@ -108,12 +112,15 @@ public class PanelGraph extends JPanel implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource().equals(listAlgorithms) && e.getClickCount() == 2) {
 			// Aca se ejecutan los algoritmos
-			System.out.println(e.getClickCount());
-			System.out.println(listAlgorithms.getSelectedValue());
+			int index = listAlgorithms.getSelectedIndex();
+			if(index == 0) {
+				ArticulationPoints ap = new ArticulationPoints(graph);
+				ap.compute();
+			}
+			panelNodes.ProcessNodes();
 		}
 		if(e.getSource().equals(listSelectBy)&&e.getClickCount()==2) {
 			//Aca se selecionan por nodos
-			System.out.println(e.getClickCount());
 			System.out.println(listSelectBy.getSelectedValue());
 		}
 	}

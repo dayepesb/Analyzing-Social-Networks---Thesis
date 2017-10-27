@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
+
+import co.edu.poligran.Colors.ColorRandom;
 
 public class ArticulationPoints {
 	private Graph graph;
@@ -25,6 +28,23 @@ public class ArticulationPoints {
 				cnt = 1;
 				articulationPoints(v, v, graph, res);
 			}
+		// Aca cambia el color de los puntos de articulacion
+		for (Node node : graph) {
+			node.setAttribute("ui.style", "fill-color:#bbb;");
+		}
+		ColorRandom cr;
+		try {
+			cr = new ColorRandom();
+			String[] color = cr.getArrayColors();
+			for (int i = 0; i < res.size(); i++) {
+				Node node = graph.getNode(res.get(i));
+				node.setAttribute("ui.style", "fill-color : " + color[i]);
+				for (Edge edge : node) {
+					edge.setAttribute("ui.style", "fill-color:#e6f704;");
+				}
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	void articulationPoints(int v, int w, Graph graph, ArrayList<Integer> res) {

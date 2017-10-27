@@ -27,8 +27,15 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.graphstream.algorithm.generator.BananaTreeGenerator;
+import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
+import org.graphstream.algorithm.generator.FlowerSnarkGenerator;
 import org.graphstream.algorithm.generator.Generator;
+import org.graphstream.algorithm.generator.GridGenerator;
+import org.graphstream.algorithm.generator.LobsterGenerator;
 import org.graphstream.algorithm.generator.RandomGenerator;
+import org.graphstream.algorithm.generator.WattsStrogatzGenerator;
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -98,10 +105,10 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 
 		// create graph
 		graph = new SingleGraph("Random");
-		Generator gen = new RandomGenerator(1);
+		Generator gen = new WattsStrogatzGenerator(10, 2,1);
 		gen.addSink(graph);
 		gen.begin();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 100; i++) {
 			gen.nextEvents();
 		}
 		gen.end();
@@ -110,16 +117,24 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 			n.addAttribute("-attribute-Country", "Colombia");
 		}
 
-		// panel Graph
-		try {
-			panelGraph = new PanelGraph(graph, windows.getWidth(), windows.getHeight());
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		// Paint Graph
+		graph.addAttribute("ui.stylesheet", "graph { fill-color: BLACK; }");
+		for (Node node : graph) {
+			node.setAttribute("ui.style", "fill-color:#fff;");
 		}
+		for (Edge edge : graph.getEdgeSet()) {
+			edge.setAttribute("ui.style", "fill-color:#fff;");
+		}
+		// panel Graph
 
 		// Panel nodes
 		try {
 			panelNodes = new PanelNodes(graph, windows.getWidth(), windows.getHeight());
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			panelGraph = new PanelGraph(graph, panelNodes);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
