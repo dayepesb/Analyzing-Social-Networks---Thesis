@@ -2,7 +2,9 @@ package co.edu.poligran.Colors;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,6 +14,10 @@ public class ColorRandom {
 	private String arrayColors[];
 
 	public ColorRandom() throws Exception {
+		
+	}
+
+	public String[] getColorRamdom() throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(new File(url)));
 		colors = new ArrayList<>();
 		while (true) {
@@ -31,9 +37,7 @@ public class ColorRandom {
 			colors.remove(random);
 			index++;
 		}
-	}
-
-	public String[] getArrayColors() {
 		return arrayColors;
 	}
+
 }

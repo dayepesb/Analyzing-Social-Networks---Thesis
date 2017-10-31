@@ -21,7 +21,7 @@ public class Tarjan  {
 		tscc.init(graph);
 		tscc.compute();
 		ColorRandom cr=new ColorRandom();
-		String arrayColors[]= cr.getArrayColors();
+		String arrayColors[]= cr.getColorRamdom();
 		for (Node node : graph) {
 			node.setAttribute("ui.style", "fill-color:#fff;");
 		}

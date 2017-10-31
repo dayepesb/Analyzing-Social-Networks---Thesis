@@ -11,38 +11,23 @@ import java.awt.print.PrinterJob;
 import java.io.IOException;
 
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
 
-import org.graphstream.algorithm.generator.BananaTreeGenerator;
-import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
-import org.graphstream.algorithm.generator.DorogovtsevMendesGenerator;
-import org.graphstream.algorithm.generator.FlowerSnarkGenerator;
 import org.graphstream.algorithm.generator.Generator;
-import org.graphstream.algorithm.generator.GridGenerator;
-import org.graphstream.algorithm.generator.LobsterGenerator;
 import org.graphstream.algorithm.generator.RandomEuclideanGenerator;
-import org.graphstream.algorithm.generator.RandomGenerator;
-import org.graphstream.algorithm.generator.WattsStrogatzGenerator;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
-
-import com.sun.prism.paint.Color;
 
 import co.edu.poligran.Panels.PanelEdges;
 import co.edu.poligran.Panels.PanelGraph;

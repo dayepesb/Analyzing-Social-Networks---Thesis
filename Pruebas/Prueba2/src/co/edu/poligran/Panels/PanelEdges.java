@@ -38,13 +38,14 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 	private final Border border = LineBorder.createGrayLineBorder();
 	private DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 	private JLabel labelAddEdge, labelId, labelLabel, labelProperties, labelSelectEdge, labelComboBoxSelectEdge,
-			labelPropertiesSelect;
-	private ComboBoxModel<String> selectNodeDefautlComboBoxModel;
-	private JComboBox<String> nodesComboBox;
+			labelPropertiesSelect,labelRemoveEdge;
+	private ComboBoxModel<String> selectNodeDefautlComboBoxModel,removeEdgeDefautlComboBoxModel;
+	private JComboBox<String> nodesComboBox,removeComboBox;
 	private TextField textIdEdge, textLabel;
 	private DefaultListModel<String> DefaultListPropertiesAddEdge, defaultListPropertiesSelectEdge;
 	private JList<String> listPropertiesAddEdge, listPropertiesSelectEdge;
-	private JButton addEdgeButton, addPropertyAddEdge, removePropertyAddEdge,addPropertySelectEdge,removePropertySelectEdge,modifyNodeSelectEdge;
+	private JButton addEdgeButton, addPropertyAddEdge, removePropertyAddEdge, addPropertySelectEdge,
+			removePropertySelectEdge, modifyNodeSelectEdge,removeEdge;
 
 	public PanelEdges(Graph graph) {
 		t = 0;
@@ -146,6 +147,19 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		modifyNodeSelectEdge.addMouseListener(this);
 		this.add(modifyNodeSelectEdge);
 
+		labelRemoveEdge = new JLabel("Remove Edge", JLabel.CENTER);
+		labelRemoveEdge.setBorder(border);
+		this.add(labelRemoveEdge);
+
+		removeEdgeDefautlComboBoxModel = new DefaultComboBoxModel<>();
+		removeComboBox = new JComboBox<>(removeEdgeDefautlComboBoxModel);
+		removeComboBox.addActionListener(this);
+		this.add(removeComboBox);
+
+		removeEdge = new JButton("Remove");
+		removeEdge.addMouseListener(this);
+		this.add(removeEdge);
+
 		cargarInfoInComoboBox();
 	}
 
@@ -194,6 +208,11 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		modifyNodeSelectEdge.setBounds(jspEdges.getWidth() + 90,
 				jspPropertiesSelectEdge.getY() + jspPropertiesSelectEdge.getHeight() + 10, 100, 20);
 
+		labelRemoveEdge.setBounds(jspEdges.getWidth(),
+				modifyNodeSelectEdge.getY() + modifyNodeSelectEdge.getHeight() + 5, 200, 20);
+		removeComboBox.setBounds(jspEdges.getWidth() + 10, labelRemoveEdge.getY() + labelRemoveEdge.getHeight() + 10,
+				70, 20);
+		removeEdge.setBounds(removeComboBox.getX() + removeComboBox.getWidth() + 10, removeComboBox.getY(), 100, 20);
 	}
 
 	private void cargarInfoInComoboBox() {
@@ -205,8 +224,8 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		}
 		selectNodeDefautlComboBoxModel = new DefaultComboBoxModel<>(edges);
 		nodesComboBox.setModel(selectNodeDefautlComboBoxModel);
-		// removeNodeDefautlComboBoxModel = new DefaultComboBoxModel<>(nodes);
-		// removeComboBox.setModel(removeNodeDefautlComboBoxModel);
+		 removeEdgeDefautlComboBoxModel = new DefaultComboBoxModel<>(edges);
+		 removeComboBox.setModel(removeEdgeDefautlComboBoxModel);
 	}
 
 	public void processEdges() {

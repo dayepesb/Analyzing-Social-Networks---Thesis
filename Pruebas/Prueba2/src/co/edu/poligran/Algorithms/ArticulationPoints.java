@@ -41,7 +41,7 @@ public class ArticulationPoints {
 				edge.setAttribute("ui.style", "fill-color:#fff;");
 			}
 			cr = new ColorRandom();
-			String[] color = cr.getArrayColors();
+			String[] color = cr.getColorRamdom();
 			for (int i = 0; i < res.size(); i++) {
 				Node node = graph.getNode(res.get(i));
 				node.setAttribute("ui.style", "fill-color : " + color[i]);

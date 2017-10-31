@@ -29,7 +29,7 @@ public class TestArticulationPoints {
 		ArticulationPoints ap = new ArticulationPoints(graph);
 		ap.compute();
 		ArrayList<Integer> articulationPoints = ap.getArticulationPoints();
-		String colors [] = new ColorRandom().getArrayColors();
+		String colors [] = new ColorRandom().getColorRamdom();
 
 		for (Node n : graph) {
 			n.addAttribute("label", n.getId());
