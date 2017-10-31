@@ -29,10 +29,12 @@ import javax.swing.table.DefaultTableModel;
 
 import org.graphstream.algorithm.generator.BananaTreeGenerator;
 import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
+import org.graphstream.algorithm.generator.DorogovtsevMendesGenerator;
 import org.graphstream.algorithm.generator.FlowerSnarkGenerator;
 import org.graphstream.algorithm.generator.Generator;
 import org.graphstream.algorithm.generator.GridGenerator;
 import org.graphstream.algorithm.generator.LobsterGenerator;
+import org.graphstream.algorithm.generator.RandomEuclideanGenerator;
 import org.graphstream.algorithm.generator.RandomGenerator;
 import org.graphstream.algorithm.generator.WattsStrogatzGenerator;
 import org.graphstream.graph.Edge;
@@ -70,7 +72,6 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		windows = new JFrame("Analizing Social Network");
@@ -107,10 +108,10 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 
 		// create graph
 		graph = new SingleGraph("Random");
-		Generator gen = new WattsStrogatzGenerator(10, 2, 1);
+		Generator gen = new RandomEuclideanGenerator(2);
 		gen.addSink(graph);
 		gen.begin();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 300; i++) {
 			gen.nextEvents();
 		}
 		gen.end();
@@ -135,10 +136,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		try {
 			panelEdges = new PanelEdges(graph);
-		} catch (Exception e) {
-		}
 		try {
 			panelGraph = new PanelGraph(graph, panelNodes);
 		} catch (IOException e1) {

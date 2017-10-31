@@ -1,7 +1,7 @@
 Articulation Points
+Dijkstra
 Betweenness Centrality
+Tarjan
 Closeness Centrality
 Degree Centrality
-Dijkstra
 Edmons Karp
-Trajan

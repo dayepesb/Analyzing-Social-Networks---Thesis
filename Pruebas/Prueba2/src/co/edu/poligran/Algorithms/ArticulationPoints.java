@@ -34,6 +34,12 @@ public class ArticulationPoints {
 		}
 		ColorRandom cr;
 		try {
+			for (Node node : graph) {
+				node.setAttribute("ui.style", "fill-color:#fff;");
+			}
+			for (Edge edge : graph.getEdgeSet()) {
+				edge.setAttribute("ui.style", "fill-color:#fff;");
+			}
 			cr = new ColorRandom();
 			String[] color = cr.getArrayColors();
 			for (int i = 0; i < res.size(); i++) {
