@@ -65,7 +65,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		};
 
 		updateTable();
-		updateEdges();
+		processEdges();
 
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
@@ -209,7 +209,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		// removeComboBox.setModel(removeNodeDefautlComboBoxModel);
 	}
 
-	private void updateEdges() {
+	public void processEdges() {
 		int i = 0;
 		updateTable();
 		for (Edge e : graph.getEdgeSet()) {

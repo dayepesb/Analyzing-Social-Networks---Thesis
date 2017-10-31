@@ -138,7 +138,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		}
 			panelEdges = new PanelEdges(graph);
 		try {
-			panelGraph = new PanelGraph(graph, panelNodes);
+			panelGraph = new PanelGraph(graph, panelNodes,panelEdges);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

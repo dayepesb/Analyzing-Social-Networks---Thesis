@@ -35,9 +35,11 @@ public class PanelGraph extends JPanel implements MouseListener {
 	private JScrollPane jspAlgorithms, jspSelectBy;
 	private Graph graph;
 	private PanelNodes panelNodes;
+	private PanelEdges panelEdges;
 
-	public PanelGraph(Graph graph, PanelNodes panelNodes) throws IOException {
+	public PanelGraph(Graph graph, PanelNodes panelNodes,PanelEdges panelEdges) throws IOException {
 		this.panelNodes = panelNodes;
+		this.panelEdges = panelEdges;
 		this.graph = graph;
 		this.setLayout(null);
 		// Grphic Graph
@@ -134,6 +136,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 				}
 			}
 			panelNodes.ProcessNodes();
+			panelEdges.processEdges();
 		}
 		if (e.getSource().equals(listSelectBy) && e.getClickCount() == 2) {
 			// Aca se selecionan por nodos
