@@ -2,6 +2,7 @@ Articulation Points
 Dijkstra
 Betweenness Centrality
 Tarjan
+Prim (Minimum Spanning Tree)
 Closeness Centrality
 Degree Centrality
 Edmons Karp
