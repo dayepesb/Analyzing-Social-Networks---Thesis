@@ -5,18 +5,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.StringTokenizer;
+import java.util.Map.Entry;
 
+import javax.swing.AbstractButton;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -26,6 +34,8 @@ import javax.swing.table.DefaultTableModel;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+
+import co.edu.poligran.Lists.ModelListSelectBy;
 
 public class PanelEdges extends JPanel implements MouseListener, ActionListener {
 	private int t, minWidthColumProperties;
@@ -37,15 +47,16 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 	private JScrollPane jspEdges, jspPropertiesAddEdge, jspPropertiesSelectEdge;
 	private final Border border = LineBorder.createGrayLineBorder();
 	private DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-	private JLabel labelAddEdge, labelId, labelLabel, labelProperties, labelSelectEdge, labelComboBoxSelectEdge,
-			labelPropertiesSelect,labelRemoveEdge;
-	private ComboBoxModel<String> selectNodeDefautlComboBoxModel,removeEdgeDefautlComboBoxModel;
-	private JComboBox<String> nodesComboBox,removeComboBox;
-	private TextField textIdEdge, textLabel;
+	private JLabel labelAddEdge, labelNodeA, labelNodeB, labelProperties, labelSelectEdge, labelComboBoxSelectEdge,
+			labelPropertiesSelect, labelRemoveEdge;
+	private ComboBoxModel<String> selectNodeDefautlComboBoxModel, removeEdgeDefautlComboBoxModel, defaultComboBoxA,
+			defaultComboBoxB;
+	private JComboBox<String> edgesComboBox, removeComboBox, comboBoxNodeA, comboBoxNodeB;
+	// private TextField comboBoxNodeA, textLabel;
 	private DefaultListModel<String> DefaultListPropertiesAddEdge, defaultListPropertiesSelectEdge;
 	private JList<String> listPropertiesAddEdge, listPropertiesSelectEdge;
 	private JButton addEdgeButton, addPropertyAddEdge, removePropertyAddEdge, addPropertySelectEdge,
-			removePropertySelectEdge, modifyNodeSelectEdge,removeEdge;
+			removePropertySelectEdge, modifyEdgeSelectEdge, removeEdge;
 
 	public PanelEdges(Graph graph) {
 		t = 0;
@@ -69,6 +80,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		processEdges();
 
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
 		((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 		table.setBorder(border);
 		jspEdges = new JScrollPane(table);
@@ -79,17 +91,19 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		labelAddEdge.setBorder(border);
 		this.add(labelAddEdge);
 
-		labelId = new JLabel("Id :", JLabel.CENTER);
-		this.add(labelId);
+		labelNodeA = new JLabel("Node A :", JLabel.CENTER);
+		this.add(labelNodeA);
 
-		textIdEdge = new TextField();
-		this.add(textIdEdge);
+		defaultComboBoxA = new DefaultComboBoxModel<>();
+		comboBoxNodeA = new JComboBox<>();
+		this.add(comboBoxNodeA);
 
-		labelLabel = new JLabel("Label:", JLabel.CENTER);
-		this.add(labelLabel);
+		labelNodeB = new JLabel("Node B :", JLabel.CENTER);
+		this.add(labelNodeB);
 
-		textLabel = new TextField();
-		this.add(textLabel);
+		defaultComboBoxB = new DefaultComboBoxModel<>();
+		comboBoxNodeB = new JComboBox<>();
+		this.add(comboBoxNodeB);
 
 		labelProperties = new JLabel("Properties:", JLabel.CENTER);
 		this.add(labelProperties);
@@ -119,13 +133,13 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		labelSelectEdge.setBorder(border);
 		this.add(labelSelectEdge);
 
-		labelComboBoxSelectEdge = new JLabel("Label Node :", JLabel.CENTER);
+		labelComboBoxSelectEdge = new JLabel("Label Edge :", JLabel.CENTER);
 		this.add(labelComboBoxSelectEdge);
 
 		selectNodeDefautlComboBoxModel = new DefaultComboBoxModel<>();
-		nodesComboBox = new JComboBox<>();
-		nodesComboBox.addActionListener(this);
-		this.add(nodesComboBox);
+		edgesComboBox = new JComboBox<>();
+		edgesComboBox.addActionListener(this);
+		this.add(edgesComboBox);
 
 		labelPropertiesSelect = new JLabel("Properties", JLabel.CENTER);
 		this.add(labelPropertiesSelect);
@@ -143,9 +157,9 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		removePropertySelectEdge.addMouseListener(this);
 		this.add(removePropertySelectEdge);
 
-		modifyNodeSelectEdge = new JButton("Modify Node");
-		modifyNodeSelectEdge.addMouseListener(this);
-		this.add(modifyNodeSelectEdge);
+		modifyEdgeSelectEdge = new JButton("Modify Node");
+		modifyEdgeSelectEdge.addMouseListener(this);
+		this.add(modifyEdgeSelectEdge);
 
 		labelRemoveEdge = new JLabel("Remove Edge", JLabel.CENTER);
 		labelRemoveEdge.setBorder(border);
@@ -160,7 +174,8 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		removeEdge.addMouseListener(this);
 		this.add(removeEdge);
 
-		cargarInfoInComoboBox();
+		cargarInfoInComoboBoxEdges();
+		updateInfoInComboBoxNodes();
 	}
 
 	public void resizedComponents(int width, int height) {
@@ -169,13 +184,13 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 
 		labelAddEdge.setBounds(jspEdges.getWidth(), 1, 200, 20);
 
-		labelId.setBounds(20 + jspEdges.getWidth(), 10 + labelAddEdge.getHeight(), 20, 20);
-		textIdEdge.setBounds(labelId.getWidth() + labelId.getX() + 10, 10 + labelAddEdge.getHeight(), 130, 18);
+		labelNodeA.setBounds(jspEdges.getWidth() + 10, 10 + labelAddEdge.getHeight(), 60, 20);
+		comboBoxNodeA.setBounds(labelNodeA.getWidth() + labelNodeA.getX() + 10, 10 + labelAddEdge.getHeight(), 70, 20);
 
-		labelLabel.setBounds(jspEdges.getWidth() + 10, 10 + labelId.getY() + labelId.getHeight(), 40, 20);
-		textLabel.setBounds(labelLabel.getWidth() + labelLabel.getX(), 10 + textIdEdge.getHeight() + textIdEdge.getY(),
-				130, 18);
-		labelProperties.setBounds(jspEdges.getWidth() + 10, 10 + labelLabel.getY() + labelLabel.getHeight(), 60, 20);
+		labelNodeB.setBounds(jspEdges.getWidth() + 10, 10 + labelNodeA.getY() + labelNodeA.getHeight(), 60, 20);
+		comboBoxNodeB.setBounds(labelNodeB.getWidth() + labelNodeB.getX() + 10,
+				10 + comboBoxNodeA.getHeight() + comboBoxNodeA.getY(), 70, 20);
+		labelProperties.setBounds(jspEdges.getWidth() + 10, 10 + labelNodeB.getY() + labelNodeB.getHeight(), 60, 20);
 
 		jspPropertiesAddEdge.setBounds(jspEdges.getWidth() + 10, labelProperties.getY() + labelProperties.getHeight(),
 				180, 100);
@@ -193,7 +208,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 
 		labelComboBoxSelectEdge.setBounds(jspEdges.getWidth() + 10,
 				labelSelectEdge.getY() + labelSelectEdge.getHeight() + 5, 70, 20);
-		nodesComboBox.setBounds(jspEdges.getWidth() + 80, labelSelectEdge.getY() + labelSelectEdge.getHeight() + 5, 100,
+		edgesComboBox.setBounds(jspEdges.getWidth() + 80, labelSelectEdge.getY() + labelSelectEdge.getHeight() + 5, 100,
 				20);
 
 		labelPropertiesSelect.setBounds(jspEdges.getWidth() + 10,
@@ -205,27 +220,40 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 				jspPropertiesSelectEdge.getY() + jspPropertiesSelectEdge.getHeight() + 10, 35, 20);
 		removePropertySelectEdge.setBounds(addPropertySelectEdge.getX() + addPropertySelectEdge.getWidth() + 5,
 				jspPropertiesSelectEdge.getY() + jspPropertiesSelectEdge.getHeight() + 10, 35, 20);
-		modifyNodeSelectEdge.setBounds(jspEdges.getWidth() + 90,
+		modifyEdgeSelectEdge.setBounds(jspEdges.getWidth() + 90,
 				jspPropertiesSelectEdge.getY() + jspPropertiesSelectEdge.getHeight() + 10, 100, 20);
 
 		labelRemoveEdge.setBounds(jspEdges.getWidth(),
-				modifyNodeSelectEdge.getY() + modifyNodeSelectEdge.getHeight() + 5, 200, 20);
+				modifyEdgeSelectEdge.getY() + modifyEdgeSelectEdge.getHeight() + 5, 200, 20);
 		removeComboBox.setBounds(jspEdges.getWidth() + 10, labelRemoveEdge.getY() + labelRemoveEdge.getHeight() + 10,
 				70, 20);
 		removeEdge.setBounds(removeComboBox.getX() + removeComboBox.getWidth() + 10, removeComboBox.getY(), 100, 20);
 	}
 
-	private void cargarInfoInComoboBox() {
+	private void updateInfoInComboBoxNodes() {
+		String nodes[] = new String[graph.getNodeCount() + 1];
+		nodes[0] = "";
+		int i = 1;
+		for (Node node : graph) {
+			nodes[i++] = node.getId();
+		}
+		defaultComboBoxA = new DefaultComboBoxModel<>(nodes);
+		comboBoxNodeA.setModel(defaultComboBoxA);
+		defaultComboBoxB = new DefaultComboBoxModel<>(nodes);
+		comboBoxNodeB.setModel(defaultComboBoxB);
+	}
+
+	private void cargarInfoInComoboBoxEdges() {
 		String[] edges = new String[graph.getEdgeCount() + 1];
-		edges[0] = " ";
+		edges[0] = "";
 		int i = 1;
 		for (Edge e : graph.getEdgeSet()) {
 			edges[i++] = e.getId() + "";
 		}
 		selectNodeDefautlComboBoxModel = new DefaultComboBoxModel<>(edges);
-		nodesComboBox.setModel(selectNodeDefautlComboBoxModel);
-		 removeEdgeDefautlComboBoxModel = new DefaultComboBoxModel<>(edges);
-		 removeComboBox.setModel(removeEdgeDefautlComboBoxModel);
+		edgesComboBox.setModel(selectNodeDefautlComboBoxModel);
+		removeEdgeDefautlComboBoxModel = new DefaultComboBoxModel<>(edges);
+		removeComboBox.setModel(removeEdgeDefautlComboBoxModel);
 	}
 
 	public void processEdges() {
@@ -256,9 +284,10 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 			i++;
 		}
 		if (t > 0)
-			// cargarInfoInComoboBox();
-			t++;
-		table.getColumnModel().getColumn(4).setPreferredWidth(minWidthColumProperties);
+			cargarInfoInComoboBoxEdges();
+		t++;
+		table.getColumnModel().getColumn(5).setPreferredWidth(minWidthColumProperties);
+		table.getColumnModel().getColumn(5).setCellRenderer(tcr);
 	}
 
 	private void updateTable() {
@@ -286,9 +315,172 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		table.getColumnModel().getColumn(4).setCellRenderer(tcr);
 	}
 
+	private void updateListSelectNode() {
+		defaultListPropertiesSelectEdge = new DefaultListModel<>();
+		listPropertiesSelectEdge.setModel(defaultListPropertiesSelectEdge);
+		for (Entry<String, String> pa : propertiesMapaSelectEdge.entrySet()) {
+			defaultListPropertiesSelectEdge.addElement(pa.getKey().toLowerCase() + " : " + pa.getValue());
+		}
+	}
+
+	private void clearListAddEdge() {
+		DefaultListPropertiesAddEdge = new DefaultListModel<>();
+		listPropertiesAddEdge.setModel(DefaultListPropertiesAddEdge);
+	}
+
+	private void updateListAddNode() {
+		clearListAddEdge();
+		for (Entry<String, String> pa : propertiesMapaAddEdge.entrySet()) {
+			DefaultListPropertiesAddEdge.addElement(pa.getKey() + " : " + pa.getValue());
+		}
+		cargarInfoInComoboBoxEdges();
+	}
+
+	private void addEdge(String id, Node a, Node b) {
+		try {
+			graph.addEdge(id, a, b);
+			graph.getEdge(id).setAttribute("ui.style", "fill-color:#fff;");
+			// agregar propiedades
+			for (Entry<String, String> pa : propertiesMapaAddEdge.entrySet()) {
+				graph.getEdge(id).addAttribute("-attribute-" + pa.getKey(), pa.getValue());
+			}
+			defaultTableModel.addRow(new Object[] { id });
+			DefaultListPropertiesAddEdge = new DefaultListModel<>();
+			listPropertiesAddEdge.setModel(DefaultListPropertiesAddEdge);
+			propertiesMapaAddEdge = new HashMap<>();
+			// comboBoxNodeA.setText("");
+			// comboBoxNodeB.setText("");
+			processEdges();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "The selected id already exists, please enter a different one.",
+					"Add Edge Exception", JOptionPane.WARNING_MESSAGE);
+			System.out.println(e);
+		}
+	}
+
+	private void paintGraph() {
+		for (Node node : graph) {
+			node.setAttribute("ui.style", "fill-color:#fff;");
+		}
+		for (Edge edge : graph.getEdgeSet()) {
+			edge.setAttribute("ui.style", "fill-color:#fff;");
+		}
+	}
+
 	// Mouse Listener
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent e) {
+		if (e.getSource().equals(addEdgeButton)) {
+			String a = comboBoxNodeA.getSelectedItem() + "";
+			String b = comboBoxNodeB.getSelectedItem() + "";
+			if (!a.trim().equals("") && !b.trim().equals(""))
+				addEdge(a + "-" + b, graph.getNode(Integer.parseInt(a)), graph.getNode(Integer.parseInt(b)));
+		}
+		if (e.getSource().equals(modifyEdgeSelectEdge)) {
+			if (edgesComboBox.getSelectedIndex() > 0) {
+				String edge = (edgesComboBox.getSelectedItem() + "");
+				int index = edgesComboBox.getSelectedIndex();
+				Edge n = graph.getEdge(edge);
+				ArrayList<String> delete = new ArrayList<>();
+				for (String s : n.getAttributeKeySet()) {
+					if (s.startsWith("-attribute-"))
+						delete.add(s);
+				}
+				for (String s : delete) {
+					n.removeAttribute(s);
+				}
+				for (Entry<String, String> p : propertiesMapaSelectEdge.entrySet()) {
+					n.addAttribute("-attribute-" + p.getKey(), p.getValue());
+				}
+				updateListSelectNode();
+				processEdges();
+				edgesComboBox.setSelectedIndex(index);
+			}
+		}
+		if (e.getSource().equals(addPropertyAddEdge)) {
+			// jOptionPane
+			try {
+				ModelListSelectBy mlsb = new ModelListSelectBy();
+				Object[] propeties = new Object[mlsb.getSize()];
+				for (int i = 0; i < propeties.length; i++) {
+					propeties[i] = mlsb.get(i);
+				}
+				JPanel panel = new JPanel();
+				JComboBox<Object> properties = new JComboBox<>(propeties);
+				JTextField value = new JTextField(20);
+				panel.add(properties);
+				panel.add(value);
+				Icon icono = new ImageIcon(getClass().getResource("../Images/ImageMensajeDialog.png"));
+				int resp = JOptionPane.showConfirmDialog(null, panel, "Add Edge", JOptionPane.CANCEL_OPTION,
+						JOptionPane.YES_NO_OPTION, icono);
+				if (resp == 0) {
+					String p = properties.getSelectedItem().toString().trim().toLowerCase();
+					propertiesMapaAddEdge.put(p, value.getText().trim().toLowerCase());
+					updateListAddNode();
+				}
+			} catch (Exception ex) {
+			}
+		}
+		//////
+		if (e.getSource().equals(removePropertyAddEdge)) {
+			try {
+				int index = listPropertiesAddEdge.getSelectedIndex();
+				String remove = listPropertiesAddEdge.getSelectedValue();
+				StringTokenizer st = new StringTokenizer(remove);
+				DefaultListPropertiesAddEdge.remove(index);
+				propertiesMapaAddEdge.remove(st.nextToken().trim());
+			} catch (Exception ex) {
+			}
+		}
+		if (e.getSource().equals(addPropertySelectEdge)) {
+			if (edgesComboBox.getSelectedIndex() > 0) {
+				try {
+					ModelListSelectBy mlsb = new ModelListSelectBy();
+					Object[] propeties = new Object[mlsb.getSize()];
+					for (int i = 0; i < propeties.length; i++) {
+						propeties[i] = mlsb.get(i);
+					}
+					JPanel panel = new JPanel();
+					JComboBox<Object> properties = new JComboBox<>(propeties);
+					JTextField value = new JTextField(20);
+					panel.add(properties);
+					panel.add(value);
+					Icon icono = new ImageIcon(getClass().getResource("../Images/ImageMensajeDialog.png"));
+					int resp = JOptionPane.showConfirmDialog(null, panel, "Add Node", JOptionPane.CANCEL_OPTION,
+							JOptionPane.YES_NO_OPTION, icono);
+					if (resp == 0) {
+						String edgeId = (edgesComboBox.getSelectedItem() + "".trim());
+						String p = properties.getSelectedItem().toString().trim().toLowerCase();
+						propertiesMapaSelectEdge.put(p, value.getText().trim().toLowerCase());
+						Edge n = graph.getEdge(edgeId);
+						n.addAttribute("-attribute-" + p, value.getText().trim().toLowerCase());
+						updateListSelectNode();
+					}
+				} catch (Exception ex) {
+					System.out.println(ex);
+				}
+			}
+		}
+		if (e.getSource().equals(removePropertySelectEdge)) {
+			try {
+				int index = listPropertiesSelectEdge.getSelectedIndex();
+				String remove = listPropertiesSelectEdge.getSelectedValue();
+				StringTokenizer st = new StringTokenizer(remove);
+				defaultListPropertiesSelectEdge.remove(index);
+				propertiesMapaSelectEdge.remove(st.nextToken().trim());
+			} catch (Exception ex) {
+				System.out.println(ex);
+			}
+		}
+		if (e.getSource().equals(removeEdge)) {
+			if (removeComboBox.getSelectedIndex() > 0) {
+				String item = (removeComboBox.getSelectedItem() + "");
+				graph.removeEdge(item);
+				cargarInfoInComoboBoxEdges();
+				paintGraph();
+				processEdges();
+			}
+		}
 	}
 
 	@Override
@@ -309,7 +501,22 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+		if (e.getSource().equals(edgesComboBox)) {
+			defaultListPropertiesSelectEdge = new DefaultListModel<>();
+			listPropertiesSelectEdge.setModel(defaultListPropertiesSelectEdge);
+			propertiesMapaSelectEdge = new HashMap<>();
+			if (edgesComboBox.getSelectedIndex() > 0) {
+				String index = (edgesComboBox.getSelectedItem() + "");
+				Edge n = graph.getEdge(index);
+				for (String s : n.getAttributeKeySet()) {
+					if (s.startsWith("-attribute-")) {
+						String l = n.getAttribute(s).toString().toLowerCase();
+						s = s.substring(11, s.length()).toLowerCase();
+						defaultListPropertiesSelectEdge.addElement(s.toLowerCase() + " : " + l);
+						propertiesMapaSelectEdge.put(s, l);
+					}
+				}
+			}
+		}
 	}
 }

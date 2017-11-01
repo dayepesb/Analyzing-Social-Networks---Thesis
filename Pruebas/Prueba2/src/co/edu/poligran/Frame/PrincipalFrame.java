@@ -104,6 +104,9 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 			n.addAttribute("-attribute-age", "13");
 			n.addAttribute("-attribute-country", "Colombia");
 		}
+		for (Edge edge : graph.getEdgeSet()) {
+			edge.addAttribute("-attribute-country", "4567");
+		}
 
 		// Paint Graph
 		graph.addAttribute("ui.stylesheet", "graph { fill-color: BLACK; }");

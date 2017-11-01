@@ -87,13 +87,13 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 		labelAddNode.setBorder(border);
 		this.add(labelAddNode);
 
-		labelId = new JLabel("Id :", JLabel.CENTER);
+		labelId = new JLabel("Node A :", JLabel.CENTER);
 		this.add(labelId);
 
 		textIdNode = new TextField();
 		this.add(textIdNode);
 
-		labelLabel = new JLabel("Label:", JLabel.CENTER);
+		labelLabel = new JLabel("Node B :", JLabel.CENTER);
 		this.add(labelLabel);
 
 		textLabel = new TextField();
@@ -361,8 +361,6 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 					n.addAttribute("-attribute-" + p.getKey(), p.getValue());
 				}
 				updateListSelectNode();
-				for (String s : n.getAttributeKeySet()) {
-				}
 				ProcessNodes();
 				nodesComboBox.setSelectedIndex(index);
 			}
