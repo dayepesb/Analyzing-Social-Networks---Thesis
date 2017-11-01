@@ -44,7 +44,8 @@ public class BetweenessPoli {
 			double temp=(double)n.getAttribute("Cb");
 			double color=((temp-min)/(max-min));
 			//System.out.println((int)(color*1000));
-			n.setAttribute("ui.style","fill-color :"+ colors[((int)(color*1000))%colors.length]);
+			if((color*100)>=colors.length)	n.setAttribute("ui.style","fill-color :"+ colors[colors.length-1]);
+			else n.setAttribute("ui.style","fill-color :"+ colors[((int)(color*1000))%colors.length]);
 		}
 	}
 	

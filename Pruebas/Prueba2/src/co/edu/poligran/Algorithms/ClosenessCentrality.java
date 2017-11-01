@@ -4,56 +4,65 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import org.graphstream.algorithm.Dijkstra;
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+
+import scala.runtime.StringFormat;
 
 public class ClosenessCentrality {
 
 	private Graph graph;
-	public HashMap<Integer, Double> remoteness;
-	public HashMap<Integer, Double> closeness;
 
 	public ClosenessCentrality(Graph g) {
 		this.graph = g;
-		remoteness = remoteness();
-		closeness = closeness();
+		for (Edge e : graph.getEdgeSet()) {
+			if (!e.hasAttribute("-attribute-width"))
+				e.setAttribute("-attribute-width", 1.0);
+		}
+		remoteness();
+		closeness();
 	}
 
-	public HashMap<Integer, Double> closeness() {
+	public void closeness() {
 		Double total = 0d;
-		HashMap<Integer, Double> closeness = new HashMap<>();
-		remoteness = remoteness();
-		for (Entry<Integer, Double> dist : remoteness.entrySet()) {
-			total += dist.getValue();
+
+		for (Node n : graph) {
+			total += (double) n.getAttribute("-attribute-remoteness");
 		}
 		for (Node n : graph) {
-			closeness.put(n.getIndex(), closeness(total, n.getIndex()));
+			double closenessNode = closeness(total, n);
+			if ((double) n.getAttribute("-attribute-remoteness") != 0) {
+				n.setAttribute("-attribute-closeness", String.format("%.5f", closenessNode));
+			} else {
+				n.setAttribute("-attribute-closeness", String.format("%.5f", Double.MAX_VALUE));
+			}
 		}
-		return closeness;
 
 	}
 
-	public double closeness(double total, int node) {
-		return total / remoteness.get(node);
+	public double closeness(double total, Node node) {
+		return total / (double) node.getAttribute("-attribute-remoteness");
 	}
 
-	public HashMap<Integer, Double> remoteness() {
-		HashMap<Integer, Double> remoteness = new HashMap<>();
+	public void remoteness() {
 		for (Node n : graph) {
 			int id = n.getIndex();
 			double remotenessNode = remoteness(id);
-			remoteness.put(id, remotenessNode);
+			n.setAttribute("-attribute-remoteness", remotenessNode);
 		}
-		return remoteness;
 	}
+
 	public double remoteness(int node) {
-		Dijkstra dijkstra = new Dijkstra(Dijkstra.Element.EDGE, "result", "length");
+		Dijkstra dijkstra = new Dijkstra(Dijkstra.Element.EDGE, "result", "-attribute-width");
 		dijkstra.init(graph);
 		dijkstra.setSource(graph.getNode(node));
 		dijkstra.compute();
 		double distTotal = 0;
 		for (Node n : graph) {
-			distTotal += dijkstra.getPathLength(n);
+			double dist=dijkstra.getPathLength(n);
+			if(dist!=Double.POSITIVE_INFINITY)
+				distTotal += dist;
 		}
 		return distTotal;
 	}

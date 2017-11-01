@@ -3,6 +3,6 @@ Dijkstra
 Betweenness Centrality
 Tarjan
 Prim (Minimum Spanning Tree)
-Closeness Centrality
+Closeness And Remoteness Centrality
 Degree Centrality
 Edmons Karp

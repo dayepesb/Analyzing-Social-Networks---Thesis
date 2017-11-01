@@ -23,6 +23,7 @@ import org.graphstream.ui.view.Viewer;
 
 import co.edu.poligran.Algorithms.ArticulationPoints;
 import co.edu.poligran.Algorithms.BetweenessPoli;
+import co.edu.poligran.Algorithms.ClosenessCentrality;
 import co.edu.poligran.Algorithms.DijkstraPoli;
 import co.edu.poligran.Algorithms.PrimPoli;
 import co.edu.poligran.Algorithms.Tarjan;
@@ -128,7 +129,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 				ap.compute();
 			} else if (index == 1) {
 				DijkstraPoli dij = new DijkstraPoli(graph);
-				dij.compute("0", "1");
+				dij.compute("0", "34");
 			} else if (index == 2) {
 				BetweenessPoli bi = new BetweenessPoli(graph);
 				bi.compute();
@@ -143,6 +144,8 @@ public class PanelGraph extends JPanel implements MouseListener {
 			}else if(index==4){
 				PrimPoli prim= new PrimPoli(graph);
 				prim.compute();
+			}else if(index==5){
+				ClosenessCentrality clos=new ClosenessCentrality(graph);
 			}
 			panelNodes.ProcessNodes();
 			panelEdges.processEdges();

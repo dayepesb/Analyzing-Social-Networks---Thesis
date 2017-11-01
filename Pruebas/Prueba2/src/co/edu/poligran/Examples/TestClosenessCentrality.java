@@ -38,12 +38,7 @@ public class TestClosenessCentrality {
 
 		graph.display();
 
-		for (Entry<Integer, Double> dist : c.closeness.entrySet()) {
-			System.out.println("La cercania del nodo" + dist.getKey() + " es " + dist.getValue());
-		}
-		for (Entry<Integer, Double> dist : c.remoteness.entrySet()) {
-			System.out.println("La lejania del nodo" + dist.getKey() + " es " + dist.getValue());
-		}
+		
 
 	}
 
