@@ -2,6 +2,9 @@ package co.edu.poligran.Panels;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.JLabel;
@@ -13,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
+import org.graphstream.algorithm.Toolkit;
 import org.graphstream.graph.Graph;
 import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
@@ -20,6 +24,7 @@ import org.graphstream.ui.view.Viewer;
 import co.edu.poligran.Algorithms.ArticulationPoints;
 import co.edu.poligran.Algorithms.BetweenessPoli;
 import co.edu.poligran.Algorithms.DijkstraPoli;
+import co.edu.poligran.Algorithms.PrimPoli;
 import co.edu.poligran.Algorithms.Tarjan;
 import co.edu.poligran.Lists.ListPropertiesAlgorithms;
 import co.edu.poligran.Lists.ListPropertiesSelectBy;
@@ -61,6 +66,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 		contextGraphArea = new JTextArea();
 		contextGraphArea.setBorder(border);
 		contextGraphArea.setEditable(false);
+		contextGraphArea.setText(generateContext());
 		this.add(contextGraphArea);
 
 		// Label Algorithms
@@ -134,6 +140,9 @@ public class PanelGraph extends JPanel implements MouseListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}else if(index==4){
+				PrimPoli prim= new PrimPoli(graph);
+				prim.compute();
 			}
 			panelNodes.ProcessNodes();
 			panelEdges.processEdges();
@@ -142,6 +151,34 @@ public class PanelGraph extends JPanel implements MouseListener {
 			// Aca se selecionan por nodos
 			System.out.println(listSelectBy.getSelectedValue());
 		}
+	}
+	
+
+	public String generateContext() throws IOException{
+		BufferedReader br=new BufferedReader(new FileReader(new File("src/co/edu/poligran/Files/ContextGraph.txt")));
+		String context="";
+		String line="";
+		int cont=0;
+		Toolkit tol=new Toolkit();
+		while(true){
+			if(line==null)break;
+			line=br.readLine();
+			if(cont==0){
+				context+=line+" "+graph.getNodeCount();
+			}
+			
+			if(cont==1){
+				context+="\n"+line+" "+graph.getEdgeCount();
+			}
+			
+			if(cont==2){
+				double density=tol.density(graph);
+				context+="\n"+line+" "+String.format("%.4f", density);
+			}
+			cont++;
+		}
+		return context;
+		
 	}
 
 	@Override

@@ -5,10 +5,12 @@ import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
+import co.edu.poligran.Colors.ColorRandom;
+
 public class BetweenessPoli {
 	private Graph graph;
 	
-	public BetweenessPoli(Graph graph) {
+	public BetweenessPoli(Graph graph){
 		this.graph=graph;
 		BetweennessCentrality bc= new BetweennessCentrality();
 		bc.init(this.graph);
@@ -21,6 +23,15 @@ public class BetweenessPoli {
 		for (Edge edge : graph.getEdgeSet()) {
 			edge.setAttribute("ui.style", "fill-color:#fff;");
 		}
+		
+		ColorRandom cr=new ColorRandom();
+		String colors[]=new String[256];
+		try {
+			colors=cr.getColorRandomDegre();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		for(Node n:graph){
 			double temp=(double)n.getAttribute("Cb");
 			if(temp>max)max=temp;
@@ -32,8 +43,8 @@ public class BetweenessPoli {
 		for(Node n:graph) {
 			double temp=(double)n.getAttribute("Cb");
 			double color=((temp-min)/(max-min));
-			System.out.println(color);
-			n.setAttribute("ui.color", 0.50000);
+			//System.out.println((int)(color*1000));
+			n.setAttribute("ui.style","fill-color :"+ colors[((int)(color*1000))%colors.length]);
 		}
 	}
 	
