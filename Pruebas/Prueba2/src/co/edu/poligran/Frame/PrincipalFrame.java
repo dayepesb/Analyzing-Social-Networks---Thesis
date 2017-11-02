@@ -23,6 +23,8 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import org.graphstream.algorithm.generator.Generator;
+import org.graphstream.algorithm.generator.GridGenerator;
+import org.graphstream.algorithm.generator.IncompleteGridGenerator;
 import org.graphstream.algorithm.generator.RandomEuclideanGenerator;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;

@@ -129,7 +129,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 				ap.compute();
 			} else if (index == 1) {
 				DijkstraPoli dij = new DijkstraPoli(graph);
-				dij.compute("0", "34");
+				dij.compute("0", "1");
 			} else if (index == 2) {
 				BetweenessPoli bi = new BetweenessPoli(graph);
 				bi.compute();
