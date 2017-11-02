@@ -2,7 +2,6 @@ package co.edu.poligran.Main;
 
 import javax.swing.SwingUtilities;
 
-import co.edu.poligran.Frame.PrincipalFrame;
 import co.edu.poligran.Frame.ProgressBarFrame;
 
 public class MainApplication {

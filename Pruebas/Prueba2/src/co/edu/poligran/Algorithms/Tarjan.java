@@ -29,8 +29,7 @@ public class Tarjan  {
 			edge.setAttribute("ui.style", "fill-color:#fff;");
 		}
 		for(Node n :graph){
-			n.addAttribute("label", n.getAttribute(tscc.getSCCIndexAttribute()).toString());
-			int index = Integer.parseInt(n.getAttribute("label").toString());
+			int index = Integer.parseInt(n.getAttribute(tscc.getSCCIndexAttribute()).toString());
 			n.addAttribute("ui.style", "fill-color:" + arrayColors[index]);
 		}
 	}
