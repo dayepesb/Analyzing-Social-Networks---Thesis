@@ -31,7 +31,7 @@ public class ColorRandom {
 		}
 		arrayColorsDegre = new String[colorsDegre.size()];
 		int index = 0;
-		while (index<512) {
+		while (index<1024) {
 			if (colorsDegre.size() == 0)
 				break;
 			arrayColorsDegre[index] = colorsDegre.get(index)+";";
