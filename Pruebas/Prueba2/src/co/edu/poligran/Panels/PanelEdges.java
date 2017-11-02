@@ -57,10 +57,12 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 	private JList<String> listPropertiesAddEdge, listPropertiesSelectEdge;
 	private JButton addEdgeButton, addPropertyAddEdge, removePropertyAddEdge, addPropertySelectEdge,
 			removePropertySelectEdge, modifyEdgeSelectEdge, removeEdge;
+	private PanelMatriz panelMatriz;
 
-	public PanelEdges(Graph graph) {
-		t = 0;
+	public PanelEdges(Graph graph, PanelMatriz panelMatriz) {
+		this.panelMatriz = panelMatriz;
 		this.graph = graph;
+
 		t = 0;
 		this.setLayout(null);
 		tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -230,7 +232,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		removeEdge.setBounds(removeComboBox.getX() + removeComboBox.getWidth() + 10, removeComboBox.getY(), 100, 20);
 	}
 
-	private void updateInfoInComboBoxNodes() {
+	public void updateInfoInComboBoxNodes() {
 		String nodes[] = new String[graph.getNodeCount() + 1];
 		nodes[0] = "";
 		int i = 1;
@@ -351,6 +353,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 			// comboBoxNodeA.setText("");
 			// comboBoxNodeB.setText("");
 			processEdges();
+			panelMatriz.updateValues();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "The selected id already exists, please enter a different one.",
 					"Add Edge Exception", JOptionPane.WARNING_MESSAGE);
@@ -374,7 +377,11 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 			String a = comboBoxNodeA.getSelectedItem() + "";
 			String b = comboBoxNodeB.getSelectedItem() + "";
 			if (!a.trim().equals("") && !b.trim().equals(""))
-				addEdge(a + "-" + b, graph.getNode(Integer.parseInt(a)), graph.getNode(Integer.parseInt(b)));
+				try {
+					addEdge(a + "-" + b, graph.getNode(a), graph.getNode(b));
+				} catch (Exception e2) {
+					System.out.println(e2);
+				}
 		}
 		if (e.getSource().equals(modifyEdgeSelectEdge)) {
 			if (edgesComboBox.getSelectedIndex() > 0) {
@@ -479,6 +486,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 				cargarInfoInComoboBoxEdges();
 				paintGraph();
 				processEdges();
+				panelMatriz.updateValues();
 			}
 		}
 	}

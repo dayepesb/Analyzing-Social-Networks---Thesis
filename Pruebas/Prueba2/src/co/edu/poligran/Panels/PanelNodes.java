@@ -55,9 +55,12 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 	private JList<String> listPropertiesAddNode, listPropertiesSelectNode;
 	private DefaultListModel<String> DefaultListPropertiesAddNode, defaultListPropertiesSelectNode;
 	private JComboBox<String> nodesComboBox, removeComboBox;
-
-	public PanelNodes(Graph g) throws IOException {
+	private PanelEdges panelEdges;
+	private PanelMatriz panelMatriz;
+	public PanelNodes(Graph g,PanelEdges panelEdges,PanelMatriz panelMatriz) throws IOException {
 		this.graph = g;
+		this.panelEdges = panelEdges;
+		this.panelMatriz = panelMatriz;
 		t = 0;
 		this.setLayout(null);
 		tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -87,13 +90,13 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 		labelAddNode.setBorder(border);
 		this.add(labelAddNode);
 
-		labelId = new JLabel("Node A :", JLabel.CENTER);
+		labelId = new JLabel("Id :", JLabel.CENTER);
 		this.add(labelId);
 
 		textIdNode = new TextField();
 		this.add(textIdNode);
 
-		labelLabel = new JLabel("Node B :", JLabel.CENTER);
+		labelLabel = new JLabel("Label :", JLabel.CENTER);
 		this.add(labelLabel);
 
 		textLabel = new TextField();
@@ -302,6 +305,7 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 			minWidthColumProperties = Math.max(minWidthColumProperties, 100 + 5 * sb.toString().trim().length());
 			i++;
 		}
+		panelMatriz.updateValues();
 		if (t > 0)
 			cargarInfoInComoboBox();
 		t++;
@@ -323,6 +327,9 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 			textIdNode.setText("");
 			textLabel.setText("");
 			ProcessNodes();
+			panelEdges.processEdges();
+			panelEdges.updateInfoInComboBoxNodes();
+			panelMatriz.updateValues();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "The selected id already exists, please enter a different one.",
 					"Add Node Exception", JOptionPane.WARNING_MESSAGE);
@@ -342,6 +349,7 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource().equals(addNodeButton)) {
+			System.out.println("add Node");
 			addNode(textIdNode.getText());
 		}
 		if (e.getSource().equals(modifyNodeSelectNode)) {
@@ -444,6 +452,7 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 				int item = Integer.parseInt(removeComboBox.getSelectedItem() + "");
 				graph.removeNode(item);
 				cargarInfoInComoboBox();
+				panelMatriz.updateValues();
 				paintGraph();
 				ProcessNodes();
 			}

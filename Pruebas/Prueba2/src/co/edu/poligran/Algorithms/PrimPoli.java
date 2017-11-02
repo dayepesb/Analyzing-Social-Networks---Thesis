@@ -5,29 +5,11 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
-import org.graphstream.algorithm.generator.DorogovtsevMendesGenerator;
-import org.graphstream.algorithm.generator.Generator;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
-import org.graphstream.graph.implementations.MultiGraph;
 
 public class PrimPoli {
-
-	public static void main(String[] args) {
-		Graph temp = new MultiGraph("as");
-		Generator gen = new DorogovtsevMendesGenerator();
-		gen.addSink(temp);
-		gen.begin();
-		for (int i = 0; i < 100; i++) {
-			gen.nextEvents();
-		}
-		gen.end();
-		temp.display();
-		PrimPoli prim = new PrimPoli(temp);
-		prim.compute();
-
-	}
 
 	private Graph graph;
 

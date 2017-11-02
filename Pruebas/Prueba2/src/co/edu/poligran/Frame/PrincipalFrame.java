@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -31,6 +30,7 @@ import org.graphstream.graph.implementations.SingleGraph;
 
 import co.edu.poligran.Panels.PanelEdges;
 import co.edu.poligran.Panels.PanelGraph;
+import co.edu.poligran.Panels.PanelMatriz;
 import co.edu.poligran.Panels.PanelNodes;
 
 public class PrincipalFrame implements Runnable, ActionListener, ComponentListener {
@@ -44,9 +44,14 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	private PanelGraph panelGraph;
 	private PanelNodes panelNodes;
 	private PanelEdges panelEdges;
+	private PanelMatriz panelMatriz;
 	private final Image icono = Toolkit.getDefaultToolkit()
-			.getImage("src/co/edu/poligran/Images/LogoPoliGraphApplication.png");
-
+			.getImage("src/co/edu/poligran/Images/LogoPoliGraphApplicationExecutable.png");
+	private ProgressBarFrame pbf;
+	public PrincipalFrame(ProgressBarFrame pbf) {
+		this.pbf = pbf;
+		run();
+	}
 	@Override
 	public void run() {
 		JFrame.setDefaultLookAndFeelDecorated(true);
@@ -59,6 +64,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 				| UnsupportedLookAndFeelException e2) {
 			e2.printStackTrace();
 		}
+		pbf.setProgressBar(2);
 		windows = new JFrame("Analizing Social Network");
 		windows.setIconImage(icono);
 		windows.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,12 +72,14 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		windows.setSize(dim.width * 7 / 10, dim.height * 8 / 10);
 		windows.setMinimumSize(new Dimension(956, 614));
 		windows.addComponentListener(this);
-
+		pbf.setProgressBar(7);
+		
 		// MenuBar
 		mb = new JMenuBar();
 		archive = new JMenu("Archive");
 		mb.add(archive);
 		windows.setJMenuBar(mb);
+		pbf.setProgressBar(4);
 
 		archive.add(new AbstractAction("Print") {
 			private static final long serialVersionUID = 1L;
@@ -90,6 +98,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		close = new JMenuItem("Close");
 		close.addActionListener(this);
 		archive.add(close);
+		pbf.setProgressBar(4);
 
 		// create graph
 		graph = new SingleGraph("Random");
@@ -107,6 +116,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		for (Edge edge : graph.getEdgeSet()) {
 			edge.addAttribute("-attribute-country", "4567");
 		}
+		pbf.setProgressBar(7);
 
 		// Paint Graph
 		graph.addAttribute("ui.stylesheet", "graph { fill-color: BLACK; }");
@@ -118,18 +128,25 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		}
 		// panel Graph
 
+		// Panel matriz
+		panelMatriz = new PanelMatriz(graph);
+		pbf.setProgressBar(10);
+		// Panel Edges
+		panelEdges = new PanelEdges(graph,panelMatriz);
+		pbf.setProgressBar(10);
 		// Panel nodes
 		try {
-			panelNodes = new PanelNodes(graph);
+			panelNodes = new PanelNodes(graph,panelEdges,panelMatriz);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-			panelEdges = new PanelEdges(graph);
+		pbf.setProgressBar(10);
 		try {
 			panelGraph = new PanelGraph(graph, panelNodes,panelEdges);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		pbf.setProgressBar(10);
 
 		// create view graph
 		addTabbedPane(graph);
@@ -146,7 +163,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		tabbedPane.addTab("Graph", panelGraph);
 		tabbedPane.addTab("Nodes", panelNodes);
 		tabbedPane.addTab("Edges", panelEdges);
-		tabbedPane.addTab("Matrix", new JPanel());
+		tabbedPane.addTab("Matrix", panelMatriz);
 		windows.add(tabbedPane);
 
 	}
@@ -155,6 +172,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		panelGraph.rezisedComponents(windows.getWidth(), windows.getHeight());
 		panelNodes.resizedComponents(windows.getWidth() - 15, windows.getHeight() - 150);
 		panelEdges.resizedComponents(windows.getWidth() - 15, windows.getHeight() - 150);
+		panelMatriz.resizedComponents(windows.getWidth() - 15, windows.getHeight() - 150);
 	}
 
 	// ActionListener
