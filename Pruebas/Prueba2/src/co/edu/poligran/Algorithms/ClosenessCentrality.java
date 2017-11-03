@@ -1,14 +1,9 @@
 package co.edu.poligran.Algorithms;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
-
 import org.graphstream.algorithm.Dijkstra;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
-
-import scala.runtime.StringFormat;
 
 public class ClosenessCentrality {
 
@@ -35,14 +30,14 @@ public class ClosenessCentrality {
 			if ((double) n.getAttribute("-attribute-remoteness") != 0) {
 				n.setAttribute("-attribute-closeness", String.format("%.5f", closenessNode));
 			} else {
-				n.setAttribute("-attribute-closeness", String.format("%.5f", Double.MAX_VALUE));
+				n.setAttribute("-attribute-closeness", String.format("%.5f", 0));
 			}
 		}
 
 	}
 
 	public double closeness(double total, Node node) {
-		return total / (double) node.getAttribute("-attribute-remoteness");
+		return (100*(double) node.getAttribute("-attribute-remoteness"))/total;
 	}
 
 	public void remoteness() {
