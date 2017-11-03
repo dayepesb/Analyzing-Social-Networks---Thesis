@@ -27,9 +27,9 @@ import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
-
 import co.edu.poligran.Panels.PanelEdges;
 import co.edu.poligran.Panels.PanelGraph;
+import co.edu.poligran.Panels.PanelGraphics;
 import co.edu.poligran.Panels.PanelMatriz;
 import co.edu.poligran.Panels.PanelNodes;
 
@@ -45,13 +45,16 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	private PanelNodes panelNodes;
 	private PanelEdges panelEdges;
 	private PanelMatriz panelMatriz;
+	private PanelGraphics panelGraphics;
 	private final Image icono = Toolkit.getDefaultToolkit()
 			.getImage("src/co/edu/poligran/Images/LogoPoliGraphApplicationExecutable.png");
 	private ProgressBarFrame pbf;
+
 	public PrincipalFrame(ProgressBarFrame pbf) {
 		this.pbf = pbf;
 		run();
 	}
+
 	@Override
 	public void run() {
 		JFrame.setDefaultLookAndFeelDecorated(true);
@@ -73,7 +76,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		windows.setMinimumSize(new Dimension(956, 614));
 		windows.addComponentListener(this);
 		pbf.setProgressBar(7);
-		
+
 		// MenuBar
 		mb = new JMenuBar();
 		archive = new JMenu("Archive");
@@ -126,23 +129,25 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		for (Edge edge : graph.getEdgeSet()) {
 			edge.setAttribute("ui.style", "fill-color:#fff;");
 		}
-		// panel Graph
 
+		// Panel Graphics
+		panelGraphics = new PanelGraphics(graph);
 		// Panel matriz
 		panelMatriz = new PanelMatriz(graph);
 		pbf.setProgressBar(10);
 		// Panel Edges
-		panelEdges = new PanelEdges(graph,panelMatriz);
+		panelEdges = new PanelEdges(graph, panelMatriz);
 		pbf.setProgressBar(10);
 		// Panel nodes
 		try {
-			panelNodes = new PanelNodes(graph,panelEdges,panelMatriz);
+			panelNodes = new PanelNodes(graph, panelEdges, panelMatriz);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		pbf.setProgressBar(10);
+		// panel Graph
 		try {
-			panelGraph = new PanelGraph(graph, panelNodes,panelEdges);
+			panelGraph = new PanelGraph(graph, panelNodes, panelEdges);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -164,6 +169,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		tabbedPane.addTab("Nodes", panelNodes);
 		tabbedPane.addTab("Edges", panelEdges);
 		tabbedPane.addTab("Matrix", panelMatriz);
+		tabbedPane.addTab("Statics", panelGraphics);
 		windows.add(tabbedPane);
 
 	}
@@ -173,6 +179,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		panelNodes.resizedComponents(windows.getWidth() - 15, windows.getHeight() - 150);
 		panelEdges.resizedComponents(windows.getWidth() - 15, windows.getHeight() - 150);
 		panelMatriz.resizedComponents(windows.getWidth() - 15, windows.getHeight() - 150);
+		panelGraphics.resizedComponents(windows.getWidth() - 15, windows.getHeight() - 150);
 	}
 
 	// ActionListener

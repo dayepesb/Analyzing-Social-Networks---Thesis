@@ -1,16 +1,15 @@
 package co.edu.poligran.Panels;
 
-import java.awt.TextField;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 import java.util.Map.Entry;
+import java.util.StringTokenizer;
 
-import javax.swing.AbstractButton;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -62,6 +61,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 	public PanelEdges(Graph graph, PanelMatriz panelMatriz) {
 		this.panelMatriz = panelMatriz;
 		this.graph = graph;
+//		this.setBackground(Color.WHITE);
 
 		t = 0;
 		this.setLayout(null);

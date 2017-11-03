@@ -1,9 +1,5 @@
 package co.edu.poligran.Panels;
 
-import java.awt.Component;
-import java.util.Arrays;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -12,7 +8,6 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
@@ -111,3 +106,4 @@ public class PanelMatriz extends JPanel {
 		table.getColumnModel().setColumnMargin(2);
 	}
 }
+
