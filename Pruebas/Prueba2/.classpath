@@ -11,5 +11,7 @@
 	<classpathentry kind="lib" path="C:/Users/PC/Documents/GitHub/Analyzing-Social-Networks---Thesis/2. Libraries/GraphStream/gs-algo-1.3/gs-algo-1.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/PC/Documents/GitHub/Analyzing-Social-Networks---Thesis/2. Libraries/GraphStream/gs-algo-1.3/gs-algo-1.3-javadoc.jar"/>
 	<classpathentry kind="lib" path="C:/Users/PC/Documents/GitHub/Analyzing-Social-Networks---Thesis/2. Libraries/GraphStream/gs-algo-1.3/gs-algo-1.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Documents/GitHub/Analyzing-Social-Networks---Thesis/2. Libraries/JFreeChart/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Documents/GitHub/Analyzing-Social-Networks---Thesis/2. Libraries/JFreeChart/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

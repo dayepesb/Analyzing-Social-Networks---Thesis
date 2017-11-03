@@ -25,8 +25,11 @@ public class PrimPoli {
 		PriorityQueue<Edge> q = new PriorityQueue<Edge>(graph.getEdgeCount(), new Comparator<Edge>() {
 			@Override
 			public int compare(Edge a, Edge b) {
-				double widthA = (double) a.getAttribute("-attribute-width");
-				double widthB = (double) b.getAttribute("-attribute-width");
+				String s = a.getAttribute("-attribute-width").toString();
+				System.out.println(s);
+				double widthA = (double) Double.parseDouble(s);
+				s = b.getAttribute("-attribute-width").toString();
+				double widthB = (double) Double.parseDouble(s);
 				return Double.compare(widthA, widthB);
 			}
 		});
