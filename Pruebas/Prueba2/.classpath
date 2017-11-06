@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/Analyzing-Social-Networks---Thesis/2. Libraries/GraphStream/gs-ui-1.3/gs-ui-1.3-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/Analyzing-Social-Networks---Thesis/2. Libraries/JFreeChart/jcommon-1.0.23.jar"/>
 	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/Analyzing-Social-Networks---Thesis/2. Libraries/JFreeChart/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="C:/Users/johansteven/Desktop/JulianBorrar/Analyzing-Social-Networks---Thesis/2. Libraries/JsonGoogle/gson-2.6.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

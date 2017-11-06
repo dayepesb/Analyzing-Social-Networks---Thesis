@@ -31,7 +31,7 @@ public class BellmanFordTest {
 		source.addSink(graph);
 		source.readAll(reader);
 
-		BellmanFord bf = new BellmanFord("weight", "A");
+		BellmanFord bf = new BellmanFord("weight");
 		bf.init(graph);
 		bf.compute();
 

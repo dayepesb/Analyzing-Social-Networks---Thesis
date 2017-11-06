@@ -82,10 +82,10 @@ public class EjemploJFileChooser extends JFrame {
             	fc.setMultiSelectionEnabled(true);
             	 
             	//Indicamos lo que podemos seleccionar
-            	fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+            	fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
             	 
             	//Creamos el filtro
-            	FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.TXT", "txt");
+            	FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.txt", "txt");
             	 
             	//Le indicamos el filtro
             	fc.setFileFilter(filtro);

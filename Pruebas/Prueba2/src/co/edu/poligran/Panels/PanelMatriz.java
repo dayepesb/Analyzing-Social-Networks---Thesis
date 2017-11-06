@@ -66,7 +66,7 @@ public class PanelMatriz extends JPanel {
 							break;
 						}
 					}
-					if(!bo) {
+		 			if(!bo) {
 						dtm.setValueAt(1.0+"", i - 1, j);
 					}
 				} else {
@@ -84,6 +84,11 @@ public class PanelMatriz extends JPanel {
 		}
 
 	}
+
+	public void setGraph(Graph graph){
+		this.graph = graph;
+	}
+	
 
 	public void resizedComponents(int width, int height) {
 		this.setBounds(0, 0, width, height);

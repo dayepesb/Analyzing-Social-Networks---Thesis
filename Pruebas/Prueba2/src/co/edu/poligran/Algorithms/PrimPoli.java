@@ -26,7 +26,6 @@ public class PrimPoli {
 			@Override
 			public int compare(Edge a, Edge b) {
 				String s = a.getAttribute("-attribute-width").toString();
-				System.out.println(s);
 				double widthA = (double) Double.parseDouble(s);
 				s = b.getAttribute("-attribute-width").toString();
 				double widthB = (double) Double.parseDouble(s);

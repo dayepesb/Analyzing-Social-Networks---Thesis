@@ -93,6 +93,11 @@ public class PanelGraphics extends JPanel implements MouseListener {
 		dcbm = new DefaultComboBoxModel<>(items);
 		properties.setModel(dcbm);
 	}
+	
+	public void setGraph(Graph graph) {
+		this.graph = graph;
+		updateComboBoxModel();
+	}
 
 	// MouseListener
 	@Override

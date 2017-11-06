@@ -226,6 +226,11 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 		removeNode.setBounds(removeComboBox.getX() + removeComboBox.getWidth() + 10, removeComboBox.getY(), 100, 20);
 	}
 
+	public void setGraph(Graph graph){
+		this.graph = graph;
+	}
+	
+
 	private void updateTable() {
 		dtm = new DefaultTableModel(graph.getNodeCount(), 4) {
 			@Override
@@ -264,7 +269,7 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 		removeComboBox.setModel(removeNodeDefautlComboBoxModel);
 	}
 
-	private void updateListSelectNode() {
+	public void updateListSelectNode() {
 		defaultListPropertiesSelectNode = new DefaultListModel<>();
 		listPropertiesSelectNode.setModel(defaultListPropertiesSelectNode);
 		for (Entry<String, String> pa : propertiesMapaSelectNode.entrySet()) {

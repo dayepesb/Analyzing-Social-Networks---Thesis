@@ -30,7 +30,7 @@ public class ClosenessCentrality {
 			if ((double) n.getAttribute("-attribute-remoteness") != 0) {
 				n.setAttribute("-attribute-closeness", String.format("%.5f", closenessNode));
 			} else {
-				n.setAttribute("-attribute-closeness", String.format("%.5f", 0));
+				n.setAttribute("-attribute-closeness", 0.0000);
 			}
 		}
 

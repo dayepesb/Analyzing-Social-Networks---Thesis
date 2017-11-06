@@ -30,7 +30,7 @@ public class Tarjan  {
 		}
 		for(Node n :graph){
 			int index = Integer.parseInt(n.getAttribute(tscc.getSCCIndexAttribute()).toString());
-			n.addAttribute("ui.style", "fill-color:" + arrayColors[index]);
+			n.addAttribute("ui.style", "fill-color:" + arrayColors[(index%arrayColors.length)]);
 		}
 	}
 	

@@ -17,7 +17,9 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import org.graphstream.algorithm.Toolkit;
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
 import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
 
@@ -43,19 +45,24 @@ public class PanelGraph extends JPanel implements MouseListener {
 	private PanelNodes panelNodes;
 	private PanelEdges panelEdges;
 
-	public PanelGraph(Graph graph, PanelNodes panelNodes,PanelEdges panelEdges) throws IOException {
+	public PanelGraph(Graph graph, PanelNodes panelNodes, PanelEdges panelEdges) throws IOException {
 		this.panelNodes = panelNodes;
 		this.panelEdges = panelEdges;
 		this.graph = graph;
+		
 		this.setLayout(null);
-		// Grphic Graph
+		for (Node node : this.graph) {
+			node.setAttribute("ui.style", "fill-color:#fff;");
+		}
+		for (Edge edge : this.graph.getEdgeSet()) {
+			edge.setAttribute("ui.style", "fill-color:#fff;");
+		}
 		viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
 		viewer.enableAutoLayout();
 		viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER);
 		view = viewer.addDefaultView(false);
 		view.setBorder(border);
 		this.add(view);
-
 		// colum
 
 		// Label del contex Graph
@@ -67,7 +74,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 		contextGraphArea = new JTextArea();
 		contextGraphArea.setBorder(border);
 		contextGraphArea.setEditable(false);
-		contextGraphArea.setText(generateContext());
+		setContext();
 		this.add(contextGraphArea);
 
 		// Label Algorithms
@@ -75,7 +82,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 		labelAlgorithms.setBorder(border);
 		this.add(labelAlgorithms);
 
-		// List Algorithms
+		// List Algoritshms
 		listAlgorithms = new ListPropertiesAlgorithms();
 		listAlgorithms.addMouseListener(this);
 		jspAlgorithms = new JScrollPane(listAlgorithms);
@@ -93,6 +100,25 @@ public class PanelGraph extends JPanel implements MouseListener {
 		jspSelectBy = new JScrollPane(listSelectBy);
 		jspSelectBy.setBorder(border);
 		this.add(jspSelectBy);
+	}
+
+	public void setGraph(Graph graph) {
+		this.remove(view);
+		this.graph = graph;
+		// Paint Graph
+		this.graph.addAttribute("ui.stylesheet", "graph { fill-color: BLACK; }");
+		for (Node node : this.graph) {
+			node.setAttribute("ui.style", "fill-color:#fff;");
+		}
+		for (Edge edge : this.graph.getEdgeSet()) {
+			edge.setAttribute("ui.style", "fill-color:#fff;");
+		}
+		viewer = new Viewer(this.graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+		viewer.enableAutoLayout();
+		viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER);
+		view = viewer.addDefaultView(false);
+		view.setBorder(border);
+		this.add(view);
 	}
 
 	public void rezisedComponents(int width, int height) {
@@ -141,11 +167,11 @@ public class PanelGraph extends JPanel implements MouseListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			}else if(index==4){
-				PrimPoli prim= new PrimPoli(graph);
+			} else if (index == 4) {
+				PrimPoli prim = new PrimPoli(graph);
 				prim.compute();
-			}else if(index==5){
-				ClosenessCentrality clos=new ClosenessCentrality(graph);
+			} else if (index == 5) {
+				ClosenessCentrality clos = new ClosenessCentrality(graph);
 			}
 			panelNodes.ProcessNodes();
 			panelEdges.processEdges();
@@ -155,32 +181,32 @@ public class PanelGraph extends JPanel implements MouseListener {
 			System.out.println(listSelectBy.getSelectedValue());
 		}
 	}
-	
 
-	public String generateContext() throws IOException{
-		BufferedReader br=new BufferedReader(new FileReader(new File("src/co/edu/poligran/Files/ContextGraph.txt")));
-		String context="";
-		String line="";
-		int cont=0;
-		Toolkit tol=new Toolkit();
-		while(true){
-			if(line==null)break;
-			line=br.readLine();
-			if(cont==0){
-				context+=line+" "+graph.getNodeCount();
+	public void setContext() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(new File("src/co/edu/poligran/Files/ContextGraph.txt")));
+		String context = "";
+		String line = "";
+		int cont = 0;
+		Toolkit tol = new Toolkit();
+		while (true) {
+			if (line == null)
+				break;
+			line = br.readLine();
+			if (cont == 0) {
+				context += line + " " + graph.getNodeCount();
 			}
-			
-			if(cont==1){
-				context+="\n"+line+" "+graph.getEdgeCount();
+
+			if (cont == 1) {
+				context += "\n" + line + " " + graph.getEdgeCount();
 			}
-			
-			if(cont==2){
-				double density=tol.density(graph);
-				context+="\n"+line+" "+String.format("%.4f", density);
+
+			if (cont == 2) {
+				double density = tol.density(graph);
+				context += "\n" + line + " " + String.format("%.4f", density);
 			}
 			cont++;
 		}
-		return context;
+		contextGraphArea.setText(context);
 		
 	}
 

@@ -1,3 +1,6 @@
+/**
+ * @author David Yepes Buitrago
+ */
 package co.edu.poligran.Colors;
 
 import java.io.BufferedReader;

@@ -257,6 +257,12 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		removeEdgeDefautlComboBoxModel = new DefaultComboBoxModel<>(edges);
 		removeComboBox.setModel(removeEdgeDefautlComboBoxModel);
 	}
+	
+
+	public void setGraph(Graph graph){
+		this.graph = graph;
+	}
+	
 
 	public void processEdges() {
 		int i = 0;
@@ -317,7 +323,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		table.getColumnModel().getColumn(4).setCellRenderer(tcr);
 	}
 
-	private void updateListSelectNode() {
+	public void updateListSelectNode() {
 		defaultListPropertiesSelectEdge = new DefaultListModel<>();
 		listPropertiesSelectEdge.setModel(defaultListPropertiesSelectEdge);
 		for (Entry<String, String> pa : propertiesMapaSelectEdge.entrySet()) {

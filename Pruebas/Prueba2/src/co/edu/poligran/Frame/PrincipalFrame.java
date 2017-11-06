@@ -8,9 +8,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.print.PrinterJob;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -20,18 +22,19 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.graphstream.algorithm.generator.Generator;
-import org.graphstream.algorithm.generator.RandomEuclideanGenerator;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+
 import co.edu.poligran.Panels.PanelEdges;
 import co.edu.poligran.Panels.PanelGraph;
 import co.edu.poligran.Panels.PanelGraphics;
 import co.edu.poligran.Panels.PanelMatriz;
 import co.edu.poligran.Panels.PanelNodes;
+import co.edu.poligran.Reader.GraphReaderJSON;
 
 public class PrincipalFrame implements Runnable, ActionListener, ComponentListener {
 	private final Border border = LineBorder.createGrayLineBorder();
@@ -39,8 +42,8 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	private JFrame windows;
 	private Dimension dim;
 	private JMenuBar mb;
-	private JMenu archive;
-	private JMenuItem close;
+	private JMenu archive, importGraph;
+	private JMenuItem close, json;
 	private PanelGraph panelGraph;
 	private PanelNodes panelNodes;
 	private PanelEdges panelEdges;
@@ -98,6 +101,11 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 				}
 			}
 		});
+		importGraph = new JMenu("Import");
+		json = new JMenuItem("Json File");
+		json.addActionListener(this);
+		importGraph.add(json);
+		archive.add(importGraph);
 		close = new JMenuItem("Close");
 		close.addActionListener(this);
 		archive.add(close);
@@ -105,13 +113,6 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 
 		// create graph
 		graph = new SingleGraph("Random");
-		Generator gen = new RandomEuclideanGenerator(2);
-		gen.addSink(graph);
-		gen.begin();
-		for (int i = 0; i < 300; i++) {
-			gen.nextEvents();
-		}
-		gen.end();
 		for (Node n : graph) {
 			n.addAttribute("-attribute-age", "13");
 			n.addAttribute("-attribute-country", "Colombia");
@@ -182,12 +183,46 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		panelGraphics.resizedComponents(windows.getWidth() - 15, windows.getHeight() - 150);
 	}
 
+	public void setGraph(Graph graph) throws IOException {
+		this.graph = graph;
+		// pinta el grafo
+		panelGraph.setGraph(graph);
+		panelGraph.setContext();
+		panelNodes.setGraph(graph);
+		panelNodes.ProcessNodes();
+		panelNodes.updateListSelectNode();
+		panelEdges.setGraph(graph);
+		panelEdges.processEdges();
+		panelEdges.updateListSelectNode();
+		panelEdges.updateInfoInComboBoxNodes();
+		panelMatriz.setGraph(graph);
+		panelMatriz.updateValues();
+		panelGraphics.setGraph(graph);
+		this.resizedConponents();
+	}
+
 	// ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(close)) {
 			windows.dispose();
 			System.exit(0);
+		}
+		if(e.getSource().equals(json)){
+			JFileChooser fc=new JFileChooser();
+			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        	FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.json", "json");
+        	fc.setFileFilter(filtro);
+        	int seleccion=fc.showOpenDialog(windows);
+        	if(seleccion==JFileChooser.APPROVE_OPTION){
+        		File fichero=fc.getSelectedFile();
+        		GraphReaderJSON reader=new GraphReaderJSON(fichero,this);
+        		try {
+					setGraph(reader.getGraph());
+				} catch (IOException e1) {
+				}
+        	}
+        	
 		}
 	}
 
