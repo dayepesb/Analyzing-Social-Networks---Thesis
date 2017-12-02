@@ -9,6 +9,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.print.PrinterJob;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.AbstractAction;
@@ -35,6 +36,7 @@ import co.edu.poligran.Panels.PanelGraphics;
 import co.edu.poligran.Panels.PanelMatriz;
 import co.edu.poligran.Panels.PanelNodes;
 import co.edu.poligran.Reader.GraphReaderJSON;
+import co.edu.poligran.Writer.GraphWriterJSON;
 
 public class PrincipalFrame implements Runnable, ActionListener, ComponentListener {
 	private final Border border = LineBorder.createGrayLineBorder();
@@ -42,8 +44,8 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	private JFrame windows;
 	private Dimension dim;
 	private JMenuBar mb;
-	private JMenu archive, importGraph;
-	private JMenuItem close, json;
+	private JMenu archive, importGraph,exportGraph;
+	private JMenuItem close, jsonImport,jsonExport;
 	private PanelGraph panelGraph;
 	private PanelNodes panelNodes;
 	private PanelEdges panelEdges;
@@ -102,10 +104,17 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 			}
 		});
 		importGraph = new JMenu("Import");
-		json = new JMenuItem("Json File");
-		json.addActionListener(this);
-		importGraph.add(json);
+		jsonImport = new JMenuItem("Json File");
+		jsonImport.addActionListener(this);
+		importGraph.add(jsonImport);
 		archive.add(importGraph);
+		
+		exportGraph = new JMenu("Export");
+		jsonExport = new JMenuItem("Json File");
+		jsonExport.addActionListener(this);
+		exportGraph.add(jsonExport);
+		archive.add(exportGraph);
+		
 		close = new JMenuItem("Close");
 		close.addActionListener(this);
 		archive.add(close);
@@ -113,6 +122,39 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 
 		// create graph
 		graph = new SingleGraph("Random");
+		graph.addNode("A").addAttribute("xy", 0, 1);
+		graph.addNode("B").addAttribute("xy", 1, 2);
+		graph.addNode("C").addAttribute("xy", 1, 1);
+		graph.addNode("D").addAttribute("xy", 1, 0);
+		graph.addNode("E").addAttribute("xy", 2, 2);
+		graph.addNode("F").addAttribute("xy", 2, 1);
+		// graph.addNode("G").addAttribute("xy", 2, 0);
+		graph.addEdge("AB", "A", "B").addAttribute("-attribute-width", 14);
+		graph.addEdge("AC", "A", "C").addAttribute("-attribute-width", 9);
+		graph.addEdge("AD", "A", "D").addAttribute("-attribute-width", 7);
+		graph.addEdge("BC", "B", "C").addAttribute("-attribute-width", 2);
+		graph.addEdge("CD", "C", "D").addAttribute("-attribute-width", 10);
+		graph.addEdge("BE", "B", "E").addAttribute("-attribute-width", 9);
+		graph.addEdge("CF", "C", "F").addAttribute("-attribute-width", 11);
+		graph.addEdge("DF", "D", "F").addAttribute("-attribute-width", 15);
+		graph.addEdge("EF", "E", "F").addAttribute("-attribute-width", 6);
+		for (Node n : graph)
+			n.addAttribute("label", n.getId());
+		for (Edge e : graph.getEachEdge()){
+			e.addAttribute("label", "" + (int) e.getNumber("length"));
+		}
+		graph.addAttribute("ui.stylesheet", "edge.label { color: white; }");
+		//graph.setAttribute("ui.style", );
+
+		// Generator gen = new BarabasiAlbertGenerator(5);
+		// gen.addSink(graph);
+		// gen.begin();
+		// for(int i=0; i<100; i++) {
+		// gen.nextEvents();
+		// }
+		//
+		// gen.end();
+		// System.out.println(graph.getNodeCount());
 		for (Node n : graph) {
 			n.addAttribute("-attribute-age", "13");
 			n.addAttribute("-attribute-country", "Colombia");
@@ -208,21 +250,33 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 			windows.dispose();
 			System.exit(0);
 		}
-		if(e.getSource().equals(json)){
-			JFileChooser fc=new JFileChooser();
+		if (e.getSource().equals(jsonImport)) {
+			JFileChooser fc = new JFileChooser();
+			fc.setDialogTitle("Import Graph to PoliGraph");
 			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        	FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.json", "json");
-        	fc.setFileFilter(filtro);
-        	int seleccion=fc.showOpenDialog(windows);
-        	if(seleccion==JFileChooser.APPROVE_OPTION){
-        		File fichero=fc.getSelectedFile();
-        		GraphReaderJSON reader=new GraphReaderJSON(fichero,this);
-        		try {
+			FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.json", "json");
+			fc.setFileFilter(filtro);
+			int seleccion = fc.showOpenDialog(windows);
+			if (seleccion == JFileChooser.APPROVE_OPTION) {
+				File fichero = fc.getSelectedFile();
+				GraphReaderJSON reader = new GraphReaderJSON(fichero, this);
+				try {
 					setGraph(reader.getGraph());
 				} catch (IOException e1) {
 				}
-        	}
-        	
+			}
+
+		}
+		if(e.getSource().equals(jsonExport)){
+			JFileChooser fc = new JFileChooser();
+			fc.setDialogTitle("Export Graph from PoliGraph");
+			FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.json", "json");
+			fc.setFileFilter(filtro);
+			int userSelection = fc.showSaveDialog(windows);
+			if(userSelection == fc.APPROVE_OPTION){
+				File fileToSave = fc.getSelectedFile();
+				GraphWriterJSON g=new GraphWriterJSON(graph,fileToSave.getAbsolutePath());
+			}
 		}
 	}
 
