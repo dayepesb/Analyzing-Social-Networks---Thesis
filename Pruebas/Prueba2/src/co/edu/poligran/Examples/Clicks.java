@@ -52,12 +52,13 @@ public class Clicks implements ViewerListener {
 			fromViewer.pump(); // or fromViewer.blockingPump(); in the nightly builds
 
 			// here your simulation code.
-
-			// You do not necessarily need to use a loop, this is only an example.
-			// as long as you call pump() before using the graph. pump() is non
-			// blocking.  If you only use the loop to look at event, use blockingPump()
-			// to avoid 100% CPU usage. The blockingPump() method is only available from
-			// the nightly builds.
+/*
+			 You do not necessarily need to use a loop, this is only an example.
+			 as long as you call pump() before using the graph. pump() is non
+			 blocking.  If you only use the loop to look at event, use blockingPump()
+			 to avoid 100% CPU usage. The blockingPump() method is only available from
+			 the nightly builds.
+			 */
 		}
 	}
 

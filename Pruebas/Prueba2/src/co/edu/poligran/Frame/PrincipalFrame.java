@@ -9,7 +9,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.print.PrinterJob;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.AbstractAction;
@@ -30,6 +29,7 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 
+import co.edu.poligran.Listener.ListenerMouseInGraph;
 import co.edu.poligran.Panels.PanelEdges;
 import co.edu.poligran.Panels.PanelGraph;
 import co.edu.poligran.Panels.PanelGraphics;
@@ -44,8 +44,8 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	private JFrame windows;
 	private Dimension dim;
 	private JMenuBar mb;
-	private JMenu archive, importGraph,exportGraph;
-	private JMenuItem close, jsonImport,jsonExport;
+	private JMenu archive, importGraph, exportGraph;
+	private JMenuItem close, jsonImport, jsonExport;
 	private PanelGraph panelGraph;
 	private PanelNodes panelNodes;
 	private PanelEdges panelEdges;
@@ -54,6 +54,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	private final Image icono = Toolkit.getDefaultToolkit()
 			.getImage("src/co/edu/poligran/Images/LogoPoliGraphApplicationExecutable.png");
 	private ProgressBarFrame pbf;
+	private boolean loop = true;;
 
 	public PrincipalFrame(ProgressBarFrame pbf) {
 		this.pbf = pbf;
@@ -108,30 +109,40 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		jsonImport.addActionListener(this);
 		importGraph.add(jsonImport);
 		archive.add(importGraph);
-		
+
 		exportGraph = new JMenu("Export");
 		jsonExport = new JMenuItem("Json File");
 		jsonExport.addActionListener(this);
 		exportGraph.add(jsonExport);
 		archive.add(exportGraph);
-		
+
 		close = new JMenuItem("Close");
 		close.addActionListener(this);
 		archive.add(close);
 		pbf.setProgressBar(4);
+		Runnable r = new Runnable() {
+
+			@Override
+			public void run() {
+				while (loop) {
+					panelGraph.getFromViewer().pump();
+				}
+			}
+		};
+		Thread t = new Thread(r);
 
 		// create graph
 		graph = new SingleGraph("Random");
-		graph.addNode("A").addAttribute("xy", 0, 1);
+		graph.addNode("Q").addAttribute("xy", 0, 1);
 		graph.addNode("B").addAttribute("xy", 1, 2);
 		graph.addNode("C").addAttribute("xy", 1, 1);
 		graph.addNode("D").addAttribute("xy", 1, 0);
 		graph.addNode("E").addAttribute("xy", 2, 2);
 		graph.addNode("F").addAttribute("xy", 2, 1);
 		// graph.addNode("G").addAttribute("xy", 2, 0);
-		graph.addEdge("AB", "A", "B").addAttribute("-attribute-width", 14);
-		graph.addEdge("AC", "A", "C").addAttribute("-attribute-width", 9);
-		graph.addEdge("AD", "A", "D").addAttribute("-attribute-width", 7);
+		graph.addEdge("QB", "Q", "B").addAttribute("-attribute-width", 14);
+		graph.addEdge("QC", "Q", "C").addAttribute("-attribute-width", 9);
+		graph.addEdge("QD", "Q", "D").addAttribute("-attribute-width", 7);
 		graph.addEdge("BC", "B", "C").addAttribute("-attribute-width", 2);
 		graph.addEdge("CD", "C", "D").addAttribute("-attribute-width", 10);
 		graph.addEdge("BE", "B", "E").addAttribute("-attribute-width", 9);
@@ -140,11 +151,11 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		graph.addEdge("EF", "E", "F").addAttribute("-attribute-width", 6);
 		for (Node n : graph)
 			n.addAttribute("label", n.getId());
-		for (Edge e : graph.getEachEdge()){
+		for (Edge e : graph.getEachEdge()) {
 			e.addAttribute("label", "" + (int) e.getNumber("length"));
 		}
 		graph.addAttribute("ui.stylesheet", "edge.label { color: white; }");
-		//graph.setAttribute("ui.style", );
+		// graph.setAttribute("ui.style", );
 
 		// Generator gen = new BarabasiAlbertGenerator(5);
 		// gen.addSink(graph);
@@ -202,6 +213,12 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		windows.pack();
 		windows.setLocationRelativeTo(null);
 		windows.setVisible(true);
+
+		t.start();
+		// while(loop){
+		// panelGraph.getFromViewer().pump();
+		// }
+
 	}
 
 	private void addTabbedPane(Graph graph) {
@@ -267,15 +284,15 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 			}
 
 		}
-		if(e.getSource().equals(jsonExport)){
+		if (e.getSource().equals(jsonExport)) {
 			JFileChooser fc = new JFileChooser();
 			fc.setDialogTitle("Export Graph from PoliGraph");
 			FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.json", "json");
 			fc.setFileFilter(filtro);
 			int userSelection = fc.showSaveDialog(windows);
-			if(userSelection == fc.APPROVE_OPTION){
+			if (userSelection == fc.APPROVE_OPTION) {
 				File fileToSave = fc.getSelectedFile();
-				GraphWriterJSON g=new GraphWriterJSON(graph,fileToSave.getAbsolutePath());
+				GraphWriterJSON g = new GraphWriterJSON(graph, fileToSave.getAbsolutePath());
 			}
 		}
 	}

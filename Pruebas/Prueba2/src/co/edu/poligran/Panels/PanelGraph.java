@@ -22,6 +22,8 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
+import org.graphstream.ui.view.ViewerListener;
+import org.graphstream.ui.view.ViewerPipe;
 
 import co.edu.poligran.Algorithms.ArticulationPoints;
 import co.edu.poligran.Algorithms.BetweenessPoli;
@@ -29,6 +31,7 @@ import co.edu.poligran.Algorithms.ClosenessCentrality;
 import co.edu.poligran.Algorithms.DijkstraPoli;
 import co.edu.poligran.Algorithms.PrimPoli;
 import co.edu.poligran.Algorithms.Tarjan;
+import co.edu.poligran.Listener.ListenerMouseInGraph;
 import co.edu.poligran.Lists.ListPropertiesAlgorithms;
 import co.edu.poligran.Lists.ListPropertiesSelectBy;
 
@@ -36,6 +39,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	private ViewPanel view;
 	private Viewer viewer;
+	private ViewerPipe fromViewer;
 	private final Border border = LineBorder.createGrayLineBorder();
 	private JTextArea contextGraphArea;
 	private JLabel labelContext, labelAlgorithms, labelSelectBy;
@@ -63,6 +67,17 @@ public class PanelGraph extends JPanel implements MouseListener {
 		view = viewer.addDefaultView(false);
 		view.setBorder(border);
 		this.add(view);
+		
+		fromViewer=viewer.newViewerPipe();
+		ListenerMouseInGraph t=new ListenerMouseInGraph();
+		fromViewer.addViewerListener(t);
+		//fromViewer.addSink(graph);
+		
+//		try{
+//		fromViewer.blockingPump();
+//		}catch (Exception e) {
+//			// TODO: handle exception
+//		}
 		// colum
 
 		// Label del contex Graph
@@ -208,6 +223,9 @@ public class PanelGraph extends JPanel implements MouseListener {
 		}
 		contextGraphArea.setText(context);
 		
+	}
+	public ViewerPipe getFromViewer() {
+		return fromViewer;
 	}
 
 	@Override
