@@ -75,7 +75,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 		this.add(view);
 
 		fromViewer = viewer.newViewerPipe();
-		ListenerMouseInGraph t = new ListenerMouseInGraph();
+		ListenerMouseInGraph t = new ListenerMouseInGraph(graph);
 		fromViewer.addViewerListener(t);
 
 		// Label del contex Graph
@@ -228,6 +228,12 @@ public class PanelGraph extends JPanel implements MouseListener {
 
 	public ViewerPipe getFromViewer() {
 		return fromViewer;
+	}
+	public void setFromViewer(ViewerPipe fromViewer) {
+		this.fromViewer = fromViewer;
+	}
+	public Viewer getViewer() {
+		return viewer;
 	}
 
 	@Override
