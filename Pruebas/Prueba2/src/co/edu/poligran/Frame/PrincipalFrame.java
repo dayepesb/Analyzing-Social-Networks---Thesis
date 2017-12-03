@@ -28,7 +28,9 @@ import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.view.ViewerPipe;
 
+import co.edu.poligran.Listener.ListenerMouseInGraph;
 import co.edu.poligran.Panels.PanelEdges;
 import co.edu.poligran.Panels.PanelGraph;
 import co.edu.poligran.Panels.PanelGraphics;
@@ -55,6 +57,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	private ProgressBarFrame pbf;
 	private boolean loop = true;
 	public String background,nodes,edges;
+	private ViewerPipe fromViewer;
 	
 	public PrincipalFrame(ProgressBarFrame pbf) {
 		this.pbf = pbf;
@@ -255,6 +258,12 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		panelMatriz.setGraph(graph);
 		panelMatriz.updateValues();
 		panelGraphics.setGraph(graph);
+		
+		fromViewer = panelGraph.getViewer().newViewerPipe();
+		ListenerMouseInGraph listenerGraph = new ListenerMouseInGraph(graph);
+		fromViewer.addViewerListener(listenerGraph);
+		panelGraph.setFromViewer(fromViewer);
+		
 		this.resizedConponents();
 	}
 
