@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -35,11 +34,11 @@ import co.edu.poligran.Algorithms.DegreeCentrality;
 import co.edu.poligran.Algorithms.DijkstraPoli;
 import co.edu.poligran.Algorithms.PrimPoli;
 import co.edu.poligran.Algorithms.Tarjan;
+import co.edu.poligran.Frame.PrincipalFrame;
 import co.edu.poligran.Listener.ListenerMouseInGraph;
 import co.edu.poligran.Lists.ListPropertiesAlgorithms;
 import co.edu.poligran.Lists.ListPropertiesSelectBy;
 import co.edu.poligran.PopUp.PopUpDijkstra;
-import co.edu.poligran.PopUp.PopUpProperties;
 
 public class PanelGraph extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
@@ -54,6 +53,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 	private Graph graph;
 	private PanelNodes panelNodes;
 	private PanelEdges panelEdges;
+	private PrincipalFrame principalFrame;
 
 	public PanelGraph(Graph graph, PanelNodes panelNodes, PanelEdges panelEdges) throws IOException {
 		this.panelNodes = panelNodes;
@@ -176,17 +176,18 @@ public class PanelGraph extends JPanel implements MouseListener {
 				ap.compute();
 			} else if (select.equals("Dijkstra")) {
 				DijkstraPoli dij = new DijkstraPoli(graph);
-				try{
-					String url=".../Images/ImgaeMensajeDialog.png";
-					PopUpDijkstra pop= new PopUpDijkstra();
-					String[]p=pop.PopUpDijkstra(url, "Selected Nodes", JOptionPane.CANCEL_OPTION, JOptionPane.YES_NO_OPTION, graph);
-					if(p!=null){
+				try {
+					String url = ".../Images/ImgaeMensajeDialog.png";
+					PopUpDijkstra pop = new PopUpDijkstra();
+					String[] p = pop.PopUpDijkstra(url, "Selected Nodes", JOptionPane.CANCEL_OPTION,
+							JOptionPane.YES_NO_OPTION, graph);
+					if (p != null) {
 						dij.compute(p[0], p[1]);
 					}
-				}catch (Exception ex) {
+				} catch (Exception ex) {
 					// TODO: handle exception
 				}
-				
+
 			} else if (select.equals("Betweenness Centrality")) {
 				BetweenessPoli bi = new BetweenessPoli(graph);
 				bi.compute();
@@ -203,14 +204,14 @@ public class PanelGraph extends JPanel implements MouseListener {
 				prim.compute();
 			} else if (select.equals("Closeness And Remoteness Centrality")) {
 				ClosenessCentrality clos = new ClosenessCentrality(graph);
-			}else if(select.equals("Degree Centrality")){
-				DegreeCentrality dg=new DegreeCentrality(graph);
-				int min=dg.getMin();
-				int max=(dg.getMax());
-				HashMap<Integer,Integer>degree=dg.getTotalDegree();
-				for(Entry<Integer,Integer>deg:degree.entrySet()){
-					int size=deg.getValue()*30/max;
-					graph.getNode(deg.getKey()).setAttribute("ui.style", "size:"+(size<5?5:size)+"px;");
+			} else if (select.equals("Degree Centrality")) {
+				DegreeCentrality dg = new DegreeCentrality(graph);
+				int min = dg.getMin();
+				int max = (dg.getMax());
+				HashMap<Integer, Integer> degree = dg.getTotalDegree();
+				for (Entry<Integer, Integer> deg : degree.entrySet()) {
+					int size = deg.getValue() * 30 / max;
+					graph.getNode(deg.getKey()).setAttribute("ui.style", "size:" + (size < 5 ? 5 : size) + "px;");
 					graph.getNode(deg.getKey()).setAttribute("ui.style", "stroke-color:#000;");
 				}
 			}
@@ -267,5 +268,24 @@ public class PanelGraph extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+	}
+
+	public void setComponentsPrincipalFrame() {
+		try {
+			System.out.println("llego aca");
+			this.remove(jspSelectBy);
+			listSelectBy = new ListPropertiesSelectBy(graph);
+			listSelectBy.addMouseListener(this);
+			jspSelectBy = new JScrollPane(listSelectBy);
+			jspSelectBy.setBorder(border);
+			this.add(jspSelectBy);
+			principalFrame.resizedConponents();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setPrincipalFrame(PrincipalFrame pf) {
+		this.principalFrame = pf;
 	}
 }

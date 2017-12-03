@@ -54,6 +54,7 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 	private JComboBox<String> nodesComboBox, removeComboBox;
 	private PanelEdges panelEdges;
 	private PanelMatriz panelMatriz;
+	private PanelGraph panelGraph;
 
 	public PanelNodes(Graph g, PanelEdges panelEdges, PanelMatriz panelMatriz) throws IOException {
 		this.graph = g;
@@ -351,8 +352,8 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource().equals(addNodeButton)) {
-			System.out.println("add Node");
 			addNode(textIdNode.getText());
+			panelGraph.setComponentsPrincipalFrame();
 		}
 		if (e.getSource().equals(modifyNodeSelectNode)) {
 			if (nodesComboBox.getSelectedIndex() > 0) {
@@ -378,26 +379,6 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 		if (e.getSource().equals(addPropertyAddNode)) {
 			// jOptionPane
 			try {
-				// ModelListSelectBy mlsb = new ModelListSelectBy(graph);
-				// Object[] propeties = new Object[mlsb.getSize()];
-				// for (int i = 0; i < propeties.length; i++) {
-				// propeties[i] = mlsb.get(i);
-				// }
-				// JPanel panel = new JPanel();
-				// JComboBox<Object> properties = new JComboBox<>(propeties);
-				// JTextField value = new JTextField(20);
-				// panel.add(properties);
-				// panel.add(value);
-				// Icon icono = new
-				// ImageIcon(getClass().getResource("../Images/ImageMensajeDialog.png"));
-				// int resp = JOptionPane.showConfirmDialog(null, panel, "Add Node",
-				// JOptionPane.CANCEL_OPTION,
-				// JOptionPane.YES_NO_OPTION, icono);
-				// if (resp == 0) {
-				// String p = properties.getSelectedItem().toString().trim().toLowerCase();
-				// propertiesMapaAddNode.put(p, value.getText().trim().toLowerCase());
-				// updateListAddNode();
-				// }
 				String url = "../Images/ImageMensajeDialog.png";
 				PopUpProperties pop = new PopUpProperties();
 				String p[] = pop.PopUpProperties(url, "Add Edge", JOptionPane.CANCEL_OPTION, JOptionPane.YES_NO_OPTION,
@@ -493,5 +474,9 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 				}
 			}
 		}
+	}
+
+	public void setPanelGraph(PanelGraph panelGraph) {
+		this.panelGraph = panelGraph;
 	}
 }

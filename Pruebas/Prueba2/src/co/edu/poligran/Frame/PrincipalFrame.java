@@ -29,7 +29,6 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 
-import co.edu.poligran.Listener.ListenerMouseInGraph;
 import co.edu.poligran.Panels.PanelEdges;
 import co.edu.poligran.Panels.PanelGraph;
 import co.edu.poligran.Panels.PanelGraphics;
@@ -207,9 +206,11 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		}
 		pbf.setProgressBar(10);
 
+		panelNodes.setPanelGraph(panelGraph);
 		// create view graph
 		addTabbedPane(graph);
 
+		panelGraph.setPrincipalFrame(this);
 		windows.pack();
 		windows.setLocationRelativeTo(null);
 		windows.setVisible(true);
@@ -234,7 +235,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 
 	}
 
-	private void resizedConponents() {
+	public void resizedConponents() {
 		panelGraph.rezisedComponents(windows.getWidth(), windows.getHeight());
 		panelNodes.resizedComponents(windows.getWidth() - 15, windows.getHeight() - 150);
 		panelEdges.resizedComponents(windows.getWidth() - 15, windows.getHeight() - 150);

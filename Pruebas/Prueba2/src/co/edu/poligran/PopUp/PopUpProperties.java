@@ -1,5 +1,8 @@
 package co.edu.poligran.PopUp;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -23,10 +26,16 @@ public class PopUpProperties extends JOptionPane {
 			throws IOException {
 		ModelListSelectBy mlsb = new ModelListSelectBy(graph);
 		Set<String> set = new HashSet<>();
-		
-		Object[] propeties = new Object[mlsb.getSize()];
-		for (int i = 0; i < propeties.length; i++) {
-			propeties[i] = mlsb.get(i);
+		for (int i = 0; i < mlsb.size(); i++) {
+			set.add(mlsb.get(i).toLowerCase());
+		}
+		BufferedReader in = new BufferedReader(new FileReader(new File("src/co/edu/poligran/Files/SelectBy.txt")));
+		for (String line; (line = in.readLine()) != null;)
+			set.add(line.trim().toLowerCase());
+		Object[] propeties = new Object[set.size()];
+		int i = 0;
+		for (String string : set) {
+			propeties[i++] = string;
 		}
 		JComboBox<Object> properties = new JComboBox<>(propeties);
 		JTextField value = new JTextField(20);
