@@ -39,6 +39,7 @@ import co.edu.poligran.Listener.ListenerMouseInGraph;
 import co.edu.poligran.Lists.ListPropertiesAlgorithms;
 import co.edu.poligran.Lists.ListPropertiesSelectBy;
 import co.edu.poligran.PopUp.PopUpDijkstra;
+import co.edu.poligran.PopUp.PopUpHomophily;
 
 public class PanelGraph extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
@@ -205,6 +206,8 @@ public class PanelGraph extends JPanel implements MouseListener {
 					graph.getNode(deg.getKey()).setAttribute("ui.style", "size:" + (size < 5 ? 5 : size) + "px;");
 					graph.getNode(deg.getKey()).setAttribute("ui.style", "stroke-color:#000;");
 				}
+			} else if(select.equalsIgnoreCase("Homophily")) {
+				 PopUpHomophily poupH = new PopUpHomophily(graph);
 			}
 			panelNodes.ProcessNodes();
 			panelEdges.processEdges();
