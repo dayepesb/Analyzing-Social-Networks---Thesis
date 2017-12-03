@@ -381,7 +381,7 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 		if (e.getSource().equals(addPropertyAddNode)) {
 			// jOptionPane
 			try {
-				ModelListSelectBy mlsb = new ModelListSelectBy();
+				ModelListSelectBy mlsb = new ModelListSelectBy(graph);
 				Object[] propeties = new Object[mlsb.getSize()];
 				for (int i = 0; i < propeties.length; i++) {
 					propeties[i] = mlsb.get(i);
@@ -415,7 +415,7 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 		if (e.getSource().equals(addPropertySelectNode)) {
 			if (nodesComboBox.getSelectedIndex() > 0) {
 				try {
-					ModelListSelectBy mlsb = new ModelListSelectBy();
+					ModelListSelectBy mlsb = new ModelListSelectBy(graph);
 					Object[] propeties = new Object[mlsb.getSize()];
 					for (int i = 0; i < propeties.length; i++) {
 						propeties[i] = mlsb.get(i);

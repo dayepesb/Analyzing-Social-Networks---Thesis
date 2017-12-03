@@ -20,7 +20,6 @@ public class PanelGraphics extends JPanel implements MouseListener {
 	private JComboBox<String> properties, type;
 	private DefaultComboBoxModel<String> dcbm;
 	private final Border border = LineBorder.createGrayLineBorder();
-	private PanelBars panelBars;
 	private HashSet<String> propertiesSet;
 	private JButton generateGraphic;
 	private int isBars;

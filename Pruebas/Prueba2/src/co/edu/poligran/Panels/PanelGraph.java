@@ -22,7 +22,6 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
-import org.graphstream.ui.view.ViewerListener;
 import org.graphstream.ui.view.ViewerPipe;
 
 import co.edu.poligran.Algorithms.ArticulationPoints;
@@ -53,7 +52,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 		this.panelNodes = panelNodes;
 		this.panelEdges = panelEdges;
 		this.graph = graph;
-		
+
 		this.setLayout(null);
 		for (Node node : this.graph) {
 			node.setAttribute("ui.style", "fill-color:#fff;");
@@ -67,17 +66,17 @@ public class PanelGraph extends JPanel implements MouseListener {
 		view = viewer.addDefaultView(false);
 		view.setBorder(border);
 		this.add(view);
-		
-		fromViewer=viewer.newViewerPipe();
-		ListenerMouseInGraph t=new ListenerMouseInGraph();
+
+		fromViewer = viewer.newViewerPipe();
+		ListenerMouseInGraph t = new ListenerMouseInGraph();
 		fromViewer.addViewerListener(t);
-		//fromViewer.addSink(graph);
-		
-//		try{
-//		fromViewer.blockingPump();
-//		}catch (Exception e) {
-//			// TODO: handle exception
-//		}
+		// fromViewer.addSink(graph);
+
+		// try{
+		// fromViewer.blockingPump();
+		// }catch (Exception e) {
+		// // TODO: handle exception
+		// }
 		// colum
 
 		// Label del contex Graph
@@ -110,7 +109,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 		this.add(labelSelectBy);
 
 		// lista selectBy
-		listSelectBy = new ListPropertiesSelectBy();
+		listSelectBy = new ListPropertiesSelectBy(graph);
 		listSelectBy.addMouseListener(this);
 		jspSelectBy = new JScrollPane(listSelectBy);
 		jspSelectBy.setBorder(border);
@@ -164,17 +163,17 @@ public class PanelGraph extends JPanel implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource().equals(listAlgorithms) && e.getClickCount() == 2) {
 			// Aca se ejecutan los algoritmos
-			int index = listAlgorithms.getSelectedIndex();
-			if (index == 0) {
+			String select = listAlgorithms.getSelectedValue();
+			if (select.equals("Articulation Points")) {
 				ArticulationPoints ap = new ArticulationPoints(graph);
 				ap.compute();
-			} else if (index == 1) {
+			} else if (select.equals("Dijkstra")) {
 				DijkstraPoli dij = new DijkstraPoli(graph);
 				dij.compute("D", "E");
-			} else if (index == 2) {
+			} else if (select.equals("Betweenness Centrality")) {
 				BetweenessPoli bi = new BetweenessPoli(graph);
 				bi.compute();
-			} else if (index == 3) {
+			} else if (select.equals("Tarjan")) {
 				Tarjan tj = new Tarjan(graph);
 				try {
 					tj.compute();
@@ -182,17 +181,16 @@ public class PanelGraph extends JPanel implements MouseListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			} else if (index == 4) {
+			} else if (select.equals("Prim (Minimum Spanning Tree)")) {
 				PrimPoli prim = new PrimPoli(graph);
 				prim.compute();
-			} else if (index == 5) {
+			} else if (select.equals("Closeness And Remoteness Centrality")) {
 				ClosenessCentrality clos = new ClosenessCentrality(graph);
 			}
 			panelNodes.ProcessNodes();
 			panelEdges.processEdges();
 		}
 		if (e.getSource().equals(listSelectBy) && e.getClickCount() == 2) {
-			// Aca se selecionan por nodos
 			System.out.println(listSelectBy.getSelectedValue());
 		}
 	}
@@ -222,8 +220,8 @@ public class PanelGraph extends JPanel implements MouseListener {
 			cont++;
 		}
 		contextGraphArea.setText(context);
-		
 	}
+
 	public ViewerPipe getFromViewer() {
 		return fromViewer;
 	}

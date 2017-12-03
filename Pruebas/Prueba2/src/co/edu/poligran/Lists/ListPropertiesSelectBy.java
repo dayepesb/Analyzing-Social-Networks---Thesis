@@ -6,11 +6,13 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 
+import org.graphstream.graph.Graph;
+
 public class ListPropertiesSelectBy extends JList<String> {
 	
-	public ListPropertiesSelectBy() throws IOException {
+	public ListPropertiesSelectBy(Graph graph) throws IOException {
 		setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		DefaultListModel<String> model =  new ModelListSelectBy();
+		DefaultListModel<String> model =  new ModelListSelectBy(graph);
 		setModel(model);
 	}
 }

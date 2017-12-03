@@ -7,7 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.swing.ComboBoxModel;
@@ -35,6 +37,7 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
 import co.edu.poligran.Lists.ModelListSelectBy;
+import co.edu.poligran.PopUp.PopUpProperties;
 
 public class PanelEdges extends JPanel implements MouseListener, ActionListener {
 	private int t, minWidthColumProperties;
@@ -61,7 +64,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 	public PanelEdges(Graph graph, PanelMatriz panelMatriz) {
 		this.panelMatriz = panelMatriz;
 		this.graph = graph;
-//		this.setBackground(Color.WHITE);
+		// this.setBackground(Color.WHITE);
 
 		t = 0;
 		this.setLayout(null);
@@ -257,12 +260,10 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		removeEdgeDefautlComboBoxModel = new DefaultComboBoxModel<>(edges);
 		removeComboBox.setModel(removeEdgeDefautlComboBoxModel);
 	}
-	
 
-	public void setGraph(Graph graph){
+	public void setGraph(Graph graph) {
 		this.graph = graph;
 	}
-	
 
 	public void processEdges() {
 		int i = 0;
@@ -413,24 +414,13 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		if (e.getSource().equals(addPropertyAddEdge)) {
 			// jOptionPane
 			try {
-				ModelListSelectBy mlsb = new ModelListSelectBy();
-				Object[] propeties = new Object[mlsb.getSize()];
-				for (int i = 0; i < propeties.length; i++) {
-					propeties[i] = mlsb.get(i);
-				}
-				JPanel panel = new JPanel();
-				JComboBox<Object> properties = new JComboBox<>(propeties);
-				JTextField value = new JTextField(20);
-				panel.add(properties);
-				panel.add(value);
-				Icon icono = new ImageIcon(getClass().getResource("../Images/ImageMensajeDialog.png"));
-				int resp = JOptionPane.showConfirmDialog(null, panel, "Add Edge", JOptionPane.CANCEL_OPTION,
-						JOptionPane.YES_NO_OPTION, icono);
-				if (resp == 0) {
-					String p = properties.getSelectedItem().toString().trim().toLowerCase();
-					propertiesMapaAddEdge.put(p, value.getText().trim().toLowerCase());
-					updateListAddNode();
-				}
+				String url = "../Images/ImageMensajeDialog.png";
+				PopUpProperties pop = new PopUpProperties();
+				System.out.println(propertiesMapaAddEdge);
+				String p[] = pop.PopUpProperties(url, "Add Edge", JOptionPane.CANCEL_OPTION, JOptionPane.YES_NO_OPTION,
+						graph);
+				propertiesMapaAddEdge.put(p[0], p[1]);
+				updateListAddNode();
 			} catch (Exception ex) {
 			}
 		}
@@ -448,7 +438,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 		if (e.getSource().equals(addPropertySelectEdge)) {
 			if (edgesComboBox.getSelectedIndex() > 0) {
 				try {
-					ModelListSelectBy mlsb = new ModelListSelectBy();
+					ModelListSelectBy mlsb = new ModelListSelectBy(graph);
 					Object[] propeties = new Object[mlsb.getSize()];
 					for (int i = 0; i < propeties.length; i++) {
 						propeties[i] = mlsb.get(i);
