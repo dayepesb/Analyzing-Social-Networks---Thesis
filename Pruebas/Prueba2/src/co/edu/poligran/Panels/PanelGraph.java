@@ -38,6 +38,7 @@ import co.edu.poligran.Algorithms.Tarjan;
 import co.edu.poligran.Listener.ListenerMouseInGraph;
 import co.edu.poligran.Lists.ListPropertiesAlgorithms;
 import co.edu.poligran.Lists.ListPropertiesSelectBy;
+import co.edu.poligran.PopUp.PopUpDijkstra;
 import co.edu.poligran.PopUp.PopUpProperties;
 
 public class PanelGraph extends JPanel implements MouseListener {
@@ -177,13 +178,15 @@ public class PanelGraph extends JPanel implements MouseListener {
 				DijkstraPoli dij = new DijkstraPoli(graph);
 				try{
 					String url=".../Images/ImgaeMensajeDialog.png";
-					PopUpProperties pop= new PopUpProperties();
-					String[]p=pop.PopUpProperties(url, "Selected Nodes", JOptionPane.CANCEL_OPTION, JOptionPane.YES_NO_OPTION, graph);
-					System.out.println(Arrays.toString(p));
+					PopUpDijkstra pop= new PopUpDijkstra();
+					String[]p=pop.PopUpDijkstra(url, "Selected Nodes", JOptionPane.CANCEL_OPTION, JOptionPane.YES_NO_OPTION, graph);
+					if(p!=null){
+						dij.compute(p[0], p[1]);
+					}
 				}catch (Exception ex) {
 					// TODO: handle exception
 				}
-				dij.compute("D", "E");
+				
 			} else if (select.equals("Betweenness Centrality")) {
 				BetweenessPoli bi = new BetweenessPoli(graph);
 				bi.compute();
