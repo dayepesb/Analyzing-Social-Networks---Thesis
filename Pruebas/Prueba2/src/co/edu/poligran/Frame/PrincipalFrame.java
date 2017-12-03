@@ -169,7 +169,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		graph.addAttribute("ui.stylesheet", "edge.label { color: "+edges+"; }");
 
 		for (Node n : graph) {
-			n.addAttribute("-attribute-age", "13");
+			n.addAttribute("-attribute-age", ""+(int)(Math.random()*26));
 			n.addAttribute("-attribute-country", "Colombia");
 		}
 		for (Edge edge : graph.getEdgeSet()) {

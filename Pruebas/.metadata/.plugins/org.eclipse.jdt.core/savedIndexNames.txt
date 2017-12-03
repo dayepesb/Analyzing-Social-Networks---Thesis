@@ -1,6 +1,5 @@
 INDEX VERSION 1.130+C:\Users\david\OneDrive\Documentos\GitHub\Analyzing-Social-Networks---Thesis\Pruebas\.metadata\.plugins\org.eclipse.jdt.core
 3303425450.index
-3225157691.index
 3921356575.index
 3695897227.index
 2872723343.index
