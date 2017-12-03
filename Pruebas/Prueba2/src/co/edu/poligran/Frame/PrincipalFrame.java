@@ -53,10 +53,14 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 	private final Image icono = Toolkit.getDefaultToolkit()
 			.getImage("src/co/edu/poligran/Images/LogoPoliGraphApplicationExecutable.png");
 	private ProgressBarFrame pbf;
-	private boolean loop = true;;
-
+	private boolean loop = true;
+	public String background,nodes,edges;
+	
 	public PrincipalFrame(ProgressBarFrame pbf) {
 		this.pbf = pbf;
+		background ="#FFF";
+		nodes="#000";
+		edges="#000";
 		run();
 	}
 
@@ -159,7 +163,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		for (Edge e : graph.getEachEdge()) {
 			e.addAttribute("label", "" + (int) e.getNumber("length"));
 		}
-		graph.addAttribute("ui.stylesheet", "edge.label { color: white; }");
+		graph.addAttribute("ui.stylesheet", "edge.label { color: "+edges+"; }");
 
 		for (Node n : graph) {
 			n.addAttribute("-attribute-age", "13");
@@ -171,12 +175,12 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		pbf.setProgressBar(7);
 
 		// Paint Graph
-		graph.addAttribute("ui.stylesheet", "graph { fill-color: BLACK; }");
+		graph.addAttribute("ui.stylesheet", "graph { fill-color: #000; }");
 		for (Node node : graph) {
-			node.setAttribute("ui.style", "fill-color:#fff;");
+			node.setAttribute("ui.style", "fill-color:BLUE;");
 		}
 		for (Edge edge : graph.getEdgeSet()) {
-			edge.setAttribute("ui.style", "fill-color:#fff;");
+			edge.setAttribute("ui.style", "fill-color:BLUE;");
 		}
 
 		// Panel Graphics
