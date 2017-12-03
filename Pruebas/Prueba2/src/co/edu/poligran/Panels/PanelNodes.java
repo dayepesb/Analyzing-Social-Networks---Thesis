@@ -13,8 +13,6 @@ import java.util.StringTokenizer;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -23,7 +21,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -34,7 +31,7 @@ import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
-import co.edu.poligran.Lists.ModelListSelectBy;
+import co.edu.poligran.PopUp.PopUpProperties;
 
 public class PanelNodes extends JPanel implements MouseListener, ActionListener {
 	private int t;
@@ -57,7 +54,8 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 	private JComboBox<String> nodesComboBox, removeComboBox;
 	private PanelEdges panelEdges;
 	private PanelMatriz panelMatriz;
-	public PanelNodes(Graph g,PanelEdges panelEdges,PanelMatriz panelMatriz) throws IOException {
+
+	public PanelNodes(Graph g, PanelEdges panelEdges, PanelMatriz panelMatriz) throws IOException {
 		this.graph = g;
 		this.panelEdges = panelEdges;
 		this.panelMatriz = panelMatriz;
@@ -226,10 +224,9 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 		removeNode.setBounds(removeComboBox.getX() + removeComboBox.getWidth() + 10, removeComboBox.getY(), 100, 20);
 	}
 
-	public void setGraph(Graph graph){
+	public void setGraph(Graph graph) {
 		this.graph = graph;
 	}
-	
 
 	private void updateTable() {
 		dtm = new DefaultTableModel(graph.getNodeCount(), 4) {
@@ -381,24 +378,32 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 		if (e.getSource().equals(addPropertyAddNode)) {
 			// jOptionPane
 			try {
-				ModelListSelectBy mlsb = new ModelListSelectBy(graph);
-				Object[] propeties = new Object[mlsb.getSize()];
-				for (int i = 0; i < propeties.length; i++) {
-					propeties[i] = mlsb.get(i);
-				}
-				JPanel panel = new JPanel();
-				JComboBox<Object> properties = new JComboBox<>(propeties);
-				JTextField value = new JTextField(20);
-				panel.add(properties);
-				panel.add(value);
-				Icon icono = new ImageIcon(getClass().getResource("../Images/ImageMensajeDialog.png"));
-				int resp = JOptionPane.showConfirmDialog(null, panel, "Add Node", JOptionPane.CANCEL_OPTION,
-						JOptionPane.YES_NO_OPTION, icono);
-				if (resp == 0) {
-					String p = properties.getSelectedItem().toString().trim().toLowerCase();
-					propertiesMapaAddNode.put(p, value.getText().trim().toLowerCase());
-					updateListAddNode();
-				}
+				// ModelListSelectBy mlsb = new ModelListSelectBy(graph);
+				// Object[] propeties = new Object[mlsb.getSize()];
+				// for (int i = 0; i < propeties.length; i++) {
+				// propeties[i] = mlsb.get(i);
+				// }
+				// JPanel panel = new JPanel();
+				// JComboBox<Object> properties = new JComboBox<>(propeties);
+				// JTextField value = new JTextField(20);
+				// panel.add(properties);
+				// panel.add(value);
+				// Icon icono = new
+				// ImageIcon(getClass().getResource("../Images/ImageMensajeDialog.png"));
+				// int resp = JOptionPane.showConfirmDialog(null, panel, "Add Node",
+				// JOptionPane.CANCEL_OPTION,
+				// JOptionPane.YES_NO_OPTION, icono);
+				// if (resp == 0) {
+				// String p = properties.getSelectedItem().toString().trim().toLowerCase();
+				// propertiesMapaAddNode.put(p, value.getText().trim().toLowerCase());
+				// updateListAddNode();
+				// }
+				String url = "../Images/ImageMensajeDialog.png";
+				PopUpProperties pop = new PopUpProperties();
+				String p[] = pop.PopUpProperties(url, "Add Edge", JOptionPane.CANCEL_OPTION, JOptionPane.YES_NO_OPTION,
+						graph);
+				propertiesMapaAddNode.put(p[0], p[1]);
+				updateListAddNode();
 			} catch (Exception ex) {
 			}
 		}
@@ -415,27 +420,15 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 		if (e.getSource().equals(addPropertySelectNode)) {
 			if (nodesComboBox.getSelectedIndex() > 0) {
 				try {
-					ModelListSelectBy mlsb = new ModelListSelectBy(graph);
-					Object[] propeties = new Object[mlsb.getSize()];
-					for (int i = 0; i < propeties.length; i++) {
-						propeties[i] = mlsb.get(i);
-					}
-					JPanel panel = new JPanel();
-					JComboBox<Object> properties = new JComboBox<>(propeties);
-					JTextField value = new JTextField(20);
-					panel.add(properties);
-					panel.add(value);
-					Icon icono = new ImageIcon(getClass().getResource("../Images/ImageMensajeDialog.png"));
-					int resp = JOptionPane.showConfirmDialog(null, panel, "Add Node", JOptionPane.CANCEL_OPTION,
-							JOptionPane.YES_NO_OPTION, icono);
-					if (resp == 0) {
-						int nodeId = Integer.parseInt(nodesComboBox.getSelectedItem() + "".trim());
-						String p = properties.getSelectedItem().toString().trim().toLowerCase();
-						propertiesMapaSelectNode.put(p, value.getText().trim().toLowerCase());
-						Node n = graph.getNode(nodeId);
-						n.addAttribute("-attribute-" + p, value.getText().trim().toLowerCase());
-						updateListSelectNode();
-					}
+					String url = "../Images/ImageMensajeDialog.png";
+					PopUpProperties pop = new PopUpProperties();
+					String p[] = pop.PopUpProperties(url, "Add Edge", JOptionPane.CANCEL_OPTION,
+							JOptionPane.YES_NO_OPTION, graph);
+					propertiesMapaSelectNode.put(p[0], p[1]);
+					int nodeId = Integer.parseInt(nodesComboBox.getSelectedItem() + "".trim());
+					Node n = graph.getNode(nodeId);
+					n.addAttribute("-attribute-" + p[0], p[1]);
+					updateListSelectNode();
 				} catch (Exception ex) {
 					System.out.println(ex);
 				}

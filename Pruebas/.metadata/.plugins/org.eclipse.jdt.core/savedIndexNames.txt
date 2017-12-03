@@ -22,7 +22,6 @@ INDEX VERSION 1.130+C:\Users\david\OneDrive\Documentos\GitHub\Analyzing-Social-N
 3921356575.index
 2509800163.index
 4028878546.index
-3225157691.index
 664140773.index
 2365264807.index
 767842954.index
