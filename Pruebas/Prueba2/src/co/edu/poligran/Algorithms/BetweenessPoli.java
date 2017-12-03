@@ -48,7 +48,4 @@ public class BetweenessPoli {
 			else n.setAttribute("ui.style","fill-color :"+ colors[((int)(color*1000))%colors.length]);
 		}
 	}
-	
-	public void compute(){
-	}
 }

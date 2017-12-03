@@ -182,7 +182,6 @@ public class PanelGraph extends JPanel implements MouseListener {
 
 			} else if (select.equals("Betweenness Centrality")) {
 				BetweenessPoli bi = new BetweenessPoli(graph);
-				bi.compute();
 			} else if (select.equals("Tarjan")) {
 				Tarjan tj = new Tarjan(graph);
 				try {
