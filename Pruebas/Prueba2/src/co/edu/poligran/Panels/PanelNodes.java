@@ -374,6 +374,7 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 				updateListSelectNode();
 				ProcessNodes();
 				nodesComboBox.setSelectedIndex(index);
+				panelGraph.setComponentsPrincipalFrame();
 			}
 		}
 		if (e.getSource().equals(addPropertyAddNode)) {
@@ -432,6 +433,7 @@ public class PanelNodes extends JPanel implements MouseListener, ActionListener 
 				graph.removeNode(item);
 				cargarInfoInComoboBox();
 				panelMatriz.updateValues();
+				panelGraph.setComponentsPrincipalFrame();
 				paintGraph();
 				ProcessNodes();
 			}

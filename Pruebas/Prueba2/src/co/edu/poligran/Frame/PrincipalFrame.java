@@ -138,7 +138,13 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		graph.addNode("D").addAttribute("xy", 1, 0);
 		graph.addNode("E").addAttribute("xy", 2, 2);
 		graph.addNode("F").addAttribute("xy", 2, 1);
+		graph.addNode("x").addAttribute("xy", 2, 1);
+		graph.addNode("y").addAttribute("xy", 2, 1);
+		graph.addNode("z").addAttribute("xy", 2, 1);
 		// graph.addNode("G").addAttribute("xy", 2, 0);
+		graph.addEdge("xy", "x", "y").addAttribute("-attribute-width", 14);
+		graph.addEdge("xz", "x", "z").addAttribute("-attribute-width", 14);
+		graph.addEdge("yz", "y", "z").addAttribute("-attribute-width", 14);
 		graph.addEdge("QB", "Q", "B").addAttribute("-attribute-width", 14);
 		graph.addEdge("QC", "Q", "C").addAttribute("-attribute-width", 9);
 		graph.addEdge("QD", "Q", "D").addAttribute("-attribute-width", 7);
@@ -154,17 +160,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 			e.addAttribute("label", "" + (int) e.getNumber("length"));
 		}
 		graph.addAttribute("ui.stylesheet", "edge.label { color: white; }");
-		// graph.setAttribute("ui.style", );
 
-		// Generator gen = new BarabasiAlbertGenerator(5);
-		// gen.addSink(graph);
-		// gen.begin();
-		// for(int i=0; i<100; i++) {
-		// gen.nextEvents();
-		// }
-		//
-		// gen.end();
-		// System.out.println(graph.getNodeCount());
 		for (Node n : graph) {
 			n.addAttribute("-attribute-age", "13");
 			n.addAttribute("-attribute-country", "Colombia");
@@ -207,6 +203,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		pbf.setProgressBar(10);
 
 		panelNodes.setPanelGraph(panelGraph);
+		panelEdges.setPanelGraph(panelGraph);
 		// create view graph
 		addTabbedPane(graph);
 
@@ -216,10 +213,6 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		windows.setVisible(true);
 
 		t.start();
-		// while(loop){
-		// panelGraph.getFromViewer().pump();
-		// }
-
 	}
 
 	private void addTabbedPane(Graph graph) {

@@ -53,6 +53,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 	private JButton addEdgeButton, addPropertyAddEdge, removePropertyAddEdge, addPropertySelectEdge,
 			removePropertySelectEdge, modifyEdgeSelectEdge, removeEdge;
 	private PanelMatriz panelMatriz;
+	private PanelGraph panelGraph;
 
 	public PanelEdges(Graph graph, PanelMatriz panelMatriz) {
 		this.panelMatriz = panelMatriz;
@@ -382,6 +383,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 				} catch (Exception e2) {
 					System.out.println(e2);
 				}
+			panelGraph.setComponentsPrincipalFrame();
 		}
 		if (e.getSource().equals(modifyEdgeSelectEdge)) {
 			if (edgesComboBox.getSelectedIndex() > 0) {
@@ -401,6 +403,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 				}
 				updateListSelectNode();
 				processEdges();
+				panelGraph.setComponentsPrincipalFrame();
 				edgesComboBox.setSelectedIndex(index);
 			}
 		}
@@ -460,6 +463,7 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 				updateInfoInComoboBoxEdges();
 				paintGraph();
 				processEdges();
+				panelGraph.setComponentsPrincipalFrame();
 				panelMatriz.updateValues();
 			}
 		}
@@ -500,5 +504,9 @@ public class PanelEdges extends JPanel implements MouseListener, ActionListener 
 				}
 			}
 		}
+	}
+
+	public void setPanelGraph(PanelGraph pg) {
+		this.panelGraph = pg;
 	}
 }

@@ -17,7 +17,7 @@ public class ModelListSelectBy extends DefaultListModel<String> {
 		Set<String> set = new HashSet<>();
 		for (Node n: graph) {
 			for (String s : n.getAttributeKeySet()) {
-				if(s.startsWith("-attribute-"))
+				if(s.startsWith("-attribute-") && !s.substring(11).equalsIgnoreCase("remoteness")&&!s.substring(11).equalsIgnoreCase("closeness"))
 				set.add(s.substring(11));
 			}
 		}

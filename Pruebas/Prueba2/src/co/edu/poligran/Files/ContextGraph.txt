@@ -1,3 +1,4 @@
-#Nodes :
-#Edges :
-Density :
+Number Nodes :
+Number Edges :
+Density 	 :
+Diameter	 :

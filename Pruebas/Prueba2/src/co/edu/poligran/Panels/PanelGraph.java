@@ -77,14 +77,6 @@ public class PanelGraph extends JPanel implements MouseListener {
 		fromViewer = viewer.newViewerPipe();
 		ListenerMouseInGraph t = new ListenerMouseInGraph();
 		fromViewer.addViewerListener(t);
-		// fromViewer.addSink(graph);
-
-		// try{
-		// fromViewer.blockingPump();
-		// }catch (Exception e) {
-		// // TODO: handle exception
-		// }
-		// colum
 
 		// Label del contex Graph
 		labelContext = new JLabel("Graph Context", SwingConstants.CENTER);
@@ -226,27 +218,12 @@ public class PanelGraph extends JPanel implements MouseListener {
 	public void setContext() throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(new File("src/co/edu/poligran/Files/ContextGraph.txt")));
 		String context = "";
-		String line = "";
-		int cont = 0;
 		Toolkit tol = new Toolkit();
-		while (true) {
-			if (line == null)
-				break;
-			line = br.readLine();
-			if (cont == 0) {
-				context += line + " " + graph.getNodeCount();
-			}
-
-			if (cont == 1) {
-				context += "\n" + line + " " + graph.getEdgeCount();
-			}
-
-			if (cont == 2) {
-				double density = tol.density(graph);
-				context += "\n" + line + " " + String.format("%.4f", density);
-			}
-			cont++;
-		}
+		context += br.readLine() + " " + graph.getNodeCount();
+		context += "\n" + br.readLine() + " " + graph.getEdgeCount();
+		double density = tol.density(graph);
+		context += "\n" + br.readLine() + " " + String.format("%.4f", density);
+		context += "\n" + br.readLine() + " " +tol.diameter(graph);
 		contextGraphArea.setText(context);
 	}
 
@@ -272,7 +249,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 
 	public void setComponentsPrincipalFrame() {
 		try {
-			System.out.println("llego aca");
+			this.setContext();
 			this.remove(jspSelectBy);
 			listSelectBy = new ListPropertiesSelectBy(graph);
 			listSelectBy.addMouseListener(this);
