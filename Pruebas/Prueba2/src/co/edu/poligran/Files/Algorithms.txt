@@ -5,4 +5,5 @@ Tarjan
 Prim (Minimum Spanning Tree)
 Closeness And Remoteness Centrality
 Degree Centrality
-Edmons Karp
+Homophily
+Eccentricity

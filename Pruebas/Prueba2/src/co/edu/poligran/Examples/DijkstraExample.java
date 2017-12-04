@@ -28,6 +28,7 @@ package co.edu.poligran.Examples;
  //        D      G
   	public static Graph exampleGraph() {
 		Graph g = new SingleGraph("example");
+	
 		g.addNode("A").addAttribute("xy", 0, 1);
 		g.addNode("B").addAttribute("xy", 1, 2);
 		g.addNode("C").addAttribute("xy", 1, 1);
@@ -44,6 +45,8 @@ package co.edu.poligran.Examples;
 		g.addEdge("CF", "C", "F").addAttribute("length", 11);
 		g.addEdge("DF", "D", "F").addAttribute("length", 15);
 		g.addEdge("EF", "E", "F").addAttribute("length", 6);
+		
+		/*
 
 		g.addNode("G").addAttribute("xy", 0, 1);
 		g.addEdge("AB", "A", "B").addAttribute("length", 14.0);
@@ -55,6 +58,7 @@ package co.edu.poligran.Examples;
 		g.addEdge("CF", "C", "F").addAttribute("length", 11.9999);
 		g.addEdge("DF", "D", "F").addAttribute("length", 15.9);
 		g.addEdge("EF", "E", "F").addAttribute("length", 6.3);
+		*/
 
 		for (Node n : g)
 			n.addAttribute("label", n.getId());

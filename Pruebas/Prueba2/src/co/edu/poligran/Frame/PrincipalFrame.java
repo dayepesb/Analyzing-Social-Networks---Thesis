@@ -259,6 +259,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		panelMatriz.updateValues();
 		panelGraphics.setGraph(graph);
 		
+		//actualiza Listener
 		fromViewer = panelGraph.getViewer().newViewerPipe();
 		ListenerMouseInGraph listenerGraph = new ListenerMouseInGraph(graph);
 		fromViewer.addViewerListener(listenerGraph);
