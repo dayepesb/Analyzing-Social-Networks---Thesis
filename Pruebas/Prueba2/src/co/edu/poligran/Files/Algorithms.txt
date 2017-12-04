@@ -7,3 +7,4 @@ Closeness And Remoteness Centrality
 Degree Centrality
 Homophily
 Eccentricity
+Girvan Newman

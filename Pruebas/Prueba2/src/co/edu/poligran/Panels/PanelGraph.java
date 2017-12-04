@@ -32,6 +32,7 @@ import co.edu.poligran.Algorithms.BetweenessPoli;
 import co.edu.poligran.Algorithms.ClosenessCentrality;
 import co.edu.poligran.Algorithms.DegreeCentrality;
 import co.edu.poligran.Algorithms.DijkstraPoli;
+import co.edu.poligran.Algorithms.GirvanNewman;
 import co.edu.poligran.Algorithms.PrimPoli;
 import co.edu.poligran.Algorithms.Tarjan;
 import co.edu.poligran.Frame.PrincipalFrame;
@@ -208,6 +209,15 @@ public class PanelGraph extends JPanel implements MouseListener {
 				}
 			} else if(select.equalsIgnoreCase("Homophily")) {
 				 PopUpHomophily poupH = new PopUpHomophily(graph);
+			}else if(select.equals("Girvan Newman")){
+				
+				GirvanNewman gv=new GirvanNewman(graph);
+				gv.compute();
+				try{
+				setContext();
+				}catch (Exception ex) {
+					// TODO: handle exception
+				}
 			}
 			panelNodes.ProcessNodes();
 			panelEdges.processEdges();

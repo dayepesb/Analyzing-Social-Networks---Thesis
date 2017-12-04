@@ -1,5 +1,7 @@
 package co.edu.poligran.Algorithms;
 
+import java.util.HashMap;
+
 import org.graphstream.algorithm.TarjanStronglyConnectedComponents;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
@@ -12,6 +14,8 @@ import co.edu.poligran.Colors.ColorRandom;
 public class Tarjan  {
 	
 	private Graph graph;
+	private int max;
+	private String walk;
 	
 	public static void main(String[] args) {
 		Graph g = new SingleGraph("example");
@@ -48,6 +52,7 @@ public class Tarjan  {
 	}
 	
 	public void compute() throws Exception{
+		max=-1;
 		TarjanStronglyConnectedComponents tscc=new TarjanStronglyConnectedComponents();
 		tscc.init(graph);
 		tscc.compute();
@@ -59,10 +64,41 @@ public class Tarjan  {
 		for (Edge edge : graph.getEdgeSet()) {
 			edge.setAttribute("ui.style", "fill-color:#fff;");
 		}
+		HashMap<Integer,int[]>set=new HashMap<Integer,int[]>();
 		for(Node n :graph){
 			int index = Integer.parseInt(n.getAttribute(tscc.getSCCIndexAttribute()).toString());
+			if(!set.containsKey(index)){
+				set.put(index, new int[]{0});
+			}
+			set.get(index)[0]++;
+			max=Math.max(max, set.get(index)[0]);
 			n.addAttribute("ui.style", "fill-color:" + arrayColors[(index%arrayColors.length)]);
 		}
+	}
+	public void computeGirvanNewman()throws Exception{
+		max=-1;
+		TarjanStronglyConnectedComponents tscc=new TarjanStronglyConnectedComponents();
+		tscc.init(graph);
+		tscc.compute();
+		walk=tscc.getSCCIndexAttribute();
+		//ColorRandom cr=new ColorRandom();
+		//String arrayColors[]= cr.getColorRamdom();
+		HashMap<Integer,int[]>set=new HashMap<Integer,int[]>();
+		for(Node n :graph){
+			int index = Integer.parseInt(n.getAttribute(tscc.getSCCIndexAttribute()).toString());
+			if(!set.containsKey(index)){
+				set.put(index, new int[]{0});
+			}
+			set.get(index)[0]++;
+			max=Math.max(max, set.get(index)[0]);
+			//n.addAttribute("ui.style", "fill-color:" + arrayColors[(index%arrayColors.length)]);
+		}
+	}
+	public int getMax() {
+		return max;
+	}
+	public String getWalk() {
+		return walk;
 	}
 	
 }
