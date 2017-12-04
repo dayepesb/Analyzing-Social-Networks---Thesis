@@ -18,11 +18,6 @@ public class ColorRandom {
 	private String arrayColorsDegre[];
 	private ArrayList<String> colorsDegre;
 
-	public ColorRandom() {
-		
-	}
-	
-
 	public String[] getColorRandomDegre()throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(new File(urldegre)));
 		colorsDegre = new ArrayList<>();
