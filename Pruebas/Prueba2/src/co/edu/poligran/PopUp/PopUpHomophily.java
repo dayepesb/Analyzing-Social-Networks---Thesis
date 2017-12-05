@@ -46,9 +46,9 @@ public class PopUpHomophily {
 		if (resp == 0) {
 			String att = (String) comboBox.getSelectedItem();
 			if (isNumber(graph, att)) {
-				PopUpNumber poupNumber = new PopUpNumber(graph, min, max);
+				PopUpNumber poPupNumber = new PopUpNumber(graph,att, min, max);
 			} else {
-				System.out.println("No");
+				PopUpText puPopUpText = new PopUpText(graph, att);
 			}
 		}
 	}

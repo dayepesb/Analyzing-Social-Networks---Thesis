@@ -9,6 +9,4 @@ public class MainApplication {
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 		SwingUtilities.invokeLater(new ProgressBarFrame());
 	}
-
 }
- 

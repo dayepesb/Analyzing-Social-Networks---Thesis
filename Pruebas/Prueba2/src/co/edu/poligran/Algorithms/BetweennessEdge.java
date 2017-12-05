@@ -12,7 +12,7 @@ import org.graphstream.graph.implementations.SingleGraph;
 
 public class BetweennessEdge {
 
-	private Graph graph;
+	private Graph graph;	
 	private HashMap<Integer, int[]> dic;
 	static int max;
 	static int index;

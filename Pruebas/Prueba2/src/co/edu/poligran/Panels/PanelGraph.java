@@ -207,16 +207,14 @@ public class PanelGraph extends JPanel implements MouseListener {
 					graph.getNode(deg.getKey()).setAttribute("ui.style", "size:" + (size < 5 ? 5 : size) + "px;");
 					graph.getNode(deg.getKey()).setAttribute("ui.style", "stroke-color:#000;");
 				}
-			} else if(select.equalsIgnoreCase("Homophily")) {
-				 PopUpHomophily poupH = new PopUpHomophily(graph);
-			}else if(select.equals("Girvan Newman")){
-				
-				GirvanNewman gv=new GirvanNewman(graph);
+			} else if (select.equalsIgnoreCase("Homophily")) {
+				PopUpHomophily poupH = new PopUpHomophily(graph);
+			} else if (select.equals("Girvan Newman")) {
+				GirvanNewman gv = new GirvanNewman(graph);
 				gv.compute();
-				try{
-				setContext();
-				}catch (Exception ex) {
-					// TODO: handle exception
+				try {
+					setContext();
+				} catch (Exception ex) {
 				}
 			}
 			panelNodes.ProcessNodes();
@@ -235,16 +233,18 @@ public class PanelGraph extends JPanel implements MouseListener {
 		context += "\n" + br.readLine() + " " + graph.getEdgeCount();
 		double density = tol.density(graph);
 		context += "\n" + br.readLine() + " " + String.format("%.4f", density);
-		context += "\n" + br.readLine() + " " +tol.diameter(graph);
+		context += "\n" + br.readLine() + " " + tol.diameter(graph);
 		contextGraphArea.setText(context);
 	}
 
 	public ViewerPipe getFromViewer() {
 		return fromViewer;
 	}
+
 	public void setFromViewer(ViewerPipe fromViewer) {
 		this.fromViewer = fromViewer;
 	}
+
 	public Viewer getViewer() {
 		return viewer;
 	}
