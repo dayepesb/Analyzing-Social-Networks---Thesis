@@ -43,8 +43,8 @@ public class HomofilyPoli {
 					}
 				}
 			}
-			compute(nodesA, nodesB);
 		}
+		compute(nodesA, nodesB);
 	}
 
 	public HomofilyPoli(Graph graph, String att, int min, int mid, int max, Color colorA, Color colorB) {

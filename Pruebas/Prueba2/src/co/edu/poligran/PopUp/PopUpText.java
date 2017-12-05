@@ -88,7 +88,7 @@ public class PopUpText implements ActionListener {
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		panel.add(buttonColorB, gbc);
-		resp = JOptionPane.showConfirmDialog(null, panel, "Select Atttribute", JOptionPane.CANCEL_OPTION,
+		resp = JOptionPane.showConfirmDialog(null, panel, "Select Groups", JOptionPane.CANCEL_OPTION,
 				JOptionPane.YES_NO_OPTION, icon);
 		if (resp == 0) {
 			ArrayList<String> listGroupA = new ArrayList<>();
@@ -99,6 +99,7 @@ public class PopUpText implements ActionListener {
 			for (String s : propertiesRigth) {
 				listGroupB.add(s);
 			}
+			System.out.println("Text");
 			HomofilyPoli homofily = new HomofilyPoli(graph,att,listGroupA, listGroupB,buttonColorA.getBackground(),buttonColorB.getBackground());
 		}
 	}

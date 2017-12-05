@@ -66,7 +66,7 @@ public class PopUpNumber implements ChangeListener, ActionListener {
 		buttonColorB.setBackground(Color.BLUE);
 		buttonColorB.addActionListener(this);
 		panel.add(buttonColorB, gbc);
-		resp = JOptionPane.showConfirmDialog(null, panel, "Select Atttribute", JOptionPane.CANCEL_OPTION,
+		resp = JOptionPane.showConfirmDialog(null, panel, "Select Range", JOptionPane.CANCEL_OPTION,
 				JOptionPane.YES_NO_OPTION, icon);
 		if (resp == 0) {
 			if (Integer.parseInt(number.getText()) != min && Integer.parseInt(number.getText()) != max) {

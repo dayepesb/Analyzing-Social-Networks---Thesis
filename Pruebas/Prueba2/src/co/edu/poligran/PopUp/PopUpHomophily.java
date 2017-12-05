@@ -39,7 +39,7 @@ public class PopUpHomophily {
 		modelComboBox = new DefaultComboBoxModel<>(c);
 		comboBox = new JComboBox<>(modelComboBox);
 		panel.add(comboBox);
-		resp = JOptionPane.showConfirmDialog(null, panel, "Select Atttribute", JOptionPane.CANCEL_OPTION,
+		resp = JOptionPane.showConfirmDialog(null, panel, "Select Groups", JOptionPane.CANCEL_OPTION,
 				JOptionPane.YES_NO_OPTION, icon);
 		min = Integer.MAX_VALUE;
 		max = Integer.MIN_VALUE;
