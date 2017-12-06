@@ -10,6 +10,8 @@ import java.awt.event.ComponentListener;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Random;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -56,14 +58,14 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 			.getImage("src/co/edu/poligran/Images/LogoPoliGraphApplicationExecutable.png");
 	private ProgressBarFrame pbf;
 	private boolean loop = true;
-	public String background,nodes,edges;
+	public String background, nodes, edges;
 	private ViewerPipe fromViewer;
-	
+
 	public PrincipalFrame(ProgressBarFrame pbf) {
 		this.pbf = pbf;
-		background ="#FFF";
-		nodes="#000";
-		edges="#000";
+		background = "#FFF";
+		nodes = "#000";
+		edges = "#000";
 		run();
 	}
 
@@ -139,37 +141,15 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 
 		// create graph
 		graph = new SingleGraph("Random");
-		graph.addNode("Q").addAttribute("xy", 0, 1);
-		graph.addNode("B").addAttribute("xy", 1, 2);
-		graph.addNode("C").addAttribute("xy", 1, 1);
-		graph.addNode("D").addAttribute("xy", 1, 0);
-		graph.addNode("E").addAttribute("xy", 2, 2);
-		graph.addNode("F").addAttribute("xy", 2, 1);
-		graph.addNode("x").addAttribute("xy", 2, 1);
-		graph.addNode("y").addAttribute("xy", 2, 1);
-		graph.addNode("z").addAttribute("xy", 2, 1);
-		// graph.addNode("G").addAttribute("xy", 2, 0);
-		graph.addEdge("xy", "x", "y").addAttribute("-attribute-width", 14);
-		graph.addEdge("xz", "x", "z").addAttribute("-attribute-width", 14);
-		graph.addEdge("yz", "y", "z").addAttribute("-attribute-width", 14);
-		graph.addEdge("QB", "Q", "B").addAttribute("-attribute-width", 14);
-		graph.addEdge("QC", "Q", "C").addAttribute("-attribute-width", 9);
-		graph.addEdge("QD", "Q", "D").addAttribute("-attribute-width", 7);
-		graph.addEdge("BC", "B", "C").addAttribute("-attribute-width", 2);
-		graph.addEdge("CD", "C", "D").addAttribute("-attribute-width", 10);
-		graph.addEdge("BE", "B", "E").addAttribute("-attribute-width", 9);
-		graph.addEdge("CF", "C", "F").addAttribute("-attribute-width", 11);
-		graph.addEdge("DF", "D", "F").addAttribute("-attribute-width", 15);
-		graph.addEdge("EF", "E", "F").addAttribute("-attribute-width", 6);
 		for (Node n : graph)
 			n.addAttribute("label", n.getId());
 		for (Edge e : graph.getEachEdge()) {
 			e.addAttribute("label", "" + (int) e.getNumber("length"));
 		}
-		graph.addAttribute("ui.stylesheet", "edge.label { color: "+edges+"; }");
+		graph.addAttribute("ui.stylesheet", "edge.label { color: " + edges + "; }");
 
 		for (Node n : graph) {
-			n.addAttribute("-attribute-age", ""+(int)(Math.random()*26));
+			n.addAttribute("-attribute-age", "" + (int) (Math.random() * 26));
 			n.addAttribute("-attribute-country", "Colombia");
 		}
 		for (Edge edge : graph.getEdgeSet()) {
@@ -258,14 +238,39 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		panelMatriz.setGraph(graph);
 		panelMatriz.updateValues();
 		panelGraphics.setGraph(graph);
-		
-		//actualiza Listener
+
+		// actualiza Listener
 		fromViewer = panelGraph.getViewer().newViewerPipe();
 		ListenerMouseInGraph listenerGraph = new ListenerMouseInGraph(graph);
 		fromViewer.addViewerListener(listenerGraph);
 		panelGraph.setFromViewer(fromViewer);
-		
+
+		HashSet<String> set = new HashSet<>();
+		for (Node node : graph) {
+			if (node.getDegree() == 0)
+				set.add(node.getId());
+		}
+		for (String s : set) {
+			graph.removeNode(s);
+		}
+		String Country[] = new String[] { "Mexico", "Perú", "Colombia", "Chile", "Argentina", "Brasil", "Bolivia" };
+		Random r = new Random();
+		for (Node n : graph) {
+			int sa = (int) (Math.random() * 7);
+			System.out.println(sa);
+			n.addAttribute("-attribute-country", Country[sa]);
+			while (true) {
+				int s = r.nextInt(30);
+				if (s > 17) {
+					n.addAttribute("-attribute-age", s + "");
+					break;
+				}
+			}
+			n.addAttribute("-attribute-gender",Math.random()*2>=1.5?"MALE":"FEMALE");
+		}
 		this.resizedConponents();
+		panelGraphics.updateComboBoxModel();
+		panelGraph.setComponentsPrincipalFrame();
 	}
 
 	// ActionListener

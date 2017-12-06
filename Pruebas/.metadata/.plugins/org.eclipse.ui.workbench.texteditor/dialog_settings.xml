@@ -2,17 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="13" key="selection"/>
+		<item value="img" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="img"/>
+			<item value="images"/>
 			<item value="13"/>
 			<item value="attr"/>
 			<item value="listNodes.add(new NodeUniq(idNode));"/>
 		</list>
 		<list key="replacehistory">
+			<item value="img"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

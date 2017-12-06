@@ -32,6 +32,7 @@ import co.edu.poligran.Algorithms.BetweenessPoli;
 import co.edu.poligran.Algorithms.ClosenessCentrality;
 import co.edu.poligran.Algorithms.DegreeCentrality;
 import co.edu.poligran.Algorithms.DijkstraPoli;
+import co.edu.poligran.Algorithms.EccentricityPoli;
 import co.edu.poligran.Algorithms.GirvanNewman;
 import co.edu.poligran.Algorithms.PrimPoli;
 import co.edu.poligran.Algorithms.Tarjan;
@@ -41,6 +42,7 @@ import co.edu.poligran.Lists.ListPropertiesAlgorithms;
 import co.edu.poligran.Lists.ListPropertiesSelectBy;
 import co.edu.poligran.PopUp.PopUpDijkstra;
 import co.edu.poligran.PopUp.PopUpHomophily;
+import co.edu.poligran.PopUp.PopUpSelectBy;
 
 public class PanelGraph extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
@@ -162,6 +164,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 	// MouseListener
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		cleanGraph();
 		if (e.getSource().equals(listAlgorithms) && e.getClickCount() == 2) {
 			// Aca se ejecutan los algoritmos
 			String select = listAlgorithms.getSelectedValue();
@@ -197,6 +200,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 				prim.compute();
 			} else if (select.equals("Closeness And Remoteness Centrality")) {
 				ClosenessCentrality clos = new ClosenessCentrality(graph);
+				JOptionPane.showMessageDialog(null, "Please check the nodes tab");
 			} else if (select.equals("Degree Centrality")) {
 				DegreeCentrality dg = new DegreeCentrality(graph);
 				int min = dg.getMin();
@@ -206,6 +210,7 @@ public class PanelGraph extends JPanel implements MouseListener {
 					int size = deg.getValue() * 30 / max;
 					graph.getNode(deg.getKey()).setAttribute("ui.style", "size:" + (size < 5 ? 5 : size) + "px;");
 					graph.getNode(deg.getKey()).setAttribute("ui.style", "stroke-color:#000;");
+					graph.getNode(deg.getKey()).setAttribute("ui.style", "stroke-width:#FFFFFF;");
 				}
 			} else if (select.equalsIgnoreCase("Homophily")) {
 				PopUpHomophily poupH = new PopUpHomophily(graph);
@@ -216,13 +221,28 @@ public class PanelGraph extends JPanel implements MouseListener {
 					setContext();
 				} catch (Exception ex) {
 				}
+			} else if (select.equalsIgnoreCase("Eccentricity")) {
+				EccentricityPoli ecc = new EccentricityPoli(graph);
+				ecc.compute();
 			}
 			panelNodes.ProcessNodes();
 			panelEdges.processEdges();
 		}
 		if (e.getSource().equals(listSelectBy) && e.getClickCount() == 2) {
-			System.out.println(listSelectBy.getSelectedValue());
+			String select = listSelectBy.getSelectedValue();
+			PopUpSelectBy popupselect = new PopUpSelectBy(graph, select);
 		}
+	}
+
+	private void cleanGraph() {
+		for (Node n : graph) {
+			n.setAttribute("ui.style", "fill-color:#FFF;");
+			n.setAttribute("ui.style", "size:10px;");
+		}
+		for (Edge edge : graph.getEdgeSet()) {
+			edge.setAttribute("ui.style", "fill-color:#FFF;");
+		}
+
 	}
 
 	public void setContext() throws IOException {

@@ -1,8 +1,10 @@
 package co.edu.poligran.Algorithms;
 
+import org.graphstream.algorithm.APSP;
 import org.graphstream.algorithm.Eccentricity;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+import org.graphstream.stream.file.FileSourceDGS;
 
 public class EccentricityPoli {
 	
@@ -14,6 +16,9 @@ public class EccentricityPoli {
 	}
 	
 	public void compute(){
+		APSP apsp = new APSP();
+ 		apsp.init(graph);
+ 		apsp.compute();
 		Eccentricity eccentricity = new Eccentricity();
  		eccentricity.init(graph);
  		eccentricity.compute();

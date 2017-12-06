@@ -15,7 +15,7 @@ import javax.swing.JSlider;
 public class PopUpMessageHomofily {
 	private Icon icon;
 
-	public PopUpMessageHomofily(int p, int q, int pq, int cont) {
+	public PopUpMessageHomofily(double p, double q, double pq, double cont) {
 		icon = new ImageIcon(getClass().getResource("../Images/ImageMensajeDialog.png"));
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();

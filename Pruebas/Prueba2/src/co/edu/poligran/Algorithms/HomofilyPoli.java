@@ -79,21 +79,22 @@ public class HomofilyPoli {
 
 	private void compute(HashSet<String> nodesA, HashSet<String> nodesB) {
 		Set<String> union = union(nodesA, nodesB);
-		int p = nodesA.size();
-		int q = nodesB.size();
-		int pq = 2 * p * q;
-		int cont = 0;
+		double p = ((double) nodesA.size()) / ((double) graph.getNodeCount());
+		double q = ((double) nodesB.size()) / ((double) graph.getNodeCount());
+		double pq = 2 * p * q;
+		double cont = 0;
 		for (Edge edge : graph.getEdgeSet()) {
 			if ((nodesA.contains(edge.getNode0().getId()) && nodesB.contains(edge.getNode1().getId()))
 					|| (nodesB.contains(edge.getNode0().getId()) && nodesA.contains(edge.getNode1().getId()))) {
 				cont++;
 			}
 		}
+		cont /= ((double) graph.getEdgeCount());
 		paintGraph(nodesA, nodesB, union);
 		getMessage(p, q, pq, cont);
 	}
 
-	private void getMessage(int p, int q, int pq, int cont) {
+	private void getMessage(double p, double q, double pq, double cont) {
 		PopUpMessageHomofily popup = new PopUpMessageHomofily(p, q, pq, cont);
 	}
 
