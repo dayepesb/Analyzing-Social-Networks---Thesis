@@ -38,12 +38,12 @@ public class GirvanNewman {
 					ColorRandom cr = new ColorRandom();
 					String arrayColors[] = cr.getColorRamdom();
 					for (Node n : graph) {
-						if (n.getEdgeSet().size() == 0) {
-							this.graph.removeNode(n);
-						} else {
+						//if (n.getEdgeSet().size() == 0) {
+						//	this.graph.removeNode(n);
+						//} else {
 							int index = Integer.parseInt(n.getAttribute("scc").toString());
 							n.addAttribute("ui.style", "fill-color:" + arrayColors[(index % arrayColors.length)]);
-						}
+						//}
 					}
 					break loop;
 				}
