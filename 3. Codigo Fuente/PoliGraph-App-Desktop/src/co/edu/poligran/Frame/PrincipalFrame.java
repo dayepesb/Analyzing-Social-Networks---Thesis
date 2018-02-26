@@ -253,6 +253,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 		for (String s : set) {
 			graph.removeNode(s);
 		}
+		/*
 		String Country[] = new String[] { "Mexico", "Perú", "Colombia", "Chile", "Argentina", "Brasil", "Bolivia" };
 		Random r = new Random();
 		for (Node n : graph) {
@@ -268,6 +269,7 @@ public class PrincipalFrame implements Runnable, ActionListener, ComponentListen
 			}
 			n.addAttribute("-attribute-gender",Math.random()*2>=1.5?"MALE":"FEMALE");
 		}
+		*/
 		this.resizedConponents();
 		panelGraphics.updateComboBoxModel();
 		panelGraph.setComponentsPrincipalFrame();

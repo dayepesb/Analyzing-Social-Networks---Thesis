@@ -19,11 +19,9 @@ import com.google.gson.JsonParser;
 import co.edu.poligran.Frame.PrincipalFrame;
 
 public class GraphReaderJSON {
-	private PrincipalFrame principalFrame;
 	private Graph graph;
 
 	public GraphReaderJSON(File filename, PrincipalFrame principalFrame) {
-		this.principalFrame = principalFrame;
 		JsonParser parser = new JsonParser();
 		String text = "";
 		try {
