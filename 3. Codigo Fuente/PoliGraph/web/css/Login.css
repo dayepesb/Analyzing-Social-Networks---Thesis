@@ -1,0 +1,30 @@
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.banner {
+    margin: 0px auto;
+    padding: 0;
+    height: 8%;
+    width: 100%;
+    background: linear-gradient(to right, #1285ac, #16589e, #132aba);
+}
+
+.imageliGraph {
+    height: 90%;
+    padding-left: 2%;
+}
